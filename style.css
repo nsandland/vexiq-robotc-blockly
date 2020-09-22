@@ -181,3 +181,10 @@ button {
   top: 0;
   right: 0;
 }
+
+#githublink {
+  font-size: x-small;
+  text-align: right;
+  vertical-align: middle;
+  padding-right: 10px;
+}
