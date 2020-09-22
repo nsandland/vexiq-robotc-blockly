@@ -312,7 +312,7 @@ Code.attemptBlockGeneration = function() {
   var xmlText = xmlTextarea.value;
   var xmlDom = null;
   try {
-    let xmlRe = /^<xml xmlns="https:\/\/developers\.google\.com\/blockly\/xml">.*^<\/xml>/ms
+    let xmlRe = /^<xml xmlns="https:\/\/developers\.google\.com\/blockly\/xml">.*<\/xml>$/ms
     var found = xmlText.match(xmlRe);
     if (!found) {
       window.confirm("Unable to find XML in editor.");
