@@ -1,0 +1,612 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="google" value="notranslate">
+  <title>Blockly Demo:</title>
+  <link rel="stylesheet" href="style.css">
+  <script src="closure/goog/base.js"></script>
+  <script src="storage.js"></script>
+  <script src="blockly_compressed.js"></script>
+  <script src="blocks_compressed.js"></script>
+  <script src="javascript_compressed.js"></script>
+  <script src="generators/robotc.js"></script>
+  <script src="generators/robotc/vexiq.js"></script>
+  <script src="generators/robotc/colour.js"></script>
+  <script src="generators/robotc/lists.js"></script>
+  <script src="generators/robotc/logic.js"></script>
+  <script src="generators/robotc/loops.js"></script>
+  <script src="generators/robotc/math.js"></script>
+  <script src="generators/robotc/procedures.js"></script>
+  <script src="generators/robotc/text.js"></script>
+  <script src="generators/robotc/variables.js"></script>
+  <script src="generators/robotc/variables_dynamic.js"></script>
+  <script src="blockfactory/block_definitions.js"></script>
+  <script src="generators/robotc/events.js"></script>
+  <script src="generators/robotc/point.js"></script>
+  <script src="code.js"></script>
+</head>
+<body>
+  <table width="100%" height="100%">
+    <tr>
+      <td>
+        <h1>
+          <span id="title"></span>
+        </h1>
+      </td>
+    </tr>
+    <tr>
+      <td colspan=2>
+        <table width="100%">
+          <tr id="tabRow" height="1em">
+            <td id="tab_blocks" class="tabon">...</td>
+            <!--<td class="tabmin tab_collapse">&nbsp;</td>-->
+            <td id="tab_robotc" class="taboff">RobotC</td>
+            <td class="tabmin tab_collapse">&nbsp;</td>
+            <td class="tabmin">&nbsp;</td>
+            <!--<td id="tab_code" class="taboff">
+              <select id="code_menu"></select>
+            </td>-->
+            <td class="tabmax">
+              <button id="copyButton" class="notext" title="...">
+                <img src='media/1x1.gif' class="copy icon21">
+              </button>
+              <button id="openButton" class="notext" title="...">
+                <img src='media/1x1.gif' class="open icon21">
+              </button>
+              <button id="saveButton" class="notext" title="...">
+                <img src='media/1x1.gif' class="save icon21">
+              </button>
+            </td>
+          </tr>
+        </table>
+      </td>
+    </tr>
+    <tr>
+      <td height="99%" colspan=2 id="content_area">
+      </td>
+    </tr>
+  </table>
+  <input type="file" id="inputFile" accept=".c">
+  <div id="content_blocks" class="content"></div>
+  <textarea id="content_robotc" class="content" wrap="off"></textarea>
+
+  <xml xmlns="https://developers.google.com/blockly/xml" id="toolbox" style="display: none">
+    <category name="Brain" colour="#9fa55b">
+      <block type="vex_iq_brain">
+        <field name="HAS_CONTROLLER">TRUE</field>
+        <field name="PORT_1_NAME" id="2C_w(9X|eyDoXJZtSlGb">port_1</field>
+        <field name="PORT_2_NAME" id="%U9G3C1f~]_Kp7^^-7Ir">port_2</field>
+        <field name="PORT_3_NAME" id="W]!UnnR..||G/=zrEIJt">port_3</field>
+        <field name="PORT_4_NAME" id="s4u0G;(du~#s/n8=ibn}">port_4</field>
+        <field name="PORT_5_NAME" id="haGj?M05(YHo?$VWjx1^">port_5</field>
+        <field name="PORT_6_NAME" id="|}5]3]?#UB6;p-p@$?Zo">port_6</field>
+        <field name="PORT_7_NAME" id="^+4/-T,O-t[iqqC$$[Up">port_7</field>
+        <field name="PORT_8_NAME" id="z6z0}I;#nZ0)+.go64uO">port_8</field>
+        <field name="PORT_9_NAME" id="S?1OP,zVs50qC@pokl3E">port_9</field>
+        <field name="PORT_10_NAME" id="UCC-Z#0}d85!qaB^`*EY">port_10</field>
+        <field name="PORT_11_NAME" id="Sq;4ZphrM!WA8xQBm)1F">port_11</field>
+        <field name="PORT_12_NAME" id="f+3LAb5_1]ObyC0i9eX^">port_12</field>
+      </block>
+      <block type="vex_iq_motor">
+        <field name="DIRECTION">FORWARD</field>
+      </block>
+      <block type="vex_iq_bumper"></block>
+      <block type="vex_iq_touchled"></block>
+      <block type="vex_iq_color_sensor"></block>
+      <block type="vex_iq_distance_sensor"></block>
+      <block type="vex_iq_gyro"></block>
+      <block type="vex_iq_lcd_print">
+        <mutation vars="0"></mutation>
+        <field name="TEXT0">hello world</field>
+      </block>
+      <block type="vex_iq_lcd_clear_screen"></block>
+      <!--<block type="vex_iq_brain_check_button">
+        <field name="BUTTON">UP</field>
+      </block>-->
+      <block type="vex_iq_brain_play_note">
+        <field name="NOTE">C</field>
+        <field name="OCTAVE">2</field>
+        <value name="DURATION">
+          <block type="math_number">
+            <field name="NUM">1</field>
+          </block>
+        </value>
+      </block>
+      <block type="vex_iq_brain_play_sound">
+        <field name="SOUND">SIREN_2</field>
+      </block>
+    </category>
+    <category name="Controller" colour="#9fa55b">
+      <!--<block type="vex_iq_controller_button">
+        <field name="BUTTON">E_UP</field>
+      </block>-->
+      <block type="vex_iq_controller_button_pressed">
+        <field name="BUTTON">E_UP</field>
+      </block>
+      <!--<block type="vex_iq_controller_joystick">
+        <field name="JOYSTICK">LEFT</field>
+      </block>-->
+      <block type="vex_iq_controller_joystick_point_position">
+        <field name="JOYSTICK">LEFT</field>
+      </block>
+      <block type="vex_iq_controller_joystick_position">
+        <field name="JOYSTICK">LEFT</field>
+        <field name="AXIS">HORIZONTAL</field>
+      </block>
+    </category>
+    <category name="Motors" colour="#9fa55b">
+      <block type="vex_iq_motor_spin_velocity">
+        <field name="MOTOR" id="k0q^2uq(lzxTZBcYQlye">motor</field>
+        <field name="DIRECTION">FORWARD</field>
+        <value name="VELOCITY">
+          <shadow type="math_number">
+            <field name="NUM">100</field>
+          </shadow>
+        </value>
+      </block>
+      <block type="vex_iq_motor_spin_distance">
+        <field name="MOTOR" id="k0q^2uq(lzxTZBcYQlye">motor</field>
+        <field name="DIRECTION">FORWARD</field>
+        <field name="STOP_MODE">HOLD</field>
+        <value name="DISTANCE">
+          <shadow type="math_number">
+            <field name="NUM">0</field>
+          </shadow>
+        </value>
+        <value name="VELOCITY">
+          <shadow type="math_number">
+            <field name="NUM">100</field>
+          </shadow>
+        </value>
+      </block>
+      <block type="vex_iq_motor_spin_to">
+        <field name="MOTOR" id="k0q^2uq(lzxTZBcYQlye">motor</field>
+        <field name="STOP_MODE">HOLD</field>
+        <value name="POSITION">
+          <shadow type="math_number">
+            <field name="NUM">0</field>
+          </shadow>
+        </value>
+        <value name="VELOCITY">
+          <shadow type="math_number">
+            <field name="NUM">100</field>
+          </shadow>
+        </value>
+      </block>
+      <!--<block type="vex_iq_motor_spin_duration">
+        <field name="MOTOR" id="k0q^2uq(lzxTZBcYQlye">motor</field>
+        <value name="DURATION">
+          <shadow type="math_number">
+            <field name="NUM">0</field>
+          </shadow>
+        </value>
+        <value name="VELOCITY">
+          <shadow type="math_number">
+            <field name="NUM">100</field>
+          </shadow>
+        </value>
+      </block>-->
+      <block type="vex_iq_motor_stop">
+        <field name="MOTOR" id="k0q^2uq(lzxTZBcYQlye">motor</field>
+        <field name="STOP_MODE">HOLD</field>
+      </block>
+      <block type="vex_iq_motor_position">
+        <field name="MOTOR" id="k0q^2uq(lzxTZBcYQlye">motor</field>
+      </block>
+      <block type="vex_iq_motor_velocity">
+        <field name="MOTOR" id="k0q^2uq(lzxTZBcYQlye">motor</field>
+      </block>
+      <block type="vex_iq_motor_reset_absolute_position">
+        <field name="MOTOR" id="k0q^2uq(lzxTZBcYQlye">motor</field>
+      </block>
+      <block type="vex_iq_motor_wait">
+        <field name="MOTOR" id="k0q^2uq(lzxTZBcYQlye">motor</field>
+      </block>
+    </category>
+    <category name="Sensors" colour="#9fa55b">
+      <block type="vex_iq_bumper_is_pressed">
+        <field name="BUMPER" id="H]CRNSf,:M$V,$rK#lrV">bumper</field>
+      </block>
+      <!--<block type="vex_iq_touch_led_on">
+        <field name="TOUCH_LED" id="NhJ[Q9;=/rH4lZq+pAX%">touch_led</field>
+        <field name="COLOR">#ff0000</field>
+      </block>
+      <block type="vex_iq_touch_led_blink">
+        <field name="TOUCH_LED" id="NhJ[Q9;=/rH4lZq+pAX%">touch_led</field>
+        <field name="COLOR">#ff0000</field>
+      </block>
+      <block type="vex_iq_touch_led_off">
+        <field name="TOUCH_LED" id="NhJ[Q9;=/rH4lZq+pAX%">touch_led</field>
+      </block>-->
+      <block type="vex_iq_distance">
+        <field name="DISTANCE_SENSOR" id="MNx^E0$IqBIO4WysGAE,">distance_sensor</field>
+      </block>
+      <block type="vex_iq_distance_min">
+        <field name="DISTANCE_SENSOR" id="MNx^E0$IqBIO4WysGAE,">distance_sensor</field>
+      </block>
+      <block type="vex_iq_distance_max">
+        <field name="DISTANCE_SENSOR" id="MNx^E0$IqBIO4WysGAE,">distance_sensor</field>
+      </block>
+      <block type="vex_iq_gyro_heading">
+        <field name="NAME" id=".I|SKdW86im?5y-y/^hF">gyro</field>
+      </block>
+      <!--<block type="vex_iq_gyro_rate">
+        <field name="NAME" id=".I|SKdW86im?5y-y/^hF">gyro</field>
+      </block>
+      <block type="vex_iq_gyro_sensitivity">
+        <field name="NAME" id=".I|SKdW86im?5y-y/^hF">gyro</field>
+        <field name="SENSITIVITY">HIGH</field>
+      </block>-->
+      <block type="vex_iq_gyro_reset_heading">
+        <field name="NAME" id=".I|SKdW86im?5y-y/^hF">gyro</field>
+      </block>
+    </category>
+  <sep></sep>
+    <category name="Events" colour="#a5745b">
+      <block type="events_on_start"></block>
+      <!--<block type="events_on_press"></block>
+      <block type="events_on_release"></block>
+      <block type="events_on_move"></block>
+      <block type="events_on_change"></block>-->
+      <block type="events_always"></block>
+      <block type="events_when"></block>
+      <block type="events_after"></block>
+      <block type="events_while"></block>
+      <block type="events_on_event">
+        <field name="EVENT" id="!2h_/A|Ixi79tiwj.uqe">event</field>
+      </block>
+      <block type="events_trigger_event">
+        <field name="EVENT" id="!2h_/A|Ixi79tiwj.uqe">event</field>
+      </block>
+      <!--<block type="events_trigger_event_after">
+        <field name="EVENT" id="!2h_/A|Ixi79tiwj.uqe">event</field>
+        <value name="NAME">
+          <shadow type="math_number">
+            <field name="NUM">0</field>
+          </shadow>
+        </value>
+      </block>
+      <block type="events_trigger_event_on_motor_stop">
+        <field name="EVENT" id="!2h_/A|Ixi79tiwj.uqe">event</field>
+        <field name="MOTOR" id="_:-a6g6GJ#36SyKy)Sz,">motor</field>
+      </block>-->
+    </category>
+    <sep></sep>
+    <category name="Logic" colour="#5b80a5">
+      <block type="controls_if"></block>
+      <block type="controls_if">
+        <mutation else="1"></mutation>
+      </block>
+      <block type="logic_compare">
+        <field name="OP">EQ</field>
+      </block>
+      <block type="logic_operation">
+        <field name="OP">AND</field>
+      </block>
+      <block type="logic_negate"></block>
+      <block type="logic_boolean">
+        <field name="BOOL">TRUE</field>
+      </block>
+      <block type="logic_null"></block>
+      <block type="logic_ternary"></block>
+    </category>
+    <category name="Loops" colour="#5ba55b">
+      <block type="controls_repeat_ext">
+        <value name="TIMES">
+          <shadow type="math_number">
+            <field name="NUM">10</field>
+          </shadow>
+        </value>
+      </block>
+      <block type="controls_whileUntil">
+        <field name="MODE">WHILE</field>
+      </block>
+      <block type="controls_for">
+        <field name="VAR" id=".I!7/F#By!UWc4eQe#Z4">i</field>
+        <value name="FROM">
+          <shadow type="math_number">
+            <field name="NUM">0</field>
+          </shadow>
+        </value>
+        <value name="TO">
+          <shadow type="math_number">
+            <field name="NUM">10</field>
+          </shadow>
+        </value>
+        <value name="BY">
+          <shadow type="math_number">
+            <field name="NUM">1</field>
+          </shadow>
+        </value>
+      </block>
+      <!--<block type="controls_forEach">
+        <field name="VAR" id=".I!7/F#By!UWc4eQe#Z4">i</field>
+      </block>-->
+      <block type="controls_flow_statements">
+        <field name="FLOW">BREAK</field>
+      </block>
+    </category>
+    <category name="Math" colour="#5b67a5">
+      <block type="math_number">
+        <field name="NUM">0</field>
+      </block>
+      <block type="math_arithmetic">
+        <field name="OP">ADD</field>
+        <value name="A">
+          <shadow type="math_number">
+            <field name="NUM">1</field>
+          </shadow>
+        </value>
+        <value name="B">
+          <shadow type="math_number">
+            <field name="NUM">1</field>
+          </shadow>
+        </value>
+      </block>
+      <block type="math_single">
+        <field name="OP">ROOT</field>
+        <value name="NUM">
+          <shadow type="math_number">
+            <field name="NUM">9</field>
+          </shadow>
+        </value>
+      </block>
+      <block type="math_trig">
+        <field name="OP">SIN</field>
+        <value name="NUM">
+          <shadow type="math_number">
+            <field name="NUM">45</field>
+          </shadow>
+        </value>
+      </block>
+      <block type="math_constant">
+        <field name="CONSTANT">PI</field>
+      </block>
+      <block type="math_number_property">
+        <mutation divisor_input="false"></mutation>
+        <field name="PROPERTY">EVEN</field>
+        <value name="NUMBER_TO_CHECK">
+          <shadow type="math_number">
+            <field name="NUM">0</field>
+          </shadow>
+        </value>
+      </block>
+      <block type="math_change">
+        <field name="VAR" id=".q9w+W6QmfwK3+5N;(Az">item</field>
+        <value name="DELTA">
+          <shadow type="math_number">
+            <field name="NUM">1</field>
+          </shadow>
+        </value>
+      </block>
+      <block type="math_round">
+        <field name="OP">ROUND</field>
+        <value name="NUM">
+          <shadow type="math_number">
+            <field name="NUM">3.1</field>
+          </shadow>
+        </value>
+      </block>
+      <!--<block type="math_on_list">
+        <mutation op="SUM"></mutation>
+        <field name="OP">SUM</field>
+      </block>-->
+      <block type="math_modulo">
+        <value name="DIVIDEND">
+          <shadow type="math_number">
+            <field name="NUM">64</field>
+          </shadow>
+        </value>
+        <value name="DIVISOR">
+          <shadow type="math_number">
+            <field name="NUM">10</field>
+          </shadow>
+        </value>
+      </block>
+      <block type="math_constrain">
+        <value name="VALUE">
+          <shadow type="math_number">
+            <field name="NUM">50</field>
+          </shadow>
+        </value>
+        <value name="LOW">
+          <shadow type="math_number">
+            <field name="NUM">1</field>
+          </shadow>
+        </value>
+        <value name="HIGH">
+          <shadow type="math_number">
+            <field name="NUM">100</field>
+          </shadow>
+        </value>
+      </block>
+      <block type="math_random_int">
+        <value name="FROM">
+          <shadow type="math_number">
+            <field name="NUM">1</field>
+          </shadow>
+        </value>
+        <value name="TO">
+          <shadow type="math_number">
+            <field name="NUM">100</field>
+          </shadow>
+        </value>
+      </block>
+      <block type="math_random_float"></block>
+      <block type="math_points_constructor">
+        <value name="X">
+          <shadow type="math_number">
+            <field name="NUM">0</field>
+          </shadow>
+        </value>
+        <value name="Y">
+          <shadow type="math_number">
+            <field name="NUM">0</field>
+          </shadow>
+        </value>
+      </block>
+      <block type="math_points_x"></block>
+      <block type="math_points_y"></block>
+      <block type="math_points_rotation">
+        <value name="THETA">
+          <shadow type="math_number">
+            <field name="NUM">90</field>
+          </shadow>
+        </value>
+      </block>
+    </category>
+    <!--<category name="Text" colour="#5ba58c">
+      <block type="text">
+        <field name="TEXT"></field>
+      </block>
+      <block type="text_join">
+        <mutation items="2"></mutation>
+      </block>
+      <block type="text_append">
+        <field name="VAR" id="Atupuk.G#!HsE7B=w^S0">item</field>
+        <value name="TEXT">
+          <shadow type="text">
+            <field name="TEXT"></field>
+          </shadow>
+        </value>
+      </block>
+      <block type="text_length">
+        <value name="VALUE">
+          <shadow type="text">
+            <field name="TEXT">abc</field>
+          </shadow>
+        </value>
+      </block>
+      <block type="text_isEmpty">
+        <value name="VALUE">
+          <shadow type="text">
+            <field name="TEXT"></field>
+          </shadow>
+        </value>
+      </block>
+      <block type="text_indexOf">
+        <field name="END">FIRST</field>
+        <value name="VALUE">
+          <block type="variables_get">
+            <field name="VAR" id="80RIIowkFP?d0=P`aXJ.">text</field>
+          </block>
+        </value>
+        <value name="FIND">
+          <shadow type="text">
+            <field name="TEXT">abc</field>
+          </shadow>
+        </value>
+      </block>
+      <block type="text_charAt">
+        <mutation at="true"></mutation>
+        <field name="WHERE">FROM_START</field>
+        <value name="VALUE">
+          <block type="variables_get">
+            <field name="VAR" id="80RIIowkFP?d0=P`aXJ.">text</field>
+          </block>
+        </value>
+      </block>
+      <block type="text_getSubstring">
+        <mutation at1="true" at2="true"></mutation>
+        <field name="WHERE1">FROM_START</field>
+        <field name="WHERE2">FROM_START</field>
+        <value name="STRING">
+          <block type="variables_get">
+            <field name="VAR" id="80RIIowkFP?d0=P`aXJ.">text</field>
+          </block>
+        </value>
+      </block>
+      <block type="text_changeCase">
+        <field name="CASE">UPPERCASE</field>
+        <value name="TEXT">
+          <shadow type="text">
+            <field name="TEXT">abc</field>
+          </shadow>
+        </value>
+      </block>
+      <block type="text_trim">
+        <field name="MODE">BOTH</field>
+        <value name="TEXT">
+          <shadow type="text">
+            <field name="TEXT">abc</field>
+          </shadow>
+        </value>
+      </block>
+    </category>-->
+    <!--<category name="Lists" colour="#745ba5">
+      <block type="lists_create_with">
+        <mutation items="0"></mutation>
+      </block>
+      <block type="lists_create_with">
+        <mutation items="3"></mutation>
+      </block>
+      <block type="lists_repeat">
+        <value name="NUM">
+          <shadow type="math_number">
+            <field name="NUM">5</field>
+          </shadow>
+        </value>
+      </block>
+      <block type="lists_length"></block>
+      <block type="lists_isEmpty"></block>
+      <block type="lists_indexOf">
+        <field name="END">FIRST</field>
+        <value name="VALUE">
+          <block type="variables_get">
+            <field name="VAR" id="P8J_VR3F)89a(Dce6Tx;">list</field>
+          </block>
+        </value>
+      </block>
+      <block type="lists_getIndex">
+        <mutation statement="false" at="true"></mutation>
+        <field name="MODE">GET</field>
+        <field name="WHERE">FROM_START</field>
+        <value name="VALUE">
+          <block type="variables_get">
+            <field name="VAR" id="P8J_VR3F)89a(Dce6Tx;">list</field>
+          </block>
+        </value>
+      </block>
+      <block type="lists_setIndex">
+        <mutation at="true"></mutation>
+        <field name="MODE">SET</field>
+        <field name="WHERE">FROM_START</field>
+        <value name="LIST">
+          <block type="variables_get">
+            <field name="VAR" id="P8J_VR3F)89a(Dce6Tx;">list</field>
+          </block>
+        </value>
+      </block>
+      <block type="lists_getSublist">
+        <mutation at1="true" at2="true"></mutation>
+        <field name="WHERE1">FROM_START</field>
+        <field name="WHERE2">FROM_START</field>
+        <value name="LIST">
+          <block type="variables_get">
+            <field name="VAR" id="P8J_VR3F)89a(Dce6Tx;">list</field>
+          </block>
+        </value>
+      </block>
+      <block type="lists_sort">
+        <field name="TYPE">NUMERIC</field>
+        <field name="DIRECTION">1</field>
+      </block>
+    </category>-->
+    <category name="Time" colour="#5ba58c">
+      <block type="vex_iq_sleep">
+        <value name="DURATION">
+          <shadow type="math_number">
+            <field name="NUM">0</field>
+          </shadow>
+        </value>
+      </block>
+    </category>
+    <sep></sep>
+    <category name="Variables" colour="#a55b80" custom="VARIABLE"></category>
+    <category name="Functions" colour="#995ba5" custom="PROCEDURE"></category>
+  </xml>
+
+</body>
+</html>
