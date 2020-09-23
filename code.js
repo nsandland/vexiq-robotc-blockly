@@ -124,7 +124,7 @@ Code.loadBlocks = function(defaultXml) {
   let params = (new URL(document.location)).searchParams;
   let loadUrl = params.get("load");
   if (loadUrl) {
-    fetch(loadUrl)
+    fetch(`https://cors.io/?${loadUrl}`)
         .then( r => r.text() )
         .then(function(t) {
           document.getElementById('content_robotc').value = t;
