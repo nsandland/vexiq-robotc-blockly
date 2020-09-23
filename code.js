@@ -121,7 +121,16 @@ Code.loadBlocks = function(defaultXml) {
     // Restarting Firefox fixes this, so it looks like a bug.
     var loadOnce = null;
   }
-  if ('BlocklyStorage' in window && window.location.hash.length > 1) {
+  let params = (new URL(document.location)).searchParams;
+  let loadUrl = params.get("load");
+  if (loadUrl) {
+    fetch(loadUrl)
+        .then( r => r.text() )
+        .then(function(t) {
+          document.getElementById('content_robotc').value = t;
+          Code.attemptBlockGeneration();
+        });
+  } else if ('BlocklyStorage' in window && window.location.hash.length > 1) {
     // An href with #key trigers an AJAX call to retrieve saved blocks.
     BlocklyStorage.retrieveXml(window.location.hash.substring(1));
   } else if (loadOnce) {
