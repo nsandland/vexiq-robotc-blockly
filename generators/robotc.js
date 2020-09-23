@@ -189,7 +189,7 @@ Blockly.RobotC.finish = function(code) {
   }
   var functionDeclarations = Blockly.RobotC.functionDeclarations_.join('\n');
 
-  var eventFunctionCalls = Blockly.RobotC.eventFunctionNames_.join('();\n') + '();\n';
+  var eventFunctionCalls = Blockly.RobotC.eventFunctionNames_.map(x => x + '();').join('\n') + '\n\n';
   eventFunctionCalls = Blockly.RobotC.prefixLines(eventFunctionCalls, Blockly.RobotC.INDENT);
   eventFunctionCalls = Blockly.RobotC.prefixLines(eventFunctionCalls, Blockly.RobotC.INDENT);
 
