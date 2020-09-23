@@ -12,7 +12,7 @@
             htmlString += `</li>`;
           }
           else if (file.type == 'file' && file.name.endsWith('.c')) {
-            let url = `../index.html?load=` + encodeURIComponent(file.html_url);
+            let url = `../index.html?load=` + encodeURIComponent(file.path);
             htmlString += `<li><a href="${url}">${file.name}</a></li>`
           }
         }
