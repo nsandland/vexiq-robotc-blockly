@@ -123,7 +123,7 @@ Code.loadBlocks = function(defaultXml) {
   }
   let loadUrl = window.location.hash.substr(1);
   if (loadUrl) {
-    history.replaceState(null, null, ' ');
+    //history.replaceState(null, null, ' ');
     fetch(loadUrl)
         .then( r => r.text() )
         .then(function(t) {
