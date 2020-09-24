@@ -70,8 +70,8 @@ void on_start2() {
 }
 
 void always2() {
-  left_speed = getJoystickValue(ChA) - getJoystickValue(ChB) / 2;
-  right_speed = getJoystickValue(ChA) + getJoystickValue(ChB) / 2;
+  left_speed = getJoystickValue(ChA) + getJoystickValue(ChB) / 2;
+  right_speed = getJoystickValue(ChA) - getJoystickValue(ChB) / 2;
 
 }
 
@@ -110,7 +110,7 @@ void always52() {
 void always62() {
   if (getJoystickValue(BtnRUp)) {
     setMotorSpeed(claw_motor, -100);
-  } else if (getJoystickValue(BtnRUp)) {
+  } else if (getJoystickValue(BtnRDown)) {
     setMotorSpeed(claw_motor, 100);
   } else {
     setMotorBrakeMode(claw_motor, motorHold);
@@ -135,6 +135,7 @@ task main() {
     always42();
     always52();
     always62();
+
     advance_event(start);
   }
 }
@@ -232,7 +233,7 @@ task main() {
         <field name="VAR" id="#2%#m/]}mGB9ce;wY=z`">left speed</field>
         <value name="VALUE">
           <block type="math_arithmetic" id="bT$2$.,(:R%0jzsvJ$W~">
-            <field name="OP">MINUS</field>
+            <field name="OP">ADD</field>
             <value name="A">
               <shadow type="math_number" id="sFc*CE1.u,TV^Bql,eJO">
                 <field name="NUM">1</field>
@@ -271,7 +272,7 @@ task main() {
             <field name="VAR" id="`^5*YMper9%GDU{GEr#V">right speed</field>
             <value name="VALUE">
               <block type="math_arithmetic" id="h[XlHWz4@85~AO1O667o">
-                <field name="OP">ADD</field>
+                <field name="OP">MINUS</field>
                 <value name="A">
                   <shadow type="math_number">
                     <field name="NUM">1</field>
@@ -455,7 +456,7 @@ task main() {
         </statement>
         <value name="IF1">
           <block type="vex_iq_controller_button_pressed" id="vo;NUNht]:I3zh0CFJ5`">
-            <field name="BUTTON">R_UP</field>
+            <field name="BUTTON">R_DOWN</field>
           </block>
         </value>
         <statement name="DO1">

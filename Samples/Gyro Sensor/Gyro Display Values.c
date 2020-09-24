@@ -10,7 +10,6 @@ typedef struct {
   float y;
 } Point;
 
-float gyro;
 Event start;
 
 
@@ -61,7 +60,7 @@ void rotate(Point &p, float theta) {
 
 void on_start2() {
   if (event_is_active(start)) {
-    resetGyro(gyro);
+    resetGyro(gyro_sensor);
 
   }
 }
@@ -79,6 +78,7 @@ task main() {
   while(true) {
     on_start2();
     always2();
+
     advance_event(start);
   }
 }
@@ -98,7 +98,6 @@ task main() {
     <variable id="UCC-Z#0}d85!qaB^`*EY">port_10</variable>
     <variable id="Sq;4ZphrM!WA8xQBm)1F">port_11</variable>
     <variable id="f+3LAb5_1]ObyC0i9eX^">port_12</variable>
-    <variable id=".I|SKdW86im?5y-y/^hF">gyro</variable>
   </variables>
   <block type="vex_iq_brain" id="(^W84*BmMq_oQZrg1R28" x="13" y="138">
     <field name="HAS_CONTROLLER">TRUE</field>
@@ -131,7 +130,7 @@ task main() {
   <block type="events_on_start" id="K$86O_u9#5nTErm18@jK" x="13" y="513">
     <statement name="DO">
       <block type="vex_iq_gyro_reset_heading" id="s+e%#ZZn@}Ov-$G8;tIi">
-        <field name="NAME" id=".I|SKdW86im?5y-y/^hF">gyro</field>
+        <field name="NAME" id="s4u0G;(du~#s/n8=ibn}">gyro sensor</field>
       </block>
     </statement>
   </block>
