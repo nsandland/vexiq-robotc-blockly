@@ -99,6 +99,7 @@ task main() {
   activate_event(start);
   while(true) {
     on_start2();
+
     advance_event(start);
   }
 }
@@ -122,7 +123,20 @@ task main() {
     <variable id="g6iA3~(VkuXpe9n2Bej`">turn distance right</variable>
     <variable id="e^=Gts{00^|aXi~fw:Tb">turn distance left</variable>
   </variables>
-  <block type="vex_iq_brain" id="(^W84*BmMq_oQZrg1R28" x="13" y="63">
+  <block type="comment_block" id="[mKb=5eUIPzR@?_@NQ8-" x="13" y="13">
+    <field name="NAME">This program demonstrates how to write functions</field>
+    <next>
+      <block type="comment_block" id="C^Z,3J4p,]_Z=jD6,Hy3">
+        <field name="NAME">that use encoders to control a robot moving</field>
+        <next>
+          <block type="comment_block" id="oU!1qj-e1A6DS5uGm?f}">
+            <field name="NAME">straight and turning.</field>
+          </block>
+        </next>
+      </block>
+    </next>
+  </block>
+  <block type="vex_iq_brain" id="(^W84*BmMq_oQZrg1R28" x="13" y="113">
     <field name="HAS_CONTROLLER">TRUE</field>
     <field name="PORT_1_NAME" id="2C_w(9X|eyDoXJZtSlGb">left motor</field>
     <field name="PORT_2_NAME" id="%U9G3C1f~]_Kp7^^-7Ir">port_2</field>
@@ -147,7 +161,7 @@ task main() {
       </block>
     </value>
   </block>
-  <block type="procedures_defnoreturn" id="tT^]eD51`[jGlYn/aa?:" x="13" y="438">
+  <block type="procedures_defnoreturn" id="tT^]eD51`[jGlYn/aa?:" x="13" y="488">
     <mutation>
       <arg name="distance in degrees" varid="Zlup-9p(W,`K;W]fx24K"></arg>
     </mutation>
@@ -204,7 +218,7 @@ task main() {
       </block>
     </statement>
   </block>
-  <block type="procedures_defnoreturn" id="snR_/G-wi#_ID7;.KFrB" x="13" y="638">
+  <block type="procedures_defnoreturn" id="snR_/G-wi#_ID7;.KFrB" x="13" y="688">
     <mutation>
       <arg name="turn distance right" varid="g6iA3~(VkuXpe9n2Bej`"></arg>
     </mutation>
@@ -261,7 +275,7 @@ task main() {
       </block>
     </statement>
   </block>
-  <block type="procedures_defnoreturn" id="fM)TtY_GB2Z_6@_gxE$V" x="13" y="838">
+  <block type="procedures_defnoreturn" id="fM)TtY_GB2Z_6@_gxE$V" x="13" y="888">
     <mutation>
       <arg name="turn distance left" varid="e^=Gts{00^|aXi~fw:Tb"></arg>
     </mutation>
@@ -318,7 +332,7 @@ task main() {
       </block>
     </statement>
   </block>
-  <block type="events_on_start" id="K$86O_u9#5nTErm18@jK" x="13" y="1038">
+  <block type="events_on_start" id="K$86O_u9#5nTErm18@jK" x="13" y="1088">
     <statement name="DO">
       <block type="procedures_callnoreturn" id="Qq}MAXJ!k40Kf/BLxWyT">
         <mutation name="move until distance">

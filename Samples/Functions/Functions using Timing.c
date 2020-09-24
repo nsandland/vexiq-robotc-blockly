@@ -125,6 +125,7 @@ task main() {
   activate_event(start);
   while(true) {
     on_start2();
+
     advance_event(start);
   }
 }
@@ -149,7 +150,20 @@ task main() {
     <variable id="*5rZkI.0aRs1@hTKoIS~">right turn time</variable>
     <variable id="X/syq:bhXZAx21E+`jOc">left turn time</variable>
   </variables>
-  <block type="vex_iq_brain" id="(^W84*BmMq_oQZrg1R28" x="13" y="88">
+  <block type="comment_block" id="Jg2,2B5$mVZt:{Pw!4KJ" x="13" y="13">
+    <field name="NAME">This program is a very simple example of writing</field>
+    <next>
+      <block type="comment_block" id="tRp3ZGw{+9#C~05~Gqd[">
+        <field name="NAME">functions to move forward, backward, rightTurn,</field>
+        <next>
+          <block type="comment_block" id="w`=|w+3Ldcv/0om9;ZCf">
+            <field name="NAME">and leftTurn.</field>
+          </block>
+        </next>
+      </block>
+    </next>
+  </block>
+  <block type="vex_iq_brain" id="(^W84*BmMq_oQZrg1R28" x="13" y="138">
     <field name="HAS_CONTROLLER">TRUE</field>
     <field name="PORT_1_NAME" id="2C_w(9X|eyDoXJZtSlGb">left motor</field>
     <field name="PORT_2_NAME" id="%U9G3C1f~]_Kp7^^-7Ir">port_2</field>
@@ -174,7 +188,7 @@ task main() {
       </block>
     </value>
   </block>
-  <block type="procedures_defnoreturn" id="tT^]eD51`[jGlYn/aa?:" x="13" y="463">
+  <block type="procedures_defnoreturn" id="tT^]eD51`[jGlYn/aa?:" x="13" y="513">
     <mutation>
       <arg name="forward time" varid="}0[^|jC7HI:|N9=OC-|{"></arg>
     </mutation>
@@ -236,7 +250,7 @@ task main() {
       </block>
     </statement>
   </block>
-  <block type="procedures_defnoreturn" id="Zg6Pv~Gmfp`9utf#qz=`" x="13" y="738">
+  <block type="procedures_defnoreturn" id="Zg6Pv~Gmfp`9utf#qz=`" x="13" y="788">
     <mutation>
       <arg name="backward time" varid="8;8FLTBhige|goe8M^A~"></arg>
     </mutation>
@@ -298,7 +312,7 @@ task main() {
       </block>
     </statement>
   </block>
-  <block type="procedures_defnoreturn" id="H#M=qLM(eqVvE:e[K/1Q" x="13" y="1013">
+  <block type="procedures_defnoreturn" id="H#M=qLM(eqVvE:e[K/1Q" x="13" y="1063">
     <mutation>
       <arg name="right turn time" varid="*5rZkI.0aRs1@hTKoIS~"></arg>
     </mutation>
@@ -360,7 +374,7 @@ task main() {
       </block>
     </statement>
   </block>
-  <block type="procedures_defnoreturn" id="NwzJ0~;;VCE3{+jWiH@n" x="13" y="1288">
+  <block type="procedures_defnoreturn" id="NwzJ0~;;VCE3{+jWiH@n" x="13" y="1338">
     <mutation>
       <arg name="left turn time" varid="X/syq:bhXZAx21E+`jOc"></arg>
     </mutation>
@@ -422,7 +436,7 @@ task main() {
       </block>
     </statement>
   </block>
-  <block type="events_on_start" id="K$86O_u9#5nTErm18@jK" x="13" y="1563">
+  <block type="events_on_start" id="K$86O_u9#5nTErm18@jK" x="13" y="1613">
     <statement name="DO">
       <block type="procedures_callnoreturn" id="Qq}MAXJ!k40Kf/BLxWyT">
         <mutation name="move forward">
