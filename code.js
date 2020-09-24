@@ -445,10 +445,17 @@ Code.init = function() {
 
   Code.bindClick('copyButton',
       function() {
-        Code.attemptCodeGeneration(Blockly.RobotC);
+        var blocksTab = false;
+        if (document.getElementById('tab_blocks').classList.contains('tabon')) {
+          Code.tabClick('robotc');
+          blocksTab = true;
+        }
         var content = document.getElementById('content_robotc');
         content.select();
         document.execCommand("copy");
+        if (blocksTab) {
+          Code.tabClick('blocks');
+        }
         alert("Copied code to clipboard");
       });
 
