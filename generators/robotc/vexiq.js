@@ -561,6 +561,19 @@ Blockly.RobotC['vex_iq_controller_joystick_point_position'] = function(block) {
   return code;
 };
 
+Blockly.RobotC['math_points_value'] = function(block) {
+  var VALUES = {
+    'X' : 'x',
+    'Y' : 'y'
+  };
+  var value = VALUES[block.getFieldValue('VALUE')];
+  var variable_name = Blockly.RobotC.variableDB_.getName(block.getFieldValue('NAME'), Blockly.Variables.NAME_TYPE);
+  Blockly.RobotC.variableTypes_[variable_name] = 'Point';
+  var code = variable_name + '.' + value;
+  return [code, Blockly.RobotC.ORDER_ATOMIC];
+};
+
+// Deprecated
 Blockly.RobotC['math_points_x'] = function(block) {
   var variable_name = Blockly.RobotC.variableDB_.getName(block.getFieldValue('NAME'), Blockly.Variables.NAME_TYPE);
   Blockly.RobotC.variableTypes_[variable_name] = 'Point';
@@ -568,6 +581,7 @@ Blockly.RobotC['math_points_x'] = function(block) {
   return [code, Blockly.RobotC.ORDER_ATOMIC];
 };
 
+// Deprecated
 Blockly.RobotC['math_points_y'] = function(block) {
   var variable_name = Blockly.RobotC.variableDB_.getName(block.getFieldValue('NAME'), Blockly.Variables.NAME_TYPE);
   Blockly.RobotC.variableTypes_[variable_name] = 'Point';

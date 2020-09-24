@@ -1003,6 +1003,21 @@ Blockly.Blocks['vex_iq_controller_joystick_point_position'] = {
   }
 };
 
+
+Blockly.Blocks['math_points_value'] = {
+  init: function() {
+    this.appendDummyInput()
+        .appendField(new Blockly.FieldDropdown([["x","X"], ["y","Y"]]), "VALUE")
+        .appendField("position of")
+        .appendField(new Blockly.FieldVariable("point"), "NAME");
+    this.setInputsInline(true);
+    this.setOutput(true, "Number");
+    this.setColour(230);
+ this.setTooltip("");
+ this.setHelpUrl("");
+  }
+};
+
 Blockly.Blocks['math_points_x'] = {
   init: function() {
     this.appendDummyInput()
