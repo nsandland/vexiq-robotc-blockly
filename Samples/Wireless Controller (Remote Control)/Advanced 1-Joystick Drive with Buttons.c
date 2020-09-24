@@ -61,7 +61,7 @@ void rotate(Point &p, float theta) {
 }
 
 
-void between(float value, float bound1, float bound2) {
+bool between(float value, float bound1, float bound2) {
   if (bound1 > bound2) {
     return value > bound2 && value < bound1;
   } else {
@@ -69,7 +69,7 @@ void between(float value, float bound1, float bound2) {
   }
 }
 
-void notbetween(float value, float bound1, float bound2) {
+bool notbetween(float value, float bound1, float bound2) {
   if (bound1 > bound2) {
     return value < bound2 || value > bound1;
   } else {
