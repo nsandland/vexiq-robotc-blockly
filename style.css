@@ -115,7 +115,7 @@ td {
   vertical-align: top;
 }
 .content {
-  opacity: .01;
+  visibility: hidden;
   margin: 0;
   padding: 1ex;
   position: absolute;
