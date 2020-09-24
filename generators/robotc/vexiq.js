@@ -213,14 +213,17 @@ Blockly.RobotC['vex_iq_brain'] = function(block) {
 };
 
 Blockly.RobotC['vex_iq_lcd_print'] = function(block) {
+  var escape = function(s) {
+    return s.replace(/[\\"']/g, '\\$&').replace(/\u0000/g, '\\0');
+  }
   var text = new Array(block.varCount_ + 1);
   var vars = new Array(block.varCount_);
   line = block.getFieldValue('LINE');
-  text[0] = block.getFieldValue('TEXT0');
+  text[0] = escape(block.getFieldValue('TEXT0'));
   for (var i = 0; i < block.varCount_; i++) {
     vars[i] = Blockly.RobotC.valueToCode(block, 'VAR' + i,
         Blockly.RobotC.ORDER_COMMA) || '0';
-    text[i + 1] = block.getFieldValue('TEXT' + (i + 1));
+    text[i + 1] = escape(block.getFieldValue('TEXT' + (i + 1)));
   }
   var formatstr = text.join('%1.2f');
   var code = 'displayTextLine(' + line + ', "' + formatstr + '", ' + vars.join(', ') + ');\n';

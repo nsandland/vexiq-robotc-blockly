@@ -67,7 +67,9 @@ Blockly.RobotC['procedures_defreturn'] = function(block) {
   code = Blockly.RobotC.scrub_(block, code);
   // Add % so as not to collide with helper functions in definitions list.
   Blockly.RobotC.definitions_['%' + funcName] = code;
-  Blockly.RobotC.functionDeclarations_.push(signature + ';');
+  if (!block.getFieldValue('IS_TASK')) {
+    Blockly.RobotC.functionDeclarations_.push(signature + ';');
+  }
   return null;
 };
 
@@ -103,8 +105,8 @@ Blockly.RobotC['procedures_callnoreturn'] = function(block) {
 
 Blockly.RobotC['procedures_startstoptask'] = function(block) {
   var ACTIONS = {
-    'START' : 'StartTask',
-    'STOP' : 'StopTask'
+    'START' : 'startTask',
+    'STOP' : 'stopTask'
   };
   var action = ACTIONS[block.getFieldValue('ACTION')];
   var funcName = Blockly.RobotC.variableDB_.getName(

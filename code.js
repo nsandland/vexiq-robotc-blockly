@@ -248,7 +248,8 @@ Code.tabClick = function(clickedName) {
     var tab = document.getElementById('tab_' + name);
     tab.classList.add('taboff');
     tab.classList.remove('tabon');
-    document.getElementById('content_' + name).style.visibility = 'hidden';
+    document.getElementById('content_' + name).style.opacity = '.01';
+    //document.getElementById('content_' + name).style.visibility = 'hidden';
   }
 
   // Select the active tab.
@@ -257,8 +258,10 @@ Code.tabClick = function(clickedName) {
   selectedTab.classList.remove('taboff');
   selectedTab.classList.add('tabon');
   // Show the selected pane.
-  document.getElementById('content_' + clickedName).style.visibility =
-      'visible';
+  document.getElementById('content_' + clickedName).style.opacity =
+      '1';
+  // document.getElementById('content_' + clickedName).style.visibility =
+  //     'visible';
   Code.renderContent();
   Code.workspace.setVisible(true);
   // The code menu tab is on if the blocks tab is off.
