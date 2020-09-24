@@ -583,3 +583,7 @@ Blockly.RobotC['vex_iq_sleep'] = function(block) {
   var code = 'sleep(' + value_duration + ');\n';
   return code;
 };
+
+Blockly.RobotC['comment_block'] = function(block) {
+  return null;
+};

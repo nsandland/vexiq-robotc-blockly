@@ -1205,3 +1205,16 @@ Blockly.Procedures.flyoutCategory = function(workspace) {
   populateProcedures(tasks, 'procedures_startstoptask');
   return xmlList;
 };
+
+Blockly.Blocks['comment_block'] = {
+  init: function() {
+    this.appendDummyInput()
+        .appendField("//")
+        .appendField(new Blockly.FieldTextInput("comment"), "NAME");
+    this.setPreviousStatement(true, null);
+    this.setNextStatement(true, null);
+    this.setColour(260);
+ this.setTooltip("");
+ this.setHelpUrl("");
+  }
+};
