@@ -87,6 +87,7 @@ task main() {
   activate_event(start);
   while(true) {
     on_start2();
+
     advance_event(start);
   }
 }
@@ -107,7 +108,25 @@ task main() {
     <variable id="Sq;4ZphrM!WA8xQBm)1F">port_11</variable>
     <variable id="f+3LAb5_1]ObyC0i9eX^">port_12</variable>
   </variables>
-  <block type="vex_iq_brain" id="(^W84*BmMq_oQZrg1R28" x="13" y="13">
+  <block type="comment_block" id="9_agDl#G{khV``,vs4{1" x="13" y="13">
+    <field name="NAME">This program will make your robot make a series</field>
+    <next>
+      <block type="comment_block" id="RpwA23t8Kt*jcJa6=pbM">
+        <field name="NAME"> of moves for different lengths of time.   </field>
+        <next>
+          <block type="comment_block" id="v6E@=$JZh4rSAlkgsNRy">
+            <field name="NAME">At the end of the program, all motors will shut</field>
+            <next>
+              <block type="comment_block" id="5St{1hIReq]-yX[UegJn">
+                <field name="NAME"> down automatically and turn off.</field>
+              </block>
+            </next>
+          </block>
+        </next>
+      </block>
+    </next>
+  </block>
+  <block type="vex_iq_brain" id="(^W84*BmMq_oQZrg1R28" x="13" y="138">
     <field name="HAS_CONTROLLER">TRUE</field>
     <field name="PORT_1_NAME" id="2C_w(9X|eyDoXJZtSlGb">left motor</field>
     <field name="PORT_2_NAME" id="%U9G3C1f~]_Kp7^^-7Ir">port_2</field>
@@ -132,105 +151,125 @@ task main() {
       </block>
     </value>
   </block>
-  <block type="events_on_start" id="1|*G6NmWsHDvUxJ2)(qX" x="13" y="388">
+  <block type="events_on_start" id="1|*G6NmWsHDvUxJ2)(qX" x="13" y="513">
     <statement name="DO">
-      <block type="vex_iq_motor_spin_velocity" id="JVYg*DLi36DiI*7f}K(k">
-        <field name="MOTOR" id="2C_w(9X|eyDoXJZtSlGb">left motor</field>
-        <field name="DIRECTION">FORWARD</field>
-        <value name="VELOCITY">
-          <shadow type="math_number" id="6;.)]Hygq67!9GOG5~57">
-            <field name="NUM">50</field>
-          </shadow>
-        </value>
+      <block type="comment_block" id="k$^3o3@O~1@#qBz3i7nZ">
+        <field name="NAME">Move forward at half power for 1.5 seconds</field>
         <next>
-          <block type="vex_iq_motor_spin_velocity" id="GF#tYl*Sf*-ClrG.%l5#">
-            <field name="MOTOR" id="|}5]3]?#UB6;p-p@$?Zo">right motor</field>
+          <block type="vex_iq_motor_spin_velocity" id="JVYg*DLi36DiI*7f}K(k">
+            <field name="MOTOR" id="2C_w(9X|eyDoXJZtSlGb">left motor</field>
             <field name="DIRECTION">FORWARD</field>
             <value name="VELOCITY">
-              <shadow type="math_number" id="uF=yg%GW+k-4I/2HmM=:">
+              <shadow type="math_number" id="6;.)]Hygq67!9GOG5~57">
                 <field name="NUM">50</field>
               </shadow>
             </value>
             <next>
-              <block type="vex_iq_sleep" id="mSv@CFh*a)f]f)Z[IhpH">
-                <value name="DURATION">
-                  <shadow type="math_number" id="uwZ_GJ5Ogu;DKssw6q:!">
-                    <field name="NUM">1500</field>
+              <block type="vex_iq_motor_spin_velocity" id="GF#tYl*Sf*-ClrG.%l5#">
+                <field name="MOTOR" id="|}5]3]?#UB6;p-p@$?Zo">right motor</field>
+                <field name="DIRECTION">FORWARD</field>
+                <value name="VELOCITY">
+                  <shadow type="math_number" id="uF=yg%GW+k-4I/2HmM=:">
+                    <field name="NUM">50</field>
                   </shadow>
                 </value>
                 <next>
-                  <block type="vex_iq_motor_stop" id="}9q!Qp`b?Q9HA0OIZ+_?">
-                    <field name="MOTOR" id="2C_w(9X|eyDoXJZtSlGb">left motor</field>
-                    <field name="STOP_MODE">BRAKE</field>
+                  <block type="vex_iq_sleep" id="mSv@CFh*a)f]f)Z[IhpH">
+                    <value name="DURATION">
+                      <shadow type="math_number" id="uwZ_GJ5Ogu;DKssw6q:!">
+                        <field name="NUM">1500</field>
+                      </shadow>
+                    </value>
                     <next>
-                      <block type="vex_iq_motor_stop" id="pg4eqL%sdDJy%5pdpqRJ">
-                        <field name="MOTOR" id="|}5]3]?#UB6;p-p@$?Zo">right motor</field>
-                        <field name="STOP_MODE">BRAKE</field>
+                      <block type="comment_block" id="df~FpkwCj)2sPXj^cLpz">
+                        <field name="NAME">Stop for 1 second</field>
                         <next>
-                          <block type="vex_iq_sleep" id="o@sEEl(?C%=7NM5iB/ot">
-                            <value name="DURATION">
-                              <shadow type="math_number" id="43@Y]oc?/aqO(}.73GU@">
-                                <field name="NUM">1000</field>
-                              </shadow>
-                            </value>
+                          <block type="vex_iq_motor_stop" id="}9q!Qp`b?Q9HA0OIZ+_?">
+                            <field name="MOTOR" id="2C_w(9X|eyDoXJZtSlGb">left motor</field>
+                            <field name="STOP_MODE">BRAKE</field>
                             <next>
-                              <block type="vex_iq_motor_spin_velocity" id="Agiwbj^K:^.gP:KBm0[m">
-                                <field name="MOTOR" id="2C_w(9X|eyDoXJZtSlGb">left motor</field>
-                                <field name="DIRECTION">BACKWARD</field>
-                                <value name="VELOCITY">
-                                  <shadow type="math_number" id="7Ho}Ku{#wVi0}z*voVAY">
-                                    <field name="NUM">50</field>
-                                  </shadow>
-                                </value>
+                              <block type="vex_iq_motor_stop" id="pg4eqL%sdDJy%5pdpqRJ">
+                                <field name="MOTOR" id="|}5]3]?#UB6;p-p@$?Zo">right motor</field>
+                                <field name="STOP_MODE">BRAKE</field>
                                 <next>
-                                  <block type="vex_iq_motor_spin_velocity" id=":ho*@4qy$Wn!2+jaIk|d">
-                                    <field name="MOTOR" id="|}5]3]?#UB6;p-p@$?Zo">right motor</field>
-                                    <field name="DIRECTION">BACKWARD</field>
-                                    <value name="VELOCITY">
-                                      <shadow type="math_number" id="xIG}ex{uaOPwb)Qq7`ER">
-                                        <field name="NUM">50</field>
+                                  <block type="vex_iq_sleep" id="o@sEEl(?C%=7NM5iB/ot">
+                                    <value name="DURATION">
+                                      <shadow type="math_number" id="43@Y]oc?/aqO(}.73GU@">
+                                        <field name="NUM">1000</field>
                                       </shadow>
                                     </value>
                                     <next>
-                                      <block type="vex_iq_sleep" id="YwQeo))MGWrb`;MOW-[$">
-                                        <value name="DURATION">
-                                          <shadow type="math_number" id="PSsz-Ym/eB(drDr:sGX)">
-                                            <field name="NUM">1500</field>
-                                          </shadow>
-                                        </value>
+                                      <block type="comment_block" id="-C+vb?Mq}[y/K][U}?aw">
+                                        <field name="NAME">Move reverse at half power for 1.5 seconds</field>
                                         <next>
-                                          <block type="vex_iq_motor_spin_velocity" id="2V/FR=Tag9li@GsT`v`v">
+                                          <block type="vex_iq_motor_spin_velocity" id="Agiwbj^K:^.gP:KBm0[m">
                                             <field name="MOTOR" id="2C_w(9X|eyDoXJZtSlGb">left motor</field>
-                                            <field name="DIRECTION">FORWARD</field>
+                                            <field name="DIRECTION">BACKWARD</field>
                                             <value name="VELOCITY">
-                                              <shadow type="math_number" id="Obb].Z(H+[+pW11=kdAM">
-                                                <field name="NUM">100</field>
+                                              <shadow type="math_number" id="7Ho}Ku{#wVi0}z*voVAY">
+                                                <field name="NUM">50</field>
                                               </shadow>
                                             </value>
                                             <next>
-                                              <block type="vex_iq_motor_spin_velocity" id="lY:dz,]MtQRq^45rDd0i">
+                                              <block type="vex_iq_motor_spin_velocity" id=":ho*@4qy$Wn!2+jaIk|d">
                                                 <field name="MOTOR" id="|}5]3]?#UB6;p-p@$?Zo">right motor</field>
                                                 <field name="DIRECTION">BACKWARD</field>
                                                 <value name="VELOCITY">
-                                                  <shadow type="math_number" id="r)*mgdvL@9b(MWqhP9,P">
-                                                    <field name="NUM">100</field>
+                                                  <shadow type="math_number" id="xIG}ex{uaOPwb)Qq7`ER">
+                                                    <field name="NUM">50</field>
                                                   </shadow>
                                                 </value>
                                                 <next>
-                                                  <block type="vex_iq_sleep" id="GO)7|au%u?/qOyjaOVv^">
+                                                  <block type="vex_iq_sleep" id="YwQeo))MGWrb`;MOW-[$">
                                                     <value name="DURATION">
-                                                      <shadow type="math_number" id="ePCO4k{_i{houkj@%J9k">
-                                                        <field name="NUM">750</field>
+                                                      <shadow type="math_number" id="PSsz-Ym/eB(drDr:sGX)">
+                                                        <field name="NUM">1500</field>
                                                       </shadow>
                                                     </value>
                                                     <next>
-                                                      <block type="vex_iq_motor_stop" id="u5h6ct]Xeu/^G~#8Gr96">
-                                                        <field name="MOTOR" id="2C_w(9X|eyDoXJZtSlGb">left motor</field>
-                                                        <field name="STOP_MODE">BRAKE</field>
+                                                      <block type="comment_block" id="v-1ab@d2RfSt6COK0V5~">
+                                                        <field name="NAME">Turn right at full power for 0.75 seconds</field>
                                                         <next>
-                                                          <block type="vex_iq_motor_stop" id="~Kf.}V.4vE8Uh(AoqwUO">
-                                                            <field name="MOTOR" id="|}5]3]?#UB6;p-p@$?Zo">right motor</field>
-                                                            <field name="STOP_MODE">BRAKE</field>
+                                                          <block type="vex_iq_motor_spin_velocity" id="2V/FR=Tag9li@GsT`v`v">
+                                                            <field name="MOTOR" id="2C_w(9X|eyDoXJZtSlGb">left motor</field>
+                                                            <field name="DIRECTION">FORWARD</field>
+                                                            <value name="VELOCITY">
+                                                              <shadow type="math_number" id="Obb].Z(H+[+pW11=kdAM">
+                                                                <field name="NUM">100</field>
+                                                              </shadow>
+                                                            </value>
+                                                            <next>
+                                                              <block type="vex_iq_motor_spin_velocity" id="lY:dz,]MtQRq^45rDd0i">
+                                                                <field name="MOTOR" id="|}5]3]?#UB6;p-p@$?Zo">right motor</field>
+                                                                <field name="DIRECTION">BACKWARD</field>
+                                                                <value name="VELOCITY">
+                                                                  <shadow type="math_number" id="r)*mgdvL@9b(MWqhP9,P">
+                                                                    <field name="NUM">100</field>
+                                                                  </shadow>
+                                                                </value>
+                                                                <next>
+                                                                  <block type="vex_iq_sleep" id="GO)7|au%u?/qOyjaOVv^">
+                                                                    <value name="DURATION">
+                                                                      <shadow type="math_number" id="ePCO4k{_i{houkj@%J9k">
+                                                                        <field name="NUM">750</field>
+                                                                      </shadow>
+                                                                    </value>
+                                                                    <next>
+                                                                      <block type="vex_iq_motor_stop" id="u5h6ct]Xeu/^G~#8Gr96">
+                                                                        <field name="MOTOR" id="2C_w(9X|eyDoXJZtSlGb">left motor</field>
+                                                                        <field name="STOP_MODE">BRAKE</field>
+                                                                        <next>
+                                                                          <block type="vex_iq_motor_stop" id="~Kf.}V.4vE8Uh(AoqwUO">
+                                                                            <field name="MOTOR" id="|}5]3]?#UB6;p-p@$?Zo">right motor</field>
+                                                                            <field name="STOP_MODE">BRAKE</field>
+                                                                          </block>
+                                                                        </next>
+                                                                      </block>
+                                                                    </next>
+                                                                  </block>
+                                                                </next>
+                                                              </block>
+                                                            </next>
                                                           </block>
                                                         </next>
                                                       </block>
