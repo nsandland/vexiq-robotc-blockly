@@ -11,10 +11,10 @@ typedef struct {
   float y;
 } Point;
 
-float joystick_position, threshold;
+float threshold;
 Event start;
 
-float exceeds_threshold(float joystick_position);
+
 
 Event EVENT_ACTIVE = 0x01;
 Event EVENT_QUEUED = 0x02;
@@ -60,6 +60,23 @@ void rotate(Point &p, float theta) {
   p.y = newY;
 }
 
+
+void between(float value, float bound1, float bound2) {
+  if (bound1 > bound2) {
+    return value > bound2 && value < bound1;
+  } else {
+    return value > bound1 && value < bound2;
+  }
+}
+
+void notbetween(float value, float bound1, float bound2) {
+  if (bound1 > bound2) {
+    return value < bound2 || value > bound1;
+  } else {
+    return value < bound1 || value > bound2;
+  }
+}
+
 void on_start2() {
   if (event_is_active(start)) {
     threshold = 10;
@@ -68,7 +85,7 @@ void on_start2() {
 }
 
 void always2() {
-  if (exceeds_threshold(getJoystickValue(ChA))) {
+  if (notbetween(getJoystickValue(ChA), -threshold, threshold)) {
     setMotorSpeed(left_motor, (getJoystickValue(ChA)));
   } else {
     setMotorBrakeMode(left_motor, motorCoast);
@@ -78,7 +95,7 @@ void always2() {
 }
 
 void always32() {
-  if (exceeds_threshold(getJoystickValue(ChD))) {
+  if (notbetween(getJoystickValue(ChD), -threshold, threshold)) {
     setMotorSpeed(right_motor, (getJoystickValue(ChD)));
   } else {
     setMotorBrakeMode(right_motor, motorCoast);
@@ -99,11 +116,6 @@ void always42() {
 
 }
 
-// Describe this function...
-float exceeds_threshold(float joystick_position) {
-  return joystick_position > threshold || joystick_position < -threshold;
-}
-
 
 
 task main() {
@@ -113,6 +125,7 @@ task main() {
     always2();
     always32();
     always42();
+
     advance_event(start);
   }
 }
@@ -132,10 +145,9 @@ task main() {
     <variable id="UCC-Z#0}d85!qaB^`*EY">arm motor</variable>
     <variable id="Sq;4ZphrM!WA8xQBm)1F">claw motor</variable>
     <variable id="f+3LAb5_1]ObyC0i9eX^">port_12</variable>
-    <variable id="6r2!l(wUUb?7kR@4yI9S">joystick position</variable>
     <variable id="h5!zdxA0SxPI63X-k[TY">threshold</variable>
   </variables>
-  <block type="vex_iq_brain" id="%y[i=TI^e=S5W5q!.w0+" x="13" y="88">
+  <block type="vex_iq_brain" id="%y[i=TI^e=S5W5q!.w0+" x="13" y="13">
     <field name="HAS_CONTROLLER">TRUE</field>
     <field name="PORT_1_NAME" id="2C_w(9X|eyDoXJZtSlGb">left motor</field>
     <field name="PORT_2_NAME" id="%U9G3C1f~]_Kp7^^-7Ir">port_2</field>
@@ -170,7 +182,7 @@ task main() {
       </block>
     </value>
   </block>
-  <block type="events_on_start" id="unu4LZ=;_A{(*fR6uw~y" x="13" y="613">
+  <block type="events_on_start" id="unu4LZ=;_A{(*fR6uw~y" x="13" y="388">
     <statement name="DO">
       <block type="variables_set" id="/zT0c07Km|TJHIloN_6;">
         <field name="VAR" id="h5!zdxA0SxPI63X-k[TY">threshold</field>
@@ -182,19 +194,41 @@ task main() {
       </block>
     </statement>
   </block>
-  <block type="events_always" id=")]:q!gVH*Wc~xl|H58|6" x="13" y="713">
+  <block type="events_always" id=")]:q!gVH*Wc~xl|H58|6" x="13" y="488">
     <statement name="DO">
       <block type="controls_if" id="$Z^SK^u|Y|.YIVY]|)Xj">
         <mutation else="1"></mutation>
         <value name="IF0">
-          <block type="procedures_callreturn" id="2lv`|g@U6N/Qsh}xDw7R">
-            <mutation name="exceeds threshold">
-              <arg name="joystick position"></arg>
-            </mutation>
-            <value name="ARG0">
+          <block type="logic_between" id="T0pytOXuAO}*1W)1N+]8">
+            <field name="OPERATOR">NOT_BETWEEN</field>
+            <value name="VALUE">
               <block type="vex_iq_controller_joystick_position" id="@1cls_Ed+4^i|!i[Cpa_">
                 <field name="JOYSTICK">LEFT</field>
                 <field name="AXIS">VERTICAL</field>
+              </block>
+            </value>
+            <value name="BOUND1">
+              <shadow type="math_number" id="=aL:(Y_aR`6N*]((hVWu">
+                <field name="NUM">0</field>
+              </shadow>
+              <block type="math_single" id="d@Gk-G9;nj26{B;h,n`u">
+                <field name="OP">NEG</field>
+                <value name="NUM">
+                  <shadow type="math_number" id="r:aF2rcu?IBtXo)Z{@CH">
+                    <field name="NUM">9</field>
+                  </shadow>
+                  <block type="variables_get" id="0.Q;)M1s}nL5d+}Uc,7m">
+                    <field name="VAR" id="h5!zdxA0SxPI63X-k[TY">threshold</field>
+                  </block>
+                </value>
+              </block>
+            </value>
+            <value name="BOUND2">
+              <shadow type="math_number" id="mK!k9BXaTP?~.Gy8:Syq">
+                <field name="NUM">10</field>
+              </shadow>
+              <block type="variables_get" id="z!:Hd60zDNGZj__5,nR^">
+                <field name="VAR" id="h5!zdxA0SxPI63X-k[TY">threshold</field>
               </block>
             </value>
           </block>
@@ -223,19 +257,41 @@ task main() {
       </block>
     </statement>
   </block>
-  <block type="events_always" id="`f_0C1O][j2}m$v1_ycf" x="13" y="913">
+  <block type="events_always" id="`f_0C1O][j2}m$v1_ycf" x="13" y="688">
     <statement name="DO">
       <block type="controls_if" id="wT`-@;l*-[{iN8=`8`8$">
         <mutation else="1"></mutation>
         <value name="IF0">
-          <block type="procedures_callreturn" id="UY]H2^C)#w74deS0VET=">
-            <mutation name="exceeds threshold">
-              <arg name="joystick position"></arg>
-            </mutation>
-            <value name="ARG0">
-              <block type="vex_iq_controller_joystick_position" id="5!g_}jb86J-e@CV4k,vL">
+          <block type="logic_between" id="|50CPlD7_$Coi?{`#dVT">
+            <field name="OPERATOR">NOT_BETWEEN</field>
+            <value name="VALUE">
+              <block type="vex_iq_controller_joystick_position" id="71|nhEBjGkDhVkjh%Q]m">
                 <field name="JOYSTICK">RIGHT</field>
                 <field name="AXIS">VERTICAL</field>
+              </block>
+            </value>
+            <value name="BOUND1">
+              <shadow type="math_number">
+                <field name="NUM">0</field>
+              </shadow>
+              <block type="math_single" id="]-S?ZBfwW#RDgE;^ZE2w">
+                <field name="OP">NEG</field>
+                <value name="NUM">
+                  <shadow type="math_number">
+                    <field name="NUM">9</field>
+                  </shadow>
+                  <block type="variables_get" id="L]/^F/l^N$l|ZA#oryd:">
+                    <field name="VAR" id="h5!zdxA0SxPI63X-k[TY">threshold</field>
+                  </block>
+                </value>
+              </block>
+            </value>
+            <value name="BOUND2">
+              <shadow type="math_number">
+                <field name="NUM">10</field>
+              </shadow>
+              <block type="variables_get" id="u!#av{9l6:+eS%d1:q_p">
+                <field name="VAR" id="h5!zdxA0SxPI63X-k[TY">threshold</field>
               </block>
             </value>
           </block>
@@ -264,7 +320,7 @@ task main() {
       </block>
     </statement>
   </block>
-  <block type="events_always" id="?{,eq!/oY~wOAi+KVq9z" x="13" y="1113">
+  <block type="events_always" id="?{,eq!/oY~wOAi+KVq9z" x="13" y="888">
     <statement name="DO">
       <block type="controls_if" id="`)DoL9GCg,EyS=hrMzg[">
         <mutation elseif="1" else="1"></mutation>
@@ -308,56 +364,6 @@ task main() {
         </statement>
       </block>
     </statement>
-  </block>
-  <block type="procedures_defreturn" id="/7ceJJ2N^/8b|jb(7B:/" x="13" y="1363">
-    <mutation statements="false">
-      <arg name="joystick position" varid="6r2!l(wUUb?7kR@4yI9S"></arg>
-    </mutation>
-    <field name="NAME">exceeds threshold</field>
-    <comment pinned="false" h="80" w="160">Describe this function...</comment>
-    <value name="RETURN">
-      <block type="logic_operation" id="_F^hK394eir8aUiV(e/.">
-        <field name="OP">OR</field>
-        <value name="A">
-          <block type="logic_compare" id="_bn]0l?X_.DhMSeld0X#">
-            <field name="OP">GT</field>
-            <value name="A">
-              <block type="variables_get" id="59uf}^:DcT9#FpK=|39z">
-                <field name="VAR" id="6r2!l(wUUb?7kR@4yI9S">joystick position</field>
-              </block>
-            </value>
-            <value name="B">
-              <block type="variables_get" id="z!:Hd60zDNGZj__5,nR^">
-                <field name="VAR" id="h5!zdxA0SxPI63X-k[TY">threshold</field>
-              </block>
-            </value>
-          </block>
-        </value>
-        <value name="B">
-          <block type="logic_compare" id="ATbz8i@S5+uv7#~N4m+}">
-            <field name="OP">LT</field>
-            <value name="A">
-              <block type="variables_get" id="FW}~[OzB^b4xV+$,fAVN">
-                <field name="VAR" id="6r2!l(wUUb?7kR@4yI9S">joystick position</field>
-              </block>
-            </value>
-            <value name="B">
-              <block type="math_single" id="d@Gk-G9;nj26{B;h,n`u">
-                <field name="OP">NEG</field>
-                <value name="NUM">
-                  <shadow type="math_number" id="r:aF2rcu?IBtXo)Z{@CH">
-                    <field name="NUM">9</field>
-                  </shadow>
-                  <block type="variables_get" id="0.Q;)M1s}nL5d+}Uc,7m">
-                    <field name="VAR" id="h5!zdxA0SxPI63X-k[TY">threshold</field>
-                  </block>
-                </value>
-              </block>
-            </value>
-          </block>
-        </value>
-      </block>
-    </value>
   </block>
 </xml>
 END XML */

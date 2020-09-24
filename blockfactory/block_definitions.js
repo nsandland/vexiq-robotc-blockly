@@ -1254,3 +1254,21 @@ Blockly.Blocks['comment_block'] = {
  this.setHelpUrl("");
   }
 };
+
+Blockly.Blocks['logic_between'] = {
+  init: function() {
+    this.appendValueInput("VALUE")
+        .setCheck("Number");
+    this.appendValueInput("BOUND1")
+        .setCheck("Number")
+        .appendField(new Blockly.FieldDropdown([["is between","BETWEEN"], ["is not between","NOT_BETWEEN"]]), "OPERATOR");
+    this.appendValueInput("BOUND2")
+        .setCheck("Number")
+        .appendField("and");
+    this.setInputsInline(true);
+    this.setOutput(true, null);
+    this.setColour(210);
+ this.setTooltip("");
+ this.setHelpUrl("");
+  }
+};

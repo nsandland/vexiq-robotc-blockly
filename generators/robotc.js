@@ -224,6 +224,7 @@ task main() {
       + functionDeclarations
       + Blockly.RobotC.events
       + Blockly.RobotC.point
+      + Blockly.RobotC.logic
       + code
       + definitions.join('\n\n') + '\n\n\n'
       + main;

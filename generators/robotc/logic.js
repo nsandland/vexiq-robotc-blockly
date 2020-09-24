@@ -71,6 +71,20 @@ Blockly.RobotC['logic_compare'] = function(block) {
   return [code, order];
 };
 
+Blockly.RobotC['logic_between'] = function(block) {
+  var OPERATORS = {
+    'BETWEEN': 'between',
+    'NOT_BETWEEN': 'notbetween',
+  };
+  var funcName = OPERATORS[block.getFieldValue('OPERATOR')];
+  var value = Blockly.RobotC.valueToCode(block, 'VALUE', Blockly.RobotC.ORDER_RELATIONAL) || '0';
+  var bound1 = Blockly.RobotC.valueToCode(block, 'BOUND1', Blockly.RobotC.ORDER_RELATIONAL) || '0';
+  var bound2 = Blockly.RobotC.valueToCode(block, 'BOUND2', Blockly.RobotC.ORDER_RELATIONAL) || '0';
+
+  var code = funcName + '(' + value + ', ' + bound1 + ', ' + bound2 + ')';
+  return [code, Blockly.RobotC.ORDER_FUNCTION_CALL];
+};
+
 Blockly.RobotC['logic_operation'] = function(block) {
   // Operations 'and', 'or'.
   var operator = (block.getFieldValue('OP') == 'AND') ? '&&' : '||';
@@ -127,3 +141,25 @@ Blockly.RobotC['logic_ternary'] = function(block) {
   var code = value_if + ' ? ' + value_then + ' : ' + value_else;
   return [code, Blockly.RobotC.ORDER_CONDITIONAL];
 };
+
+Blockly.RobotC.logic = `
+void between(float value, float bound1, float bound2) {
+  if (bound1 > bound2) {
+    return value > bound2 && value < bound1;
+  } else {
+    return value > bound1 && value < bound2;
+  }
+}
+
+void notbetween(float value, float bound1, float bound2) {
+  if (bound1 > bound2) {
+    return value < bound2 || value > bound1;
+  } else {
+    return value < bound1 || value > bound2;
+  }
+}
+
+`;
+
+Blockly.RobotC.addReservedWords(
+    'between,notbetween');
