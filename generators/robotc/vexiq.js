@@ -191,7 +191,7 @@ Blockly.RobotC['vex_iq_gyro'] = function(block) {
 };
 
 Blockly.RobotC['vex_iq_brain'] = function(block) {
-  var dropdown_has_controller = block.getFieldValue('HAS_CONTROLLER');
+  //var dropdown_has_controller = block.getFieldValue('HAS_CONTROLLER');
   var code = '';
   for (i = 1; i <= 12; i++) {
     var value = Blockly.RobotC.valueToCode(block, 'PORT_' + i, Blockly.RobotC.ORDER_ATOMIC);

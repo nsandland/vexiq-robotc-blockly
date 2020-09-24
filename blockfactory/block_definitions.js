@@ -240,8 +240,8 @@ Blockly.Blocks['vex_iq_gyro'] = {
 Blockly.Blocks['vex_iq_brain'] = {
   init: function() {
     this.appendDummyInput()
-        .appendField("vex iq brain")
-        .appendField(new Blockly.FieldDropdown([["with remote controller","TRUE"], ["without remote controller","FALSE"]]), "HAS_CONTROLLER")
+        .appendField("vex iq brain, where")
+        //.appendField(new Blockly.FieldDropdown([["with remote controller","TRUE"], ["without remote controller","FALSE"]]), "HAS_CONTROLLER")
     this.appendValueInput("PORT_1")
         .setCheck(["BumperDeclaration", "MotorDeclaration", "TouchLEDDeclaration", "ColorSensorDeclaration", "DistanceSensorDeclaration", "GyroDeclaration"])
         .setAlign(Blockly.ALIGN_RIGHT)
