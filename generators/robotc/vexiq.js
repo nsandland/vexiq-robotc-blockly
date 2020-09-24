@@ -256,6 +256,7 @@ Blockly.RobotC['vex_iq_brain_play_note'] = function(block) {
     'F': 'noteF',
     'F_SHARP': 'noteFSharp',
     'G': 'noteG',
+    'G_SHARP': 'noteGSharp'
   };
   var noteConstant = NOTE_CONSTANTS[block.getFieldValue('NOTE')];
   var OCTAVE_CONSTANTS = {
@@ -266,7 +267,7 @@ Blockly.RobotC['vex_iq_brain_play_note'] = function(block) {
   var octaveConstant = OCTAVE_CONSTANTS[block.getFieldValue('OCTAVE')];
   var duration = Blockly.RobotC.valueToCode(block, 'DURATION', Blockly.RobotC.ORDER_ATOMIC);
   // TODO: Assemble RobotC into code variable.
-  var code = 'playNote(' + noteConstant + ', ' + octaveConstant + ', ceil(' + duration + ') / 100.0));\n';
+  var code = 'playNote(' + noteConstant + ', ' + octaveConstant + ', ceil(' + duration + '));\n';
   return code;
 };
 

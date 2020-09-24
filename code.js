@@ -445,6 +445,7 @@ Code.init = function() {
 
   Code.bindClick('copyButton',
       function() {
+        if ()
         Code.attemptCodeGeneration(Blockly.RobotC);
         var content = document.getElementById('content_robotc');
         content.select();
