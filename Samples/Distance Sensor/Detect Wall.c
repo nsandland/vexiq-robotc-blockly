@@ -95,6 +95,7 @@ task main() {
   while(true) {
     when_true2();
     when_false2();
+
     advance_event(start);
   }
 }
@@ -116,7 +117,25 @@ task main() {
     <variable id="f+3LAb5_1]ObyC0i9eX^">port_12</variable>
     <variable id="MNx^E0$IqBIO4WysGAE,">distance_sensor</variable>
   </variables>
-  <block type="vex_iq_brain" id="(^W84*BmMq_oQZrg1R28" x="13" y="63">
+  <block type="comment_block" id="|XF+gjVqjTv/2,r#6XsE" x="13" y="13">
+    <field name="NAME">Move forward until the VEX IQ Distance Sensors</field>
+    <next>
+      <block type="comment_block" id="Q!b::Vl,!$Mg/WBMc7V`">
+        <field name="NAME">sees an object 100 millimeters (mm) away. The</field>
+        <next>
+          <block type="comment_block" id="-mX=Q{DhkiQ#1iw(v+F6">
+            <field name="NAME">VEX IQ Distance Sensor returns values in</field>
+            <next>
+              <block type="comment_block" id="cRi`H:YrlmFL39JSqLH`">
+                <field name="NAME">millimeters.</field>
+              </block>
+            </next>
+          </block>
+        </next>
+      </block>
+    </next>
+  </block>
+  <block type="vex_iq_brain" id="(^W84*BmMq_oQZrg1R28" x="13" y="138">
     <field name="HAS_CONTROLLER">TRUE</field>
     <field name="PORT_1_NAME" id="2C_w(9X|eyDoXJZtSlGb">left motor</field>
     <field name="PORT_2_NAME" id="%U9G3C1f~]_Kp7^^-7Ir">port_2</field>
@@ -144,55 +163,65 @@ task main() {
       <block type="vex_iq_distance_sensor" id="t-pwZ%gw#FbV2gXB_o;)"></block>
     </value>
   </block>
-  <block type="events_when" id="#(,ivPVP_~{^Jc_`3m,^" x="13" y="438">
+  <block type="events_when" id="#(,ivPVP_~{^Jc_`3m,^" x="13" y="513">
     <value name="WHEN">
       <block type="procedures_callreturn" id="h^fy{86M[Uf;fXu]Ks0)">
         <mutation name="distance &gt; 100"></mutation>
       </block>
     </value>
     <statement name="DO">
-      <block type="vex_iq_motor_spin_velocity" id="i*3?}[Q3G0C,_o1ZYVjI">
-        <field name="MOTOR" id="2C_w(9X|eyDoXJZtSlGb">left motor</field>
-        <field name="DIRECTION">FORWARD</field>
-        <value name="VELOCITY">
-          <shadow type="math_number" id="wB|ZAPz!r;K~%dmT$%vv">
-            <field name="NUM">50</field>
-          </shadow>
-        </value>
+      <block type="comment_block" id="~HmX6|lIytx2`YVvMnj]">
+        <field name="NAME">Spin motors if farther than 10cm</field>
         <next>
-          <block type="vex_iq_motor_spin_velocity" id="fc1=9tR=vukObb@Q[l2X">
-            <field name="MOTOR" id="|}5]3]?#UB6;p-p@$?Zo">right motor</field>
+          <block type="vex_iq_motor_spin_velocity" id="i*3?}[Q3G0C,_o1ZYVjI">
+            <field name="MOTOR" id="2C_w(9X|eyDoXJZtSlGb">left motor</field>
             <field name="DIRECTION">FORWARD</field>
             <value name="VELOCITY">
-              <shadow type="math_number" id="@gZ@KD0ks%Ix[(n*^:#j">
+              <shadow type="math_number" id="wB|ZAPz!r;K~%dmT$%vv">
                 <field name="NUM">50</field>
               </shadow>
             </value>
+            <next>
+              <block type="vex_iq_motor_spin_velocity" id="fc1=9tR=vukObb@Q[l2X">
+                <field name="MOTOR" id="|}5]3]?#UB6;p-p@$?Zo">right motor</field>
+                <field name="DIRECTION">FORWARD</field>
+                <value name="VELOCITY">
+                  <shadow type="math_number" id="@gZ@KD0ks%Ix[(n*^:#j">
+                    <field name="NUM">50</field>
+                  </shadow>
+                </value>
+              </block>
+            </next>
           </block>
         </next>
       </block>
     </statement>
   </block>
-  <block type="events_after" id="eyt.svMz7E)YJB#!r_Lx" x="13" y="588">
+  <block type="events_after" id="eyt.svMz7E)YJB#!r_Lx" x="13" y="688">
     <value name="AFTER">
       <block type="procedures_callreturn" id="Y;1yr7eaKMe8kqQ17F5+">
         <mutation name="distance &gt; 100"></mutation>
       </block>
     </value>
     <statement name="DO">
-      <block type="vex_iq_motor_stop" id="(b9eKG`2f;GW^F__RZb7">
-        <field name="MOTOR" id="2C_w(9X|eyDoXJZtSlGb">left motor</field>
-        <field name="STOP_MODE">BRAKE</field>
+      <block type="comment_block" id="p/MKkFt(d5*4YAba];@A">
+        <field name="NAME">Stop motors if closer than 10cm</field>
         <next>
-          <block type="vex_iq_motor_stop" id="#y*.o7]86hFN}ow`z/;6">
-            <field name="MOTOR" id="|}5]3]?#UB6;p-p@$?Zo">right motor</field>
+          <block type="vex_iq_motor_stop" id="(b9eKG`2f;GW^F__RZb7">
+            <field name="MOTOR" id="2C_w(9X|eyDoXJZtSlGb">left motor</field>
             <field name="STOP_MODE">BRAKE</field>
+            <next>
+              <block type="vex_iq_motor_stop" id="#y*.o7]86hFN}ow`z/;6">
+                <field name="MOTOR" id="|}5]3]?#UB6;p-p@$?Zo">right motor</field>
+                <field name="STOP_MODE">BRAKE</field>
+              </block>
+            </next>
           </block>
         </next>
       </block>
     </statement>
   </block>
-  <block type="procedures_defreturn" id="{8{e(b=hK//%DG*IYGp*" x="13" y="713">
+  <block type="procedures_defreturn" id="{8{e(b=hK//%DG*IYGp*" x="13" y="838">
     <mutation statements="false"></mutation>
     <field name="NAME">distance &gt; 100</field>
     <comment pinned="false" h="80" w="160">Describe this function...</comment>

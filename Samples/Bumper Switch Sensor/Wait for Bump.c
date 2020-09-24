@@ -1,11 +1,6 @@
-#pragma config(Sensor, port4,  gyroSensor,     sensorVexIQ_Gyro)
-#pragma config(Sensor, port7,  bump_switch, sensorVexIQ_Touch)
-#pragma config(Motor,  motor5,          rightLift,     tmotorVexIQ, PIDControl, reversed, encoder)
-#pragma config(Motor,  motor6,          leftLift,      tmotorVexIQ, PIDControl, encoder)
-#pragma config(Motor,  motor8,          left_motor,     tmotorVexIQ, PIDControl, encoder)
-#pragma config(Motor,  motor9,          middleMotor,   tmotorVexIQ, PIDControl, encoder)
-#pragma config(Motor,  motor10,         right_motor,    tmotorVexIQ, PIDControl, reversed, encoder)
-#pragma config(Motor,  motor12,         topLift,       tmotorVexIQ, PIDControl, encoder)
+#pragma config(Motor, motor1, left_motor, tmotorVexIQ, PIDControl, encoder)
+#pragma config(Motor, motor6, right_motor, tmotorVexIQ, PIDControl, reversed, encoder)
+#pragma config(Sensor, port9, bump_switch, sensorVexIQ_Touch)
 
 typedef ubyte Event;
 
@@ -91,6 +86,7 @@ task main() {
   while(true) {
     on_start2();
     when_true2();
+
     advance_event(start);
   }
 }
@@ -111,7 +107,15 @@ task main() {
     <variable id="Sq;4ZphrM!WA8xQBm)1F">port_11</variable>
     <variable id="f+3LAb5_1]ObyC0i9eX^">port_12</variable>
   </variables>
-  <block type="vex_iq_brain" id="(^W84*BmMq_oQZrg1R28" x="13" y="163">
+  <block type="comment_block" id="SGbFOuMhQYwW}99hY1X4" x="13" y="13">
+    <field name="NAME">Simple program to make your robot move forward</field>
+    <next>
+      <block type="comment_block" id="b7Mq-2cbAjQt$}9ckOfK">
+        <field name="NAME">until the Bumper Sensor is triggered (pressed).</field>
+      </block>
+    </next>
+  </block>
+  <block type="vex_iq_brain" id="(^W84*BmMq_oQZrg1R28" x="13" y="88">
     <field name="HAS_CONTROLLER">TRUE</field>
     <field name="PORT_1_NAME" id="2C_w(9X|eyDoXJZtSlGb">left motor</field>
     <field name="PORT_2_NAME" id="%U9G3C1f~]_Kp7^^-7Ir">port_2</field>
@@ -139,44 +143,59 @@ task main() {
       <block type="vex_iq_bumper" id="SH~qkZ2*{{iuz+*64q%k"></block>
     </value>
   </block>
-  <block type="events_on_start" id="1|*G6NmWsHDvUxJ2)(qX" x="13" y="538">
+  <block type="events_on_start" id="1|*G6NmWsHDvUxJ2)(qX" x="13" y="463">
     <statement name="DO">
-      <block type="vex_iq_motor_spin_velocity" id="+|D~cV_hmu]kJcf=mBIk">
-        <field name="MOTOR" id="2C_w(9X|eyDoXJZtSlGb">left motor</field>
-        <field name="DIRECTION">FORWARD</field>
-        <value name="VELOCITY">
-          <shadow type="math_number" id="A=gdC:WA#eq67;|VMiHC">
-            <field name="NUM">50</field>
-          </shadow>
-        </value>
+      <block type="comment_block" id="!#o~2GIKQ=uny|c#3cU#">
+        <field name="NAME">Set the left motor to half power (50)</field>
         <next>
-          <block type="vex_iq_motor_spin_velocity" id="GF#tYl*Sf*-ClrG.%l5#">
-            <field name="MOTOR" id="|}5]3]?#UB6;p-p@$?Zo">right motor</field>
+          <block type="vex_iq_motor_spin_velocity" id="+|D~cV_hmu]kJcf=mBIk">
+            <field name="MOTOR" id="2C_w(9X|eyDoXJZtSlGb">left motor</field>
             <field name="DIRECTION">FORWARD</field>
             <value name="VELOCITY">
-              <shadow type="math_number" id="uF=yg%GW+k-4I/2HmM=:">
+              <shadow type="math_number" id="A=gdC:WA#eq67;|VMiHC">
                 <field name="NUM">50</field>
               </shadow>
             </value>
+            <next>
+              <block type="comment_block" id="$tv98A3fSoE{xvhQ(A|-">
+                <field name="NAME">Set the right motor to half power (50)</field>
+                <next>
+                  <block type="vex_iq_motor_spin_velocity" id="GF#tYl*Sf*-ClrG.%l5#">
+                    <field name="MOTOR" id="|}5]3]?#UB6;p-p@$?Zo">right motor</field>
+                    <field name="DIRECTION">FORWARD</field>
+                    <value name="VELOCITY">
+                      <shadow type="math_number" id="uF=yg%GW+k-4I/2HmM=:">
+                        <field name="NUM">50</field>
+                      </shadow>
+                    </value>
+                  </block>
+                </next>
+              </block>
+            </next>
           </block>
         </next>
       </block>
     </statement>
   </block>
-  <block type="events_when" id="4rp2~.YK/3^7*^AvQ^TL" x="13" y="688">
+  <block type="events_when" id="4rp2~.YK/3^7*^AvQ^TL" x="13" y="663">
     <value name="WHEN">
       <block type="vex_iq_bumper_is_pressed" id="F;X6*3?br#tVru5T|~fv">
         <field name="BUMPER" id="S?1OP,zVs50qC@pokl3E">bump switch</field>
       </block>
     </value>
     <statement name="DO">
-      <block type="vex_iq_motor_stop" id="Gbrl@]g[)qZMWSqn9.+f">
-        <field name="MOTOR" id="2C_w(9X|eyDoXJZtSlGb">left motor</field>
-        <field name="STOP_MODE">BRAKE</field>
+      <block type="comment_block" id="%R8Se8Y83lMWHr!X*#-;">
+        <field name="NAME">Once the sensor is touched, the motors will stop.</field>
         <next>
-          <block type="vex_iq_motor_stop" id="Xm+fYoRheD}LVK(dR9%D">
-            <field name="MOTOR" id="|}5]3]?#UB6;p-p@$?Zo">right motor</field>
+          <block type="vex_iq_motor_stop" id="Gbrl@]g[)qZMWSqn9.+f">
+            <field name="MOTOR" id="2C_w(9X|eyDoXJZtSlGb">left motor</field>
             <field name="STOP_MODE">BRAKE</field>
+            <next>
+              <block type="vex_iq_motor_stop" id="Xm+fYoRheD}LVK(dR9%D">
+                <field name="MOTOR" id="|}5]3]?#UB6;p-p@$?Zo">right motor</field>
+                <field name="STOP_MODE">BRAKE</field>
+              </block>
+            </next>
           </block>
         </next>
       </block>

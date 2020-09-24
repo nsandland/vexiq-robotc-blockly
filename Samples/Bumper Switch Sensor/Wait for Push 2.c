@@ -80,6 +80,7 @@ task main() {
   activate_event(start);
   while(true) {
     when_true2();
+
     advance_event(start);
   }
 }
@@ -100,7 +101,25 @@ task main() {
     <variable id="Sq;4ZphrM!WA8xQBm)1F">port_11</variable>
     <variable id="f+3LAb5_1]ObyC0i9eX^">port_12</variable>
   </variables>
-  <block type="vex_iq_brain" id="(^W84*BmMq_oQZrg1R28" x="13" y="213">
+  <block type="comment_block" id="v^4Qn3%ixdhx_5{jH}KE" x="13" y="13">
+    <field name="NAME">This program will make your robot not move until</field>
+    <next>
+      <block type="comment_block" id="b7|sb29v9oid@zAGtedO">
+        <field name="NAME">the bumper switch is pressed - similiar to a </field>
+        <next>
+          <block type="comment_block" id="}2AD1Melu]:IX0$o@:mi">
+            <field name="NAME">"start" button. Once the switch is pressed, the</field>
+            <next>
+              <block type="comment_block" id=";C0`%4)NEm`Ej[mcXet-">
+                <field name="NAME">robot will move forward for 2 seconds.</field>
+              </block>
+            </next>
+          </block>
+        </next>
+      </block>
+    </next>
+  </block>
+  <block type="vex_iq_brain" id="(^W84*BmMq_oQZrg1R28" x="13" y="138">
     <field name="HAS_CONTROLLER">TRUE</field>
     <field name="PORT_1_NAME" id="2C_w(9X|eyDoXJZtSlGb">left motor</field>
     <field name="PORT_2_NAME" id="%U9G3C1f~]_Kp7^^-7Ir">port_2</field>
@@ -128,45 +147,60 @@ task main() {
       <block type="vex_iq_bumper" id="SH~qkZ2*{{iuz+*64q%k"></block>
     </value>
   </block>
-  <block type="events_when" id="4rp2~.YK/3^7*^AvQ^TL" x="13" y="588">
+  <block type="events_when" id="4rp2~.YK/3^7*^AvQ^TL" x="13" y="513">
     <value name="WHEN">
       <block type="vex_iq_bumper_is_pressed" id="F;X6*3?br#tVru5T|~fv">
         <field name="BUMPER" id="S?1OP,zVs50qC@pokl3E">bump switch</field>
       </block>
     </value>
     <statement name="DO">
-      <block type="vex_iq_motor_spin_velocity" id="+|D~cV_hmu]kJcf=mBIk">
-        <field name="MOTOR" id="2C_w(9X|eyDoXJZtSlGb">left motor</field>
-        <field name="DIRECTION">FORWARD</field>
-        <value name="VELOCITY">
-          <shadow type="math_number" id="A=gdC:WA#eq67;|VMiHC">
-            <field name="NUM">50</field>
-          </shadow>
-        </value>
+      <block type="comment_block" id="`V[G3g#sTnASO/A[LPYY">
+        <field name="NAME">Set the left motor to half power (50)</field>
         <next>
-          <block type="vex_iq_motor_spin_velocity" id="GF#tYl*Sf*-ClrG.%l5#">
-            <field name="MOTOR" id="|}5]3]?#UB6;p-p@$?Zo">right motor</field>
+          <block type="vex_iq_motor_spin_velocity" id="+|D~cV_hmu]kJcf=mBIk">
+            <field name="MOTOR" id="2C_w(9X|eyDoXJZtSlGb">left motor</field>
             <field name="DIRECTION">FORWARD</field>
             <value name="VELOCITY">
-              <shadow type="math_number" id="uF=yg%GW+k-4I/2HmM=:">
+              <shadow type="math_number" id="A=gdC:WA#eq67;|VMiHC">
                 <field name="NUM">50</field>
               </shadow>
             </value>
             <next>
-              <block type="vex_iq_sleep" id="St-p7@]E3jf0SA6!(:S|">
-                <value name="DURATION">
-                  <shadow type="math_number" id="X+E=])~2`4wsDMhL1J*c">
-                    <field name="NUM">2000</field>
-                  </shadow>
-                </value>
+              <block type="comment_block" id="$bB!:/M[I:D+E{5W*A?$">
+                <field name="NAME">Set the right motor to half power (50)</field>
                 <next>
-                  <block type="vex_iq_motor_stop" id="oqV/CDcppVYH+nDZfG9l">
-                    <field name="MOTOR" id="2C_w(9X|eyDoXJZtSlGb">left motor</field>
-                    <field name="STOP_MODE">BRAKE</field>
+                  <block type="vex_iq_motor_spin_velocity" id="GF#tYl*Sf*-ClrG.%l5#">
+                    <field name="MOTOR" id="|}5]3]?#UB6;p-p@$?Zo">right motor</field>
+                    <field name="DIRECTION">FORWARD</field>
+                    <value name="VELOCITY">
+                      <shadow type="math_number" id="uF=yg%GW+k-4I/2HmM=:">
+                        <field name="NUM">50</field>
+                      </shadow>
+                    </value>
                     <next>
-                      <block type="vex_iq_motor_stop" id="k8*BWV5G;+8[J]Q3EBtB">
-                        <field name="MOTOR" id="|}5]3]?#UB6;p-p@$?Zo">right motor</field>
-                        <field name="STOP_MODE">BRAKE</field>
+                      <block type="comment_block" id=")0MOF]E.yARQxSY88VxI">
+                        <field name="NAME">Wait for 2 seconds before ending the program.</field>
+                        <next>
+                          <block type="vex_iq_sleep" id="St-p7@]E3jf0SA6!(:S|">
+                            <value name="DURATION">
+                              <shadow type="math_number" id="X+E=])~2`4wsDMhL1J*c">
+                                <field name="NUM">2000</field>
+                              </shadow>
+                            </value>
+                            <next>
+                              <block type="vex_iq_motor_stop" id="oqV/CDcppVYH+nDZfG9l">
+                                <field name="MOTOR" id="2C_w(9X|eyDoXJZtSlGb">left motor</field>
+                                <field name="STOP_MODE">BRAKE</field>
+                                <next>
+                                  <block type="vex_iq_motor_stop" id="k8*BWV5G;+8[J]Q3EBtB">
+                                    <field name="MOTOR" id="|}5]3]?#UB6;p-p@$?Zo">right motor</field>
+                                    <field name="STOP_MODE">BRAKE</field>
+                                  </block>
+                                </next>
+                              </block>
+                            </next>
+                          </block>
+                        </next>
                       </block>
                     </next>
                   </block>
