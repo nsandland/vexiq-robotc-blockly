@@ -121,9 +121,9 @@ Code.loadBlocks = function(defaultXml) {
     // Restarting Firefox fixes this, so it looks like a bug.
     var loadOnce = null;
   }
-  let params = (new URL(document.location)).searchParams;
-  let loadUrl = params.get('load');
+  let loadUrl = window.location.hash.substr(1);
   if (loadUrl) {
+    history.replaceState(null, null, ' ');
     fetch(loadUrl)
         .then( r => r.text() )
         .then(function(t) {
