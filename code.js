@@ -122,13 +122,14 @@ Code.loadBlocks = function(defaultXml) {
     var loadOnce = null;
   }
   let params = (new URL(document.location)).searchParams;
-  let loadUrl = params.get("load");
+  let loadUrl = params.get('load');
   if (loadUrl) {
     fetch(loadUrl)
         .then( r => r.text() )
         .then(function(t) {
           document.getElementById('content_robotc').value = t;
           Code.attemptBlockGeneration();
+          location.search = '';
         });
   } else if ('BlocklyStorage' in window && window.location.hash.length > 1) {
     // An href with #key trigers an AJAX call to retrieve saved blocks.
