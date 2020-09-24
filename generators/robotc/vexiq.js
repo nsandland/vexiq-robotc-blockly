@@ -586,5 +586,5 @@ Blockly.RobotC['vex_iq_sleep'] = function(block) {
 };
 
 Blockly.RobotC['comment_block'] = function(block) {
-  return null;
+  return '';
 };
