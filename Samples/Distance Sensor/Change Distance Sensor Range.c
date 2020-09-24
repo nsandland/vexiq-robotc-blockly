@@ -102,7 +102,7 @@ task main() {
     <variable id="f+3LAb5_1]ObyC0i9eX^">port_12</variable>
     <variable id="MNx^E0$IqBIO4WysGAE,">distance_sensor</variable>
   </variables>
-  <block type="comment_block" id="2.8drdYJ5j:-oCSW,XI]" x="13" y="13">
+  <block type="comment_block" id="2.8drdYJ5j:-oCSW,XI]" x="13" y="63">
     <field name="NAME">The VEX IQ Distance sensor is able to detect</field>
     <next>
       <block type="comment_block" id="xOjXyh/xnk94[}?{+*QT">
@@ -150,7 +150,7 @@ task main() {
       </block>
     </next>
   </block>
-  <block type="vex_iq_brain" id="(^W84*BmMq_oQZrg1R28" x="13" y="313">
+  <block type="vex_iq_brain" id="(^W84*BmMq_oQZrg1R28" x="13" y="363">
     <field name="HAS_CONTROLLER">TRUE</field>
     <field name="PORT_1_NAME" id="2C_w(9X|eyDoXJZtSlGb">left motor</field>
     <field name="PORT_2_NAME" id="%U9G3C1f~]_Kp7^^-7Ir">port_2</field>
@@ -178,14 +178,18 @@ task main() {
       <block type="vex_iq_distance_sensor" id="t-pwZ%gw#FbV2gXB_o;)"></block>
     </value>
   </block>
-  <block type="events_on_start" id=")LZQbUvmq55?Gk$Q71z3" x="13" y="688">
+  <block type="events_on_start" id=")LZQbUvmq55?Gk$Q71z3" x="13" y="738">
     <statement name="DO">
       <block type="comment_block" id="}B4s)gjouje2j)*X7;jq">
         <field name="NAME">Set the minimum detectable range to 200mm (20cm)</field>
         <next>
-          <block type="vex_iq_distance_min" id="i**!}g9?bSwH+Bx}7DEG">
+          <block type="vex_iq_distance_bound" id="O8$o%lK5R?Wsy^Ba]a1^">
             <field name="DISTANCE_SENSOR" id="MNx^E0$IqBIO4WysGAE,">distance_sensor</field>
+            <field name="BOUND">MINIMUM</field>
             <value name="DISTANCE">
+              <shadow type="math_number" id="]8-?Q0tnSV;AI=_9f3N@">
+                <field name="NUM">0</field>
+              </shadow>
               <block type="math_number" id="K6YBWm`xVe5i69rP4R73">
                 <field name="NUM">200</field>
               </block>
@@ -194,9 +198,13 @@ task main() {
               <block type="comment_block" id="YTS:+_bs^FcSD=SnB|g(">
                 <field name="NAME">Set the maximum detectable range to 1000mm (100cm)</field>
                 <next>
-                  <block type="vex_iq_distance_max" id="i,Qqk$f09WiBm{,cDfJa">
+                  <block type="vex_iq_distance_bound" id="Q|0vKvZ^;Q}::*-Xytn{">
                     <field name="DISTANCE_SENSOR" id="MNx^E0$IqBIO4WysGAE,">distance_sensor</field>
+                    <field name="BOUND">MAXIMUM</field>
                     <value name="DISTANCE">
+                      <shadow type="math_number">
+                        <field name="NUM">0</field>
+                      </shadow>
                       <block type="math_number" id="0r@]hPUEh6B$BmfV,{1:">
                         <field name="NUM">1000</field>
                       </block>
@@ -210,7 +218,7 @@ task main() {
       </block>
     </statement>
   </block>
-  <block type="events_always" id="%Pwmj?;Y8gwY*F8Z$#WM" x="13" y="888">
+  <block type="events_always" id="%Pwmj?;Y8gwY*F8Z$#WM" x="13" y="938">
     <statement name="DO">
       <block type="vex_iq_lcd_print" id="ms7JN?UV!$y(mbUyWuZM">
         <mutation vars="1"></mutation>

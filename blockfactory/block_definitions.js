@@ -787,6 +787,26 @@ Blockly.Blocks['vex_iq_touch_led_off'] = {
   }
 };
 
+Blockly.Blocks['vex_iq_distance_bound'] = {
+  init: function() {
+    this.appendValueInput("DISTANCE")
+        .setCheck("Number")
+        .appendField("set")
+        .appendField(new Blockly.FieldVariable("distance_sensor"), "DISTANCE_SENSOR")
+        .appendField(new Blockly.FieldDropdown([["maximum","MAXIMUM"], ["minimum","MINIMUM"]]), "BOUND")
+        .appendField("to");
+    this.appendDummyInput()
+        .appendField("mm");
+    this.setInputsInline(true);
+    this.setPreviousStatement(true, null);
+    this.setNextStatement(true, null);
+    this.setColour(65);
+ this.setTooltip("");
+ this.setHelpUrl("");
+  }
+};
+
+// Deprecated
 Blockly.Blocks['vex_iq_distance_max'] = {
   init: function() {
     this.appendValueInput("DISTANCE")
@@ -805,6 +825,7 @@ Blockly.Blocks['vex_iq_distance_max'] = {
   }
 };
 
+// Deprecated
 Blockly.Blocks['vex_iq_distance_min'] = {
   init: function() {
     this.appendValueInput("DISTANCE")

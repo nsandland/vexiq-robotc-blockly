@@ -421,6 +421,7 @@ Blockly.RobotC['vex_iq_touch_led_off'] = function(block) {
   return code;
 };
 
+// Deprecated
 Blockly.RobotC['vex_iq_distance_max'] = function(block) {
   var variable_distance_sensor = Blockly.RobotC.variableDB_.getName(block.getFieldValue('DISTANCE_SENSOR'), Blockly.Variables.NAME_TYPE);
   var value_distance = Blockly.RobotC.valueToCode(block, 'DISTANCE', Blockly.RobotC.ORDER_ATOMIC);
@@ -428,10 +429,23 @@ Blockly.RobotC['vex_iq_distance_max'] = function(block) {
   return code;
 };
 
+// Deprecated
 Blockly.RobotC['vex_iq_distance_min'] = function(block) {
   var variable_distance_sensor = Blockly.RobotC.variableDB_.getName(block.getFieldValue('DISTANCE_SENSOR'), Blockly.Variables.NAME_TYPE);
   var value_distance = Blockly.RobotC.valueToCode(block, 'DISTANCE', Blockly.RobotC.ORDER_ATOMIC);
   var code = 'setDistanceMinRange(' + variable_distance_sensor + ', ' + value_distance + ');\n';
+  return code;
+};
+
+Blockly.RobotC['vex_iq_distance_bound'] = function(block) {
+  var BOUNDS = {
+    'MAXIMUM': 'setDistanceMaxRange',
+    'MINIMUM': 'setDistanceMinRange'
+  };
+  var variable_distance_sensor = Blockly.RobotC.variableDB_.getName(block.getFieldValue('DISTANCE_SENSOR'), Blockly.Variables.NAME_TYPE);
+  var value_distance = Blockly.RobotC.valueToCode(block, 'DISTANCE', Blockly.RobotC.ORDER_ATOMIC);
+  var funcName = BOUNDS[block.getFieldValue('BOUND')];
+  var code = funcName + '(' + variable_distance_sensor + ', ' + value_distance + ');\n';
   return code;
 };
 
