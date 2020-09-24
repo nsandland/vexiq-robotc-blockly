@@ -57,6 +57,23 @@ void rotate(Point &p, float theta) {
   p.y = newY;
 }
 
+
+bool between(float value, float bound1, float bound2) {
+  if (bound1 > bound2) {
+    return value > bound2 && value < bound1;
+  } else {
+    return value > bound1 && value < bound2;
+  }
+}
+
+bool notbetween(float value, float bound1, float bound2) {
+  if (bound1 > bound2) {
+    return value < bound2 || value > bound1;
+  } else {
+    return value < bound1 || value > bound2;
+  }
+}
+
 void always2() {
   setMotorSpeed(left_motor, (getJoystickValue(ChA) + getJoystickValue(ChB) / 2));
   setMotorSpeed(right_motor, (getJoystickValue(ChA) - getJoystickValue(ChB) / 2));
@@ -69,6 +86,7 @@ task main() {
   activate_event(start);
   while(true) {
     always2();
+
     advance_event(start);
   }
 }
@@ -89,7 +107,25 @@ task main() {
     <variable id="Sq;4ZphrM!WA8xQBm)1F">port_11</variable>
     <variable id="f+3LAb5_1]ObyC0i9eX^">port_12</variable>
   </variables>
-  <block type="vex_iq_brain" id="%y[i=TI^e=S5W5q!.w0+" x="13" y="113">
+  <block type="comment_block" id="g2qpkSXJ#_/={v6OLqS|" x="13" y="13">
+    <field name="NAME">This program will use the VEX IQ Wireless</field>
+    <next>
+      <block type="comment_block" id="i*t578DSW]5Xs[pFy|).">
+        <field name="NAME">Controller to drive your Clawbot. This program</field>
+        <next>
+          <block type="comment_block" id=":~4W#UcAwJlkrzQ#]VIz">
+            <field name="NAME">will use "Arcade Mode" to use only one joystick</field>
+            <next>
+              <block type="comment_block" id=":m?M+NgpKK.UPfFWu,[+">
+                <field name="NAME">to drive the two main motors of the Clawbot.</field>
+              </block>
+            </next>
+          </block>
+        </next>
+      </block>
+    </next>
+  </block>
+  <block type="vex_iq_brain" id="%y[i=TI^e=S5W5q!.w0+" x="13" y="138">
     <field name="HAS_CONTROLLER">TRUE</field>
     <field name="PORT_1_NAME" id="2C_w(9X|eyDoXJZtSlGb">left motor</field>
     <field name="PORT_2_NAME" id="%U9G3C1f~]_Kp7^^-7Ir">port_2</field>
@@ -114,93 +150,103 @@ task main() {
       </block>
     </value>
   </block>
-  <block type="events_always" id="}@B~$VOG`.Vx%#fCUCgg" x="13" y="488">
+  <block type="events_always" id="}@B~$VOG`.Vx%#fCUCgg" x="13" y="513">
     <statement name="DO">
-      <block type="vex_iq_motor_spin_velocity" id="i!jY/=bu[dhk+]v8q)V[">
-        <field name="MOTOR" id="2C_w(9X|eyDoXJZtSlGb">left motor</field>
-        <field name="DIRECTION">FORWARD</field>
-        <value name="VELOCITY">
-          <shadow type="math_number" id="IH-F].Zg~r.L3ZNA{=pf">
-            <field name="NUM">100</field>
-          </shadow>
-          <block type="math_arithmetic" id="bT$2$.,(:R%0jzsvJ$W~">
-            <field name="OP">ADD</field>
-            <value name="A">
-              <shadow type="math_number" id="sFc*CE1.u,TV^Bql,eJO">
-                <field name="NUM">1</field>
-              </shadow>
-              <block type="vex_iq_controller_joystick_position" id="UBMUIv:T$C[.d.nHRh%?">
-                <field name="JOYSTICK">LEFT</field>
-                <field name="AXIS">VERTICAL</field>
-              </block>
-            </value>
-            <value name="B">
-              <shadow type="math_number" id="@S)h:ERV}s6riXV`*pQ@">
-                <field name="NUM">1</field>
-              </shadow>
-              <block type="math_arithmetic" id="B(REi_bUwE=u=_:;V;Oo">
-                <field name="OP">DIVIDE</field>
-                <value name="A">
-                  <shadow type="math_number" id=")Vz|UHv]~aYe[xtaz^!$">
-                    <field name="NUM">1</field>
-                  </shadow>
-                  <block type="vex_iq_controller_joystick_position" id="}[lTE7:U?GW5Q#t:zJpy">
-                    <field name="JOYSTICK">LEFT</field>
-                    <field name="AXIS">HORIZONTAL</field>
-                  </block>
-                </value>
-                <value name="B">
-                  <shadow type="math_number" id="=ume9svq?T)d/P/QtVW%">
-                    <field name="NUM">2</field>
-                  </shadow>
-                </value>
-              </block>
-            </value>
-          </block>
-        </value>
+      <block type="comment_block" id="X~$EIR?2[DukDWGQ[8C/">
+        <field name="NAME">Set the speed of the two motors the value from</field>
         <next>
-          <block type="vex_iq_motor_spin_velocity" id="]BKMA%gJ._m[#mabts7]">
-            <field name="MOTOR" id="|}5]3]?#UB6;p-p@$?Zo">right motor</field>
-            <field name="DIRECTION">FORWARD</field>
-            <value name="VELOCITY">
-              <shadow type="math_number">
-                <field name="NUM">100</field>
-              </shadow>
-              <block type="math_arithmetic" id="(+4n|Yl82Kb0p8p9iP)F">
-                <field name="OP">MINUS</field>
-                <value name="A">
-                  <shadow type="math_number">
-                    <field name="NUM">1</field>
+          <block type="comment_block" id="mOXc=9K.`8A@ry4pdemY">
+            <field name="NAME">the two joystick values in the formula.</field>
+            <next>
+              <block type="vex_iq_motor_spin_velocity" id="i!jY/=bu[dhk+]v8q)V[">
+                <field name="MOTOR" id="2C_w(9X|eyDoXJZtSlGb">left motor</field>
+                <field name="DIRECTION">FORWARD</field>
+                <value name="VELOCITY">
+                  <shadow type="math_number" id="IH-F].Zg~r.L3ZNA{=pf">
+                    <field name="NUM">100</field>
                   </shadow>
-                  <block type="vex_iq_controller_joystick_position" id="D=5WtE`~d+MKL?]5EcA3">
-                    <field name="JOYSTICK">LEFT</field>
-                    <field name="AXIS">VERTICAL</field>
-                  </block>
-                </value>
-                <value name="B">
-                  <shadow type="math_number">
-                    <field name="NUM">1</field>
-                  </shadow>
-                  <block type="math_arithmetic" id="IZANoXv9|noxpLSY/n2_">
-                    <field name="OP">DIVIDE</field>
+                  <block type="math_arithmetic" id="bT$2$.,(:R%0jzsvJ$W~">
+                    <field name="OP">ADD</field>
                     <value name="A">
-                      <shadow type="math_number">
+                      <shadow type="math_number" id="sFc*CE1.u,TV^Bql,eJO">
                         <field name="NUM">1</field>
                       </shadow>
-                      <block type="vex_iq_controller_joystick_position" id="q52)Bt$kdh.O%_7K,gM=">
+                      <block type="vex_iq_controller_joystick_position" id="UBMUIv:T$C[.d.nHRh%?">
                         <field name="JOYSTICK">LEFT</field>
-                        <field name="AXIS">HORIZONTAL</field>
+                        <field name="AXIS">VERTICAL</field>
                       </block>
                     </value>
                     <value name="B">
-                      <shadow type="math_number" id="^]h~NhggZ5pE00`U-nCQ">
-                        <field name="NUM">2</field>
+                      <shadow type="math_number" id="@S)h:ERV}s6riXV`*pQ@">
+                        <field name="NUM">1</field>
                       </shadow>
+                      <block type="math_arithmetic" id="B(REi_bUwE=u=_:;V;Oo">
+                        <field name="OP">DIVIDE</field>
+                        <value name="A">
+                          <shadow type="math_number" id=")Vz|UHv]~aYe[xtaz^!$">
+                            <field name="NUM">1</field>
+                          </shadow>
+                          <block type="vex_iq_controller_joystick_position" id="}[lTE7:U?GW5Q#t:zJpy">
+                            <field name="JOYSTICK">LEFT</field>
+                            <field name="AXIS">HORIZONTAL</field>
+                          </block>
+                        </value>
+                        <value name="B">
+                          <shadow type="math_number" id="=ume9svq?T)d/P/QtVW%">
+                            <field name="NUM">2</field>
+                          </shadow>
+                        </value>
+                      </block>
                     </value>
                   </block>
                 </value>
+                <next>
+                  <block type="vex_iq_motor_spin_velocity" id="]BKMA%gJ._m[#mabts7]">
+                    <field name="MOTOR" id="|}5]3]?#UB6;p-p@$?Zo">right motor</field>
+                    <field name="DIRECTION">FORWARD</field>
+                    <value name="VELOCITY">
+                      <shadow type="math_number">
+                        <field name="NUM">100</field>
+                      </shadow>
+                      <block type="math_arithmetic" id="(+4n|Yl82Kb0p8p9iP)F">
+                        <field name="OP">MINUS</field>
+                        <value name="A">
+                          <shadow type="math_number">
+                            <field name="NUM">1</field>
+                          </shadow>
+                          <block type="vex_iq_controller_joystick_position" id="D=5WtE`~d+MKL?]5EcA3">
+                            <field name="JOYSTICK">LEFT</field>
+                            <field name="AXIS">VERTICAL</field>
+                          </block>
+                        </value>
+                        <value name="B">
+                          <shadow type="math_number">
+                            <field name="NUM">1</field>
+                          </shadow>
+                          <block type="math_arithmetic" id="IZANoXv9|noxpLSY/n2_">
+                            <field name="OP">DIVIDE</field>
+                            <value name="A">
+                              <shadow type="math_number">
+                                <field name="NUM">1</field>
+                              </shadow>
+                              <block type="vex_iq_controller_joystick_position" id="q52)Bt$kdh.O%_7K,gM=">
+                                <field name="JOYSTICK">LEFT</field>
+                                <field name="AXIS">HORIZONTAL</field>
+                              </block>
+                            </value>
+                            <value name="B">
+                              <shadow type="math_number" id="^]h~NhggZ5pE00`U-nCQ">
+                                <field name="NUM">2</field>
+                              </shadow>
+                            </value>
+                          </block>
+                        </value>
+                      </block>
+                    </value>
+                  </block>
+                </next>
               </block>
-            </value>
+            </next>
           </block>
         </next>
       </block>

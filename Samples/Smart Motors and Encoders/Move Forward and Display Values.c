@@ -57,6 +57,23 @@ void rotate(Point &p, float theta) {
   p.y = newY;
 }
 
+
+bool between(float value, float bound1, float bound2) {
+  if (bound1 > bound2) {
+    return value > bound2 && value < bound1;
+  } else {
+    return value > bound1 && value < bound2;
+  }
+}
+
+bool notbetween(float value, float bound1, float bound2) {
+  if (bound1 > bound2) {
+    return value < bound2 || value > bound1;
+  } else {
+    return value < bound1 || value > bound2;
+  }
+}
+
 void on_start2() {
   if (event_is_active(start)) {
     resetMotorEncoder(left_motor);
@@ -67,15 +84,12 @@ void on_start2() {
   }
 }
 
-bool when_false_old_state = false;
-void when_false2() {
-  bool new_state = (getMotorSpeed(left_motor) > 0 || getMotorSpeed(right_motor) > 0 == 0);
-  if (!new_state && new_state != when_false_old_state) {
+void while22() {
+  if ((getMotorSpeed(left_motor) > 0 || getMotorSpeed(right_motor) > 0)) {
     displayTextLine(1, "Left Motor: %1.2f", getMotorEncoder(left_motor));
     displayTextLine(3, "Right Motor: %1.2f", getMotorEncoder(right_motor));
 
   }
-  when_false_old_state = new_state;
 }
 
 
@@ -84,7 +98,8 @@ task main() {
   activate_event(start);
   while(true) {
     on_start2();
-    when_false2();
+    while22();
+
     advance_event(start);
   }
 }
@@ -105,7 +120,35 @@ task main() {
     <variable id="Sq;4ZphrM!WA8xQBm)1F">port_11</variable>
     <variable id="f+3LAb5_1]ObyC0i9eX^">port_12</variable>
   </variables>
-  <block type="vex_iq_brain" id="(^W84*BmMq_oQZrg1R28" x="13" y="188">
+  <block type="comment_block" id="@$N#V)H0-)qvyfSFFUc^" x="13" y="38">
+    <field name="NAME">This program will show how you can use a</field>
+    <next>
+      <block type="comment_block" id="T`:NARvS%EY?E:)zN)mX">
+        <field name="NAME">non-blocking command to perform other tasks</field>
+        <next>
+          <block type="comment_block" id="vDP$7s#P@E;_O-v[ux(5">
+            <field name="NAME">while your motors are moving to a specific</field>
+            <next>
+              <block type="comment_block" id="-)`6.7.57v.)aeJ,ntr.">
+                <field name="NAME">position. The motors will begin moving to</field>
+                <next>
+                  <block type="comment_block" id="UPl_m5*7H.HQ+JoUzo{U">
+                    <field name="NAME">position 5000, and while they're moving we'll</field>
+                    <next>
+                      <block type="comment_block" id="u@s^-n,Z5k(Ia]5f+8gd">
+                        <field name="NAME">display the current encoder value to the display.</field>
+                      </block>
+                    </next>
+                  </block>
+                </next>
+              </block>
+            </next>
+          </block>
+        </next>
+      </block>
+    </next>
+  </block>
+  <block type="vex_iq_brain" id="(^W84*BmMq_oQZrg1R28" x="13" y="213">
     <field name="HAS_CONTROLLER">TRUE</field>
     <field name="PORT_1_NAME" id="2C_w(9X|eyDoXJZtSlGb">left motor</field>
     <field name="PORT_2_NAME" id="%U9G3C1f~]_Kp7^^-7Ir">port_2</field>
@@ -130,41 +173,56 @@ task main() {
       </block>
     </value>
   </block>
-  <block type="events_on_start" id="K$86O_u9#5nTErm18@jK" x="13" y="563">
+  <block type="events_on_start" id="K$86O_u9#5nTErm18@jK" x="13" y="588">
     <statement name="DO">
-      <block type="vex_iq_motor_reset_absolute_position" id="0K7zc-`|+H:8G%VcS#(%">
-        <field name="MOTOR" id="2C_w(9X|eyDoXJZtSlGb">left motor</field>
+      <block type="comment_block" id=";;#rh$h**]rF@!pEDwBp">
+        <field name="NAME">Reset the current position in the motor encoder</field>
         <next>
-          <block type="vex_iq_motor_reset_absolute_position" id="F~571#7F~W@@vD4Uz6j9">
-            <field name="MOTOR" id="|}5]3]?#UB6;p-p@$?Zo">right motor</field>
+          <block type="comment_block" id="#6?86+U9KYVl)/M~DR%)">
+            <field name="NAME">to zero.</field>
             <next>
-              <block type="vex_iq_motor_spin_to" id="O5Eb?f%_CW|[yG)(]Tsf">
+              <block type="vex_iq_motor_reset_absolute_position" id="0K7zc-`|+H:8G%VcS#(%">
                 <field name="MOTOR" id="2C_w(9X|eyDoXJZtSlGb">left motor</field>
-                <field name="STOP_MODE">BRAKE</field>
-                <value name="POSITION">
-                  <shadow type="math_number" id="Yyh-0gW[[$1]2}.[txtl">
-                    <field name="NUM">5000</field>
-                  </shadow>
-                </value>
-                <value name="VELOCITY">
-                  <shadow type="math_number" id="C%XUY-|y,reZDGK-q+qE">
-                    <field name="NUM">75</field>
-                  </shadow>
-                </value>
                 <next>
-                  <block type="vex_iq_motor_spin_to" id="A.(mm6|9u%qQ?.N.8,9F">
+                  <block type="vex_iq_motor_reset_absolute_position" id="F~571#7F~W@@vD4Uz6j9">
                     <field name="MOTOR" id="|}5]3]?#UB6;p-p@$?Zo">right motor</field>
-                    <field name="STOP_MODE">BRAKE</field>
-                    <value name="POSITION">
-                      <shadow type="math_number" id="c7NE@9(h.+S[0qZS?.Hd">
-                        <field name="NUM">5000</field>
-                      </shadow>
-                    </value>
-                    <value name="VELOCITY">
-                      <shadow type="math_number" id="@]kS=0Px!|_pCgWl1NN9">
-                        <field name="NUM">75</field>
-                      </shadow>
-                    </value>
+                    <next>
+                      <block type="comment_block" id="emag/U^))*`@zqo4h*f+">
+                        <field name="NAME">Set motor to run 5000 degrees at power level 75.</field>
+                        <next>
+                          <block type="vex_iq_motor_spin_to" id="O5Eb?f%_CW|[yG)(]Tsf">
+                            <field name="MOTOR" id="2C_w(9X|eyDoXJZtSlGb">left motor</field>
+                            <field name="STOP_MODE">BRAKE</field>
+                            <value name="POSITION">
+                              <shadow type="math_number" id="Yyh-0gW[[$1]2}.[txtl">
+                                <field name="NUM">5000</field>
+                              </shadow>
+                            </value>
+                            <value name="VELOCITY">
+                              <shadow type="math_number" id="C%XUY-|y,reZDGK-q+qE">
+                                <field name="NUM">75</field>
+                              </shadow>
+                            </value>
+                            <next>
+                              <block type="vex_iq_motor_spin_to" id="A.(mm6|9u%qQ?.N.8,9F">
+                                <field name="MOTOR" id="|}5]3]?#UB6;p-p@$?Zo">right motor</field>
+                                <field name="STOP_MODE">BRAKE</field>
+                                <value name="POSITION">
+                                  <shadow type="math_number" id="c7NE@9(h.+S[0qZS?.Hd">
+                                    <field name="NUM">5000</field>
+                                  </shadow>
+                                </value>
+                                <value name="VELOCITY">
+                                  <shadow type="math_number" id="@]kS=0Px!|_pCgWl1NN9">
+                                    <field name="NUM">75</field>
+                                  </shadow>
+                                </value>
+                              </block>
+                            </next>
+                          </block>
+                        </next>
+                      </block>
+                    </next>
                   </block>
                 </next>
               </block>
@@ -174,8 +232,8 @@ task main() {
       </block>
     </statement>
   </block>
-  <block type="events_after" id=".3m(GD~S~/ieS#^PHEBY" x="13" y="763">
-    <value name="AFTER">
+  <block type="events_while" id=":5z,!QP1x=88s(|%M@qr" x="13" y="863">
+    <value name="WHILE">
       <block type="logic_operation" id="XkLR!rMuT/UGf*B:3O^n">
         <field name="OP">OR</field>
         <value name="A">
@@ -194,21 +252,16 @@ task main() {
           </block>
         </value>
         <value name="B">
-          <block type="logic_compare" id="KJNx:r+y|q`h1:|/!nS~">
-            <field name="OP">EQ</field>
+          <block type="logic_compare" id="S_d[Ufo/z{!EpOC$-2%K">
+            <field name="OP">GT</field>
             <value name="A">
-              <block type="logic_compare" id="S_d[Ufo/z{!EpOC$-2%K">
-                <field name="OP">GT</field>
-                <value name="A">
-                  <block type="vex_iq_motor_velocity" id="^9W3wW9z{X4]VRoR@P#0">
-                    <field name="MOTOR" id="|}5]3]?#UB6;p-p@$?Zo">right motor</field>
-                  </block>
-                </value>
-                <value name="B">
-                  <block type="math_number" id="hZB)a2oUfW;YlyNXf,[%">
-                    <field name="NUM">0</field>
-                  </block>
-                </value>
+              <block type="vex_iq_motor_velocity" id="^9W3wW9z{X4]VRoR@P#0">
+                <field name="MOTOR" id="|}5]3]?#UB6;p-p@$?Zo">right motor</field>
+              </block>
+            </value>
+            <value name="B">
+              <block type="math_number" id="hZB)a2oUfW;YlyNXf,[%">
+                <field name="NUM">0</field>
               </block>
             </value>
           </block>
@@ -216,27 +269,47 @@ task main() {
       </block>
     </value>
     <statement name="DO">
-      <block type="vex_iq_lcd_print" id="G/oRaT1e{3emga|KR4B2">
-        <mutation vars="1"></mutation>
-        <field name="TEXT0">Left Motor: </field>
-        <field name="TEXT1"></field>
-        <field name="LINE">1</field>
-        <value name="VAR0">
-          <block type="vex_iq_motor_position" id="RocL:r8s.8=z=kSR_c4]">
-            <field name="MOTOR" id="2C_w(9X|eyDoXJZtSlGb">left motor</field>
-          </block>
-        </value>
+      <block type="comment_block" id="0Jg$t83{{w$o=iMmBhLe">
+        <field name="NAME">Print motor speeds while they are moving. Unlike</field>
         <next>
-          <block type="vex_iq_lcd_print" id="Rr,7Na|X0xcRO?NhQ`2C">
-            <mutation vars="1"></mutation>
-            <field name="TEXT0">Right Motor: </field>
-            <field name="TEXT1"></field>
-            <field name="LINE">3</field>
-            <value name="VAR0">
-              <block type="vex_iq_motor_position" id="!:hR;0WyT`5fPSx+FXDr">
-                <field name="MOTOR" id="|}5]3]?#UB6;p-p@$?Zo">right motor</field>
+          <block type="comment_block" id="1TR~Pn]yJD7nkFou$BY%">
+            <field name="NAME">a logic while loop, an event while loop allows</field>
+            <next>
+              <block type="comment_block" id="@jZBs4r9aY82[oipXse)">
+                <field name="NAME">other events to occur between each iteration of</field>
+                <next>
+                  <block type="comment_block" id="x#uO]Rif}ccapytVoeXz">
+                    <field name="NAME">the loop.</field>
+                    <next>
+                      <block type="vex_iq_lcd_print" id="G/oRaT1e{3emga|KR4B2">
+                        <mutation vars="1"></mutation>
+                        <field name="TEXT0">Left Motor: </field>
+                        <field name="TEXT1"></field>
+                        <field name="LINE">1</field>
+                        <value name="VAR0">
+                          <block type="vex_iq_motor_position" id="RocL:r8s.8=z=kSR_c4]">
+                            <field name="MOTOR" id="2C_w(9X|eyDoXJZtSlGb">left motor</field>
+                          </block>
+                        </value>
+                        <next>
+                          <block type="vex_iq_lcd_print" id="Rr,7Na|X0xcRO?NhQ`2C">
+                            <mutation vars="1"></mutation>
+                            <field name="TEXT0">Right Motor: </field>
+                            <field name="TEXT1"></field>
+                            <field name="LINE">3</field>
+                            <value name="VAR0">
+                              <block type="vex_iq_motor_position" id="!:hR;0WyT`5fPSx+FXDr">
+                                <field name="MOTOR" id="|}5]3]?#UB6;p-p@$?Zo">right motor</field>
+                              </block>
+                            </value>
+                          </block>
+                        </next>
+                      </block>
+                    </next>
+                  </block>
+                </next>
               </block>
-            </value>
+            </next>
           </block>
         </next>
       </block>

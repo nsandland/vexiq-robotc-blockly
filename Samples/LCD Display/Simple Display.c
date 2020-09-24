@@ -59,6 +59,23 @@ void rotate(Point &p, float theta) {
   p.y = newY;
 }
 
+
+bool between(float value, float bound1, float bound2) {
+  if (bound1 > bound2) {
+    return value > bound2 && value < bound1;
+  } else {
+    return value > bound1 && value < bound2;
+  }
+}
+
+bool notbetween(float value, float bound1, float bound2) {
+  if (bound1 > bound2) {
+    return value < bound2 || value > bound1;
+  } else {
+    return value < bound1 || value > bound2;
+  }
+}
+
 void on_start2() {
   if (event_is_active(start)) {
     display_value = 250;
@@ -75,6 +92,7 @@ task main() {
   activate_event(start);
   while(true) {
     on_start2();
+
     advance_event(start);
   }
 }
@@ -96,7 +114,20 @@ task main() {
     <variable id="f+3LAb5_1]ObyC0i9eX^">port_12</variable>
     <variable id="^SRP[oWh!(U-vjUd|C?d">display value</variable>
   </variables>
-  <block type="vex_iq_brain" id="(^W84*BmMq_oQZrg1R28" x="13" y="188">
+  <block type="comment_block" id="T|/]mRdWjYNbDf=CCv/_" x="13" y="13">
+    <field name="NAME">This program uses the DisplayTextLine function</field>
+    <next>
+      <block type="comment_block" id=".!`V]j2YaIkoUKJW?mLz">
+        <field name="NAME">of ROBOTC on the VEX IQ Platform. It will</field>
+        <next>
+          <block type="comment_block" id="]BN,UFKj/:3nQA^4!ar|">
+            <field name="NAME">display a message and a number.</field>
+          </block>
+        </next>
+      </block>
+    </next>
+  </block>
+  <block type="vex_iq_brain" id="(^W84*BmMq_oQZrg1R28" x="13" y="113">
     <field name="HAS_CONTROLLER">TRUE</field>
     <field name="PORT_1_NAME" id="2C_w(9X|eyDoXJZtSlGb">left motor</field>
     <field name="PORT_2_NAME" id="%U9G3C1f~]_Kp7^^-7Ir">port_2</field>
@@ -124,7 +155,7 @@ task main() {
       </block>
     </value>
   </block>
-  <block type="events_on_start" id="K$86O_u9#5nTErm18@jK" x="13" y="563">
+  <block type="events_on_start" id="K$86O_u9#5nTErm18@jK" x="13" y="488">
     <statement name="DO">
       <block type="variables_set" id=";HaRJdQ7R!iP@AHWT^io">
         <field name="VAR" id="^SRP[oWh!(U-vjUd|C?d">display value</field>

@@ -171,7 +171,40 @@ task main() {
     <variable id="#2%#m/]}mGB9ce;wY=z`">left speed</variable>
     <variable id="`^5*YMper9%GDU{GEr#V">right speed</variable>
   </variables>
-  <block type="vex_iq_brain" id="%y[i=TI^e=S5W5q!.w0+" x="13" y="13">
+  <block type="comment_block" id="yE+_Yh(O{+s4`S2NiW)P" x="13" y="13">
+    <field name="NAME">This program will use the VEX IQ Wireless</field>
+    <next>
+      <block type="comment_block" id="*)`I~Y|IEA^nZgX8`A?0">
+        <field name="NAME">Controller to drive your Clawbot. This program</field>
+        <next>
+          <block type="comment_block" id="Zy:_uT|jw3YfFC=`;7ZP">
+            <field name="NAME">uses If/Else statements to provide a "threshold"</field>
+            <next>
+              <block type="comment_block" id="IJCt-,hB5+Jss^ziao]X">
+                <field name="NAME">for the transmitter - this allows your robot to</field>
+                <next>
+                  <block type="comment_block" id="NKc`VnCht1o2oCOR_DAR">
+                    <field name="NAME">come to a stop even if the joysticks on the</field>
+                    <next>
+                      <block type="comment_block" id="iG7(E.fhO:Tn_Hbu3h([">
+                        <field name="NAME">Wireless Controller haven't perfectly returned</field>
+                        <next>
+                          <block type="comment_block" id="FIQcu$,x%XI-=z9-jo~K">
+                            <field name="NAME">to their zero position.</field>
+                          </block>
+                        </next>
+                      </block>
+                    </next>
+                  </block>
+                </next>
+              </block>
+            </next>
+          </block>
+        </next>
+      </block>
+    </next>
+  </block>
+  <block type="vex_iq_brain" id="%y[i=TI^e=S5W5q!.w0+" x="13" y="263">
     <field name="HAS_CONTROLLER">TRUE</field>
     <field name="PORT_1_NAME" id="2C_w(9X|eyDoXJZtSlGb">left motor</field>
     <field name="PORT_2_NAME" id="%U9G3C1f~]_Kp7^^-7Ir">port_2</field>
@@ -206,7 +239,7 @@ task main() {
       </block>
     </value>
   </block>
-  <block type="events_on_start" id="unu4LZ=;_A{(*fR6uw~y" x="13" y="388">
+  <block type="events_on_start" id="unu4LZ=;_A{(*fR6uw~y" x="13" y="638">
     <statement name="DO">
       <block type="variables_set" id="/zT0c07Km|TJHIloN_6;">
         <field name="VAR" id="h5!zdxA0SxPI63X-k[TY">threshold</field>
@@ -238,7 +271,7 @@ task main() {
       </block>
     </statement>
   </block>
-  <block type="events_always" id="}@B~$VOG`.Vx%#fCUCgg" x="13" y="538">
+  <block type="events_always" id="}@B~$VOG`.Vx%#fCUCgg" x="13" y="788">
     <statement name="DO">
       <block type="variables_set" id="`mnYLi~TIDfimC)hGSHP">
         <field name="VAR" id="#2%#m/]}mGB9ce;wY=z`">left speed</field>
@@ -322,7 +355,7 @@ task main() {
       </block>
     </statement>
   </block>
-  <block type="events_always" id=")]:q!gVH*Wc~xl|H58|6" x="13" y="688">
+  <block type="events_always" id=")]:q!gVH*Wc~xl|H58|6" x="13" y="938">
     <statement name="DO">
       <block type="controls_if" id="$Z^SK^u|Y|.YIVY]|)Xj">
         <mutation else="1"></mutation>
@@ -383,7 +416,7 @@ task main() {
       </block>
     </statement>
   </block>
-  <block type="events_always" id="`f_0C1O][j2}m$v1_ycf" x="13" y="888">
+  <block type="events_always" id="`f_0C1O][j2}m$v1_ycf" x="13" y="1138">
     <statement name="DO">
       <block type="controls_if" id="wT`-@;l*-[{iN8=`8`8$">
         <mutation else="1"></mutation>
@@ -444,7 +477,7 @@ task main() {
       </block>
     </statement>
   </block>
-  <block type="events_always" id="?{,eq!/oY~wOAi+KVq9z" x="13" y="1088">
+  <block type="events_always" id="?{,eq!/oY~wOAi+KVq9z" x="13" y="1338">
     <statement name="DO">
       <block type="controls_if" id="`)DoL9GCg,EyS=hrMzg[">
         <mutation elseif="1" else="1"></mutation>
@@ -454,14 +487,24 @@ task main() {
           </block>
         </value>
         <statement name="DO0">
-          <block type="vex_iq_motor_spin_velocity" id="(;xO?=Y,$P[k0`eJJqX(">
-            <field name="MOTOR" id="UCC-Z#0}d85!qaB^`*EY">arm motor</field>
-            <field name="DIRECTION">BACKWARD</field>
-            <value name="VELOCITY">
-              <shadow type="math_number" id="uo)OC7+?M?Q%HDK?un/f">
-                <field name="NUM">100</field>
-              </shadow>
-            </value>
+          <block type="comment_block" id="-.QB6M-d@1WxU;Q9JGE4">
+            <field name="NAME">If Button "L-Up" is pressed in, we'll set the</field>
+            <next>
+              <block type="comment_block" id="/~#^t:ceFXnJqBswzm=m">
+                <field name="NAME">arm motor to run in reverse.</field>
+                <next>
+                  <block type="vex_iq_motor_spin_velocity" id="(;xO?=Y,$P[k0`eJJqX(">
+                    <field name="MOTOR" id="UCC-Z#0}d85!qaB^`*EY">arm motor</field>
+                    <field name="DIRECTION">BACKWARD</field>
+                    <value name="VELOCITY">
+                      <shadow type="math_number" id="uo)OC7+?M?Q%HDK?un/f">
+                        <field name="NUM">100</field>
+                      </shadow>
+                    </value>
+                  </block>
+                </next>
+              </block>
+            </next>
           </block>
         </statement>
         <value name="IF1">
@@ -470,26 +513,46 @@ task main() {
           </block>
         </value>
         <statement name="DO1">
-          <block type="vex_iq_motor_spin_velocity" id="}vHo@ak]TZdY9+D@LjM$">
-            <field name="MOTOR" id="UCC-Z#0}d85!qaB^`*EY">arm motor</field>
-            <field name="DIRECTION">FORWARD</field>
-            <value name="VELOCITY">
-              <shadow type="math_number" id="ero5!10~EWH!(_sF^R/7">
-                <field name="NUM">100</field>
-              </shadow>
-            </value>
+          <block type="comment_block" id="Q(UA4iOL[rS_~GU#2?S~">
+            <field name="NAME">If the "L-Up" isn't pressed, but "L-Down" is,</field>
+            <next>
+              <block type="comment_block" id="t5u?%Yz@IJ*OeAzg@^UT">
+                <field name="NAME">we'll set the motor to run forward.</field>
+                <next>
+                  <block type="vex_iq_motor_spin_velocity" id="}vHo@ak]TZdY9+D@LjM$">
+                    <field name="MOTOR" id="UCC-Z#0}d85!qaB^`*EY">arm motor</field>
+                    <field name="DIRECTION">FORWARD</field>
+                    <value name="VELOCITY">
+                      <shadow type="math_number" id="ero5!10~EWH!(_sF^R/7">
+                        <field name="NUM">100</field>
+                      </shadow>
+                    </value>
+                  </block>
+                </next>
+              </block>
+            </next>
           </block>
         </statement>
         <statement name="ELSE">
-          <block type="vex_iq_motor_stop" id="}OhcU1.zydbHx%i%GixY">
-            <field name="MOTOR" id="UCC-Z#0}d85!qaB^`*EY">arm motor</field>
-            <field name="STOP_MODE">HOLD</field>
+          <block type="comment_block" id="Y3-_X+ZzodBLZ4AZ[n+P">
+            <field name="NAME">If neither button is pressed, we'll set the</field>
+            <next>
+              <block type="comment_block" id="?Qz?_NPO.oHylLugwQnF">
+                <field name="NAME">motor off.</field>
+                <next>
+                  <block type="vex_iq_motor_stop" id="}OhcU1.zydbHx%i%GixY">
+                    <field name="MOTOR" id="UCC-Z#0}d85!qaB^`*EY">arm motor</field>
+                    <field name="STOP_MODE">HOLD</field>
+                  </block>
+                </next>
+              </block>
+            </next>
           </block>
         </statement>
       </block>
     </statement>
   </block>
-  <block type="events_always" id="h4kcxe+x7C!%xmCCwa!_" x="13" y="1338">
+  <block type="events_always" id="h4kcxe+x7C!%xmCCwa!_" x="13" y="1738">
     <statement name="DO">
       <block type="controls_if" id="ujgE^`xq6kBb*6rio`rE">
         <mutation elseif="1" else="1"></mutation>
@@ -499,14 +562,24 @@ task main() {
           </block>
         </value>
         <statement name="DO0">
-          <block type="vex_iq_motor_spin_velocity" id="5jj^T~xo}whi0cXcRZIS">
-            <field name="MOTOR" id="Sq;4ZphrM!WA8xQBm)1F">claw motor</field>
-            <field name="DIRECTION">BACKWARD</field>
-            <value name="VELOCITY">
-              <shadow type="math_number" id="ljE@qDHgR~]ID5{;j)p~">
-                <field name="NUM">100</field>
-              </shadow>
-            </value>
+          <block type="comment_block" id="|oYSQ5E7TU)c]#/iFuv;">
+            <field name="NAME">If Button "R-Up" is pressed in, we'll set the</field>
+            <next>
+              <block type="comment_block" id="4AKBpD(#TDPFDe+]!c7]">
+                <field name="NAME">claw motor to run in reverse.</field>
+                <next>
+                  <block type="vex_iq_motor_spin_velocity" id="5jj^T~xo}whi0cXcRZIS">
+                    <field name="MOTOR" id="Sq;4ZphrM!WA8xQBm)1F">claw motor</field>
+                    <field name="DIRECTION">BACKWARD</field>
+                    <value name="VELOCITY">
+                      <shadow type="math_number" id="ljE@qDHgR~]ID5{;j)p~">
+                        <field name="NUM">100</field>
+                      </shadow>
+                    </value>
+                  </block>
+                </next>
+              </block>
+            </next>
           </block>
         </statement>
         <value name="IF1">
@@ -515,20 +588,40 @@ task main() {
           </block>
         </value>
         <statement name="DO1">
-          <block type="vex_iq_motor_spin_velocity" id="Z.IRt2OCi$p1uS3KT)6T">
-            <field name="MOTOR" id="Sq;4ZphrM!WA8xQBm)1F">claw motor</field>
-            <field name="DIRECTION">FORWARD</field>
-            <value name="VELOCITY">
-              <shadow type="math_number" id="}X$/D03QP7t(gqpakm{/">
-                <field name="NUM">100</field>
-              </shadow>
-            </value>
+          <block type="comment_block" id="$aj}.k{3Lxe!rwr}B?vo">
+            <field name="NAME">If the "R-Up" isn't pressed, but "R-Down" is,</field>
+            <next>
+              <block type="comment_block" id="/3rvR{v.a^6:V-iz98Q,">
+                <field name="NAME">we'll set the motor to run forward.</field>
+                <next>
+                  <block type="vex_iq_motor_spin_velocity" id="Z.IRt2OCi$p1uS3KT)6T">
+                    <field name="MOTOR" id="Sq;4ZphrM!WA8xQBm)1F">claw motor</field>
+                    <field name="DIRECTION">FORWARD</field>
+                    <value name="VELOCITY">
+                      <shadow type="math_number" id="}X$/D03QP7t(gqpakm{/">
+                        <field name="NUM">100</field>
+                      </shadow>
+                    </value>
+                  </block>
+                </next>
+              </block>
+            </next>
           </block>
         </statement>
         <statement name="ELSE">
-          <block type="vex_iq_motor_stop" id=".i7dNjmvgC?qoB_@S!V1">
-            <field name="MOTOR" id="Sq;4ZphrM!WA8xQBm)1F">claw motor</field>
-            <field name="STOP_MODE">HOLD</field>
+          <block type="comment_block" id="Zid@9dfXj9j/P}yc,`+o">
+            <field name="NAME">If neither button is pressed, we'll set the</field>
+            <next>
+              <block type="comment_block" id="Y)p`=E|,:UfUlG|$%@NN">
+                <field name="NAME">motor off.</field>
+                <next>
+                  <block type="vex_iq_motor_stop" id=".i7dNjmvgC?qoB_@S!V1">
+                    <field name="MOTOR" id="Sq;4ZphrM!WA8xQBm)1F">claw motor</field>
+                    <field name="STOP_MODE">HOLD</field>
+                  </block>
+                </next>
+              </block>
+            </next>
           </block>
         </statement>
       </block>

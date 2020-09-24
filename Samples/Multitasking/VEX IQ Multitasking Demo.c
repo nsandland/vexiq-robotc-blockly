@@ -12,8 +12,7 @@ typedef struct {
 
 Event start;
 
-task one();
-task two();
+
 
 Event EVENT_ACTIVE = 0x01;
 Event EVENT_QUEUED = 0x02;
@@ -59,6 +58,23 @@ void rotate(Point &p, float theta) {
   p.y = newY;
 }
 
+
+bool between(float value, float bound1, float bound2) {
+  if (bound1 > bound2) {
+    return value > bound2 && value < bound1;
+  } else {
+    return value > bound1 && value < bound2;
+  }
+}
+
+bool notbetween(float value, float bound1, float bound2) {
+  if (bound1 > bound2) {
+    return value < bound2 || value > bound1;
+  } else {
+    return value < bound1 || value > bound2;
+  }
+}
+
 // Describe this function...
 task one() {
   while (true) {
@@ -68,7 +84,7 @@ task one() {
     sleep(75);
     displayTextLine(0, "Task ONE:   -  -", );
     sleep(75);
-    displayTextLine(0, "Task ONE:    \ \", );
+    displayTextLine(0, "Task ONE:    \\ \\", );
     sleep(75);
   }
 }
@@ -78,19 +94,19 @@ task two() {
   while (true) {
     displayTextLine(1, "Task TWO:    / |", );
     sleep(75);
-    displayTextLine(1, "Task TWO:   -  \", );
+    displayTextLine(1, "Task TWO:   -  \\", );
     sleep(75);
     displayTextLine(1, "Task TWO:  -   -", );
     sleep(75);
-    displayTextLine(1, "Task TWO: \    /", );
+    displayTextLine(1, "Task TWO: \\    /", );
     sleep(75);
   }
 }
 
 void on_start2() {
   if (event_is_active(start)) {
-    StartTask(one);
-    StartTask(two);
+    startTask(one);
+    startTask(two);
 
   }
 }
@@ -101,6 +117,7 @@ task main() {
   activate_event(start);
   while(true) {
     on_start2();
+
     advance_event(start);
   }
 }
@@ -121,7 +138,60 @@ task main() {
     <variable id="Sq;4ZphrM!WA8xQBm)1F">port_11</variable>
     <variable id="f+3LAb5_1]ObyC0i9eX^">port_12</variable>
   </variables>
-  <block type="vex_iq_brain" id="(^W84*BmMq_oQZrg1R28" x="13" y="213">
+  <block type="comment_block" id="BY;OUrM=iJ$6?3|]559]" x="13" y="13">
+    <field name="NAME">This program will run two tasks simulatenously,</field>
+    <next>
+      <block type="comment_block" id=":$e2Fm4WXB~|():VfM0Z">
+        <field name="NAME">showing the ability to have your robot complete</field>
+        <next>
+          <block type="comment_block" id="T!]f`cAMp]bPu+ni[{s7">
+            <field name="NAME">multiple objectives/tasks at the same time. This</field>
+            <next>
+              <block type="comment_block" id="ZdePMFemts1nH{vj1n%#">
+                <field name="NAME">is illustrated by displaying characters on the</field>
+                <next>
+                  <block type="comment_block" id="tvK|gppaoIz-O|=DRu@s">
+                    <field name="NAME">VEX IQ's LCD Screen to show the two tasks</field>
+                    <next>
+                      <block type="comment_block" id="7z+6ZqHC#7TWp=1X4BGj">
+                        <field name="NAME">running at the same time.</field>
+                        <next>
+                          <block type="comment_block" id="Ye6bj{Mk]s4ml8R5.gtX">
+                            <field name="NAME"></field>
+                            <next>
+                              <block type="comment_block" id=":?K6;1.9Ln2{p3$(`@ny">
+                                <field name="NAME">In each task is a number of "sleep" commands -</field>
+                                <next>
+                                  <block type="comment_block" id="7^1I07.U8f0[c%)9Q[=t">
+                                    <field name="NAME">these commands yield the processor for a</field>
+                                    <next>
+                                      <block type="comment_block" id="yfQYEy]{-pU@L0HjH=3H">
+                                        <field name="NAME">specific amount of time to allow other tasks to</field>
+                                        <next>
+                                          <block type="comment_block" id="7qo[6%zq{0Mw{:6_YG`M">
+                                            <field name="NAME"> run.</field>
+                                          </block>
+                                        </next>
+                                      </block>
+                                    </next>
+                                  </block>
+                                </next>
+                              </block>
+                            </next>
+                          </block>
+                        </next>
+                      </block>
+                    </next>
+                  </block>
+                </next>
+              </block>
+            </next>
+          </block>
+        </next>
+      </block>
+    </next>
+  </block>
+  <block type="vex_iq_brain" id="(^W84*BmMq_oQZrg1R28" x="13" y="338">
     <field name="HAS_CONTROLLER">TRUE</field>
     <field name="PORT_1_NAME" id="2C_w(9X|eyDoXJZtSlGb">left motor</field>
     <field name="PORT_2_NAME" id="%U9G3C1f~]_Kp7^^-7Ir">port_2</field>
@@ -149,7 +219,7 @@ task main() {
       </block>
     </value>
   </block>
-  <block type="procedures_deftask" id=")CVq:$v^Ph`z;zI$4||^" x="13" y="588">
+  <block type="procedures_deftask" id=")CVq:$v^Ph`z;zI$4||^" x="13" y="713">
     <field name="NAME">one</field>
     <field name="IS_TASK">asynchronously</field>
     <comment pinned="false" h="80" w="160">Describe this function...</comment>
@@ -228,7 +298,7 @@ task main() {
       </block>
     </statement>
   </block>
-  <block type="procedures_deftask" id="z$?v.85mkspGccYojK,j" x="13" y="938">
+  <block type="procedures_deftask" id="z$?v.85mkspGccYojK,j" x="13" y="1063">
     <field name="NAME">two</field>
     <field name="IS_TASK">asynchronously</field>
     <comment pinned="false" h="80" w="160">Describe this function...</comment>
@@ -307,15 +377,25 @@ task main() {
       </block>
     </statement>
   </block>
-  <block type="events_on_start" id="K$86O_u9#5nTErm18@jK" x="13" y="1288">
+  <block type="events_on_start" id="K$86O_u9#5nTErm18@jK" x="13" y="1413">
     <statement name="DO">
-      <block type="procedures_startstoptask" id="T4_ys5T(?.`|@Y`)#Jfk">
-        <mutation name="one"></mutation>
-        <field name="ACTION">START</field>
+      <block type="comment_block" id="rzgF9Q|;_e2aexHLgXJQ">
+        <field name="NAME">Remove either of these two lines to see a Task</field>
         <next>
-          <block type="procedures_startstoptask" id="/bl#hf70v[l*R-3{kLiG">
-            <mutation name="two"></mutation>
-            <field name="ACTION">START</field>
+          <block type="comment_block" id="JFZi,iO$3,onBmD-=!-c">
+            <field name="NAME">running individually</field>
+            <next>
+              <block type="procedures_startstoptask" id="T4_ys5T(?.`|@Y`)#Jfk">
+                <mutation name="one"></mutation>
+                <field name="ACTION">START</field>
+                <next>
+                  <block type="procedures_startstoptask" id="/bl#hf70v[l*R-3{kLiG">
+                    <mutation name="two"></mutation>
+                    <field name="ACTION">START</field>
+                  </block>
+                </next>
+              </block>
+            </next>
           </block>
         </next>
       </block>

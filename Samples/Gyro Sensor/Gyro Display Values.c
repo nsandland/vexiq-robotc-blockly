@@ -58,6 +58,23 @@ void rotate(Point &p, float theta) {
   p.y = newY;
 }
 
+
+bool between(float value, float bound1, float bound2) {
+  if (bound1 > bound2) {
+    return value > bound2 && value < bound1;
+  } else {
+    return value > bound1 && value < bound2;
+  }
+}
+
+bool notbetween(float value, float bound1, float bound2) {
+  if (bound1 > bound2) {
+    return value < bound2 || value > bound1;
+  } else {
+    return value < bound1 || value > bound2;
+  }
+}
+
 void on_start2() {
   if (event_is_active(start)) {
     resetGyro(gyro_sensor);
@@ -99,6 +116,24 @@ task main() {
     <variable id="Sq;4ZphrM!WA8xQBm)1F">port_11</variable>
     <variable id="f+3LAb5_1]ObyC0i9eX^">port_12</variable>
   </variables>
+  <block type="comment_block" id="g!9D;#3OHp7ZlZC?ieT," x="13" y="13">
+    <field name="NAME">This program will use the VEX IQ Gyro sensor</field>
+    <next>
+      <block type="comment_block" id="wj-|Mpu7UK[16z9f22}I">
+        <field name="NAME">to display the heading value from the VEX IQ</field>
+        <next>
+          <block type="comment_block" id="`CE|GBJY.7irJ^=x+JNv">
+            <field name="NAME">Gyro Sensor</field>
+            <next>
+              <block type="comment_block" id="b?dvoZwB2hS21MQ0fOex">
+                <field name="NAME">Returns a value of 0-359</field>
+              </block>
+            </next>
+          </block>
+        </next>
+      </block>
+    </next>
+  </block>
   <block type="vex_iq_brain" id="(^W84*BmMq_oQZrg1R28" x="13" y="138">
     <field name="HAS_CONTROLLER">TRUE</field>
     <field name="PORT_1_NAME" id="2C_w(9X|eyDoXJZtSlGb">left motor</field>
@@ -129,12 +164,17 @@ task main() {
   </block>
   <block type="events_on_start" id="K$86O_u9#5nTErm18@jK" x="13" y="513">
     <statement name="DO">
-      <block type="vex_iq_gyro_reset_heading" id="s+e%#ZZn@}Ov-$G8;tIi">
-        <field name="NAME" id="s4u0G;(du~#s/n8=ibn}">gyro sensor</field>
+      <block type="comment_block" id="eb4}B1+H6m*Qcd,]JIa7">
+        <field name="NAME">Reset the gyro sensor to remove any previous data.</field>
+        <next>
+          <block type="vex_iq_gyro_reset_heading" id="s+e%#ZZn@}Ov-$G8;tIi">
+            <field name="NAME" id="s4u0G;(du~#s/n8=ibn}">gyro sensor</field>
+          </block>
+        </next>
       </block>
     </statement>
   </block>
-  <block type="events_always" id="Z2(a}m~0`G6@9?LKczvg" x="13" y="613">
+  <block type="events_always" id="Z2(a}m~0`G6@9?LKczvg" x="13" y="638">
     <statement name="DO">
       <block type="vex_iq_lcd_print" id="NOn!cpN1i2aaQSf[K|?5">
         <mutation vars="1"></mutation>

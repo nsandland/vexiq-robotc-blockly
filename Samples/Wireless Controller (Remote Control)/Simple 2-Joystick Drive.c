@@ -57,6 +57,23 @@ void rotate(Point &p, float theta) {
   p.y = newY;
 }
 
+
+bool between(float value, float bound1, float bound2) {
+  if (bound1 > bound2) {
+    return value > bound2 && value < bound1;
+  } else {
+    return value > bound1 && value < bound2;
+  }
+}
+
+bool notbetween(float value, float bound1, float bound2) {
+  if (bound1 > bound2) {
+    return value < bound2 || value > bound1;
+  } else {
+    return value < bound1 || value > bound2;
+  }
+}
+
 void always2() {
   setMotorSpeed(left_motor, (getJoystickValue(ChA)));
   setMotorSpeed(right_motor, (getJoystickValue(ChD)));
@@ -69,6 +86,7 @@ task main() {
   activate_event(start);
   while(true) {
     always2();
+
     advance_event(start);
   }
 }
@@ -89,7 +107,25 @@ task main() {
     <variable id="Sq;4ZphrM!WA8xQBm)1F">port_11</variable>
     <variable id="f+3LAb5_1]ObyC0i9eX^">port_12</variable>
   </variables>
-  <block type="vex_iq_brain" id="%y[i=TI^e=S5W5q!.w0+" x="13" y="113">
+  <block type="comment_block" id="z}f)75g$P;fS)VARlnX*" x="13" y="13">
+    <field name="NAME">This program will use the VEX IQ Wireless</field>
+    <next>
+      <block type="comment_block" id="pQ|`z{eB(Bm)43=B?w!d">
+        <field name="NAME">Controller to drive your Clawbot. This program</field>
+        <next>
+          <block type="comment_block" id="!$J,#QirSD?^*o}Kj30+">
+            <field name="NAME">will use "Tank Mode" to enable two joysticks to</field>
+            <next>
+              <block type="comment_block" id="P+CY9),76T81LJ4,BEs2">
+                <field name="NAME">drive the two main motors of the Clawbot.</field>
+              </block>
+            </next>
+          </block>
+        </next>
+      </block>
+    </next>
+  </block>
+  <block type="vex_iq_brain" id="%y[i=TI^e=S5W5q!.w0+" x="13" y="138">
     <field name="HAS_CONTROLLER">TRUE</field>
     <field name="PORT_1_NAME" id="2C_w(9X|eyDoXJZtSlGb">left motor</field>
     <field name="PORT_2_NAME" id="%U9G3C1f~]_Kp7^^-7Ir">port_2</field>
@@ -114,7 +150,7 @@ task main() {
       </block>
     </value>
   </block>
-  <block type="events_always" id="}@B~$VOG`.Vx%#fCUCgg" x="13" y="488">
+  <block type="events_always" id="}@B~$VOG`.Vx%#fCUCgg" x="13" y="513">
     <statement name="DO">
       <block type="vex_iq_motor_spin_velocity" id="i!jY/=bu[dhk+]v8q)V[">
         <field name="MOTOR" id="2C_w(9X|eyDoXJZtSlGb">left motor</field>
