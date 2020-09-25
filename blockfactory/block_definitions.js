@@ -227,9 +227,12 @@ Blockly.Blocks['vex_iq_distance_sensor'] = {
 
 Blockly.Blocks['vex_iq_gyro'] = {
   init: function() {
+    this.appendValueInput("DRIFT")
+        .setCheck("Number")
+        .appendField("gyro with ");
     this.appendDummyInput()
-        .appendField("gyro");
-    this.setInputsInline(false);
+        .appendField("degrees/sec drift");
+    this.setInputsInline(true);
     this.setOutput(true, "GyroDeclaration");
     this.setColour(65);
  this.setTooltip("");

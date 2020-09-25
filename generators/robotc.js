@@ -131,6 +131,8 @@ Blockly.RobotC.init = function(workspace) {
   // the map, its type is assumed to be float.
   Blockly.RobotC.variableTypes_ = {};
   Blockly.RobotC.pragmas_ = '';
+  Blockly.RobotC.gyroDrifts_ = {};
+  Blockly.RobotC.lastGyroDrift_ = 0;
 
   Blockly.RobotC.getVariableType = function(name) {
     return Blockly.RobotC.variableTypes_[name] || 'float';
