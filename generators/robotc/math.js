@@ -183,7 +183,7 @@ Blockly.RobotC['math_number_property'] = function(block) {
       code = number_to_check + ' % 2 == 0';
       break;
     case 'ODD':
-      code = number_to_check + ' % 2 == 1';
+      code = 'mod(' + number_to_check + ', 2) == 1';
       break;
     case 'WHOLE':
       code = number_to_check + ' % 1 == 0';
@@ -353,8 +353,8 @@ Blockly.RobotC['math_modulo'] = function(block) {
       Blockly.RobotC.ORDER_MODULUS) || '0';
   var argument1 = Blockly.RobotC.valueToCode(block, 'DIVISOR',
       Blockly.RobotC.ORDER_MODULUS) || '0';
-  var code = argument0 + ' % ' + argument1;
-  return [code, Blockly.RobotC.ORDER_MODULUS];
+  var code = 'mod(' + argument0 + ', ' + argument1 + ')';
+  return [code, Blockly.RobotC.ORDER_FUNCTION_CALL];
 };
 
 Blockly.RobotC['math_constrain'] = function(block) {
@@ -387,7 +387,7 @@ Blockly.RobotC['math_random_int'] = function(block) {
        '    a = b;',
        '    b = c;',
        '  }',
-       '  return (randLong() % (b-a)) + a;',
+       '  return randLong() % (b-a) + a;',
        '}']);
   var code = functionName + '(' + argument0 + ', ' + argument1 + ')';
   return [code, Blockly.RobotC.ORDER_FUNCTION_CALL];
@@ -398,12 +398,19 @@ Blockly.RobotC['math_random_float'] = function(block) {
   return ['(float)randLong() / 2147483647', Blockly.RobotC.ORDER_DIVISION];
 };
 
-// Blockly.RobotC['math_atan2'] = function(block) {
-//   // Arctangent of point (X, Y) in degrees from -180 to 180.
-//   var argument0 = Blockly.RobotC.valueToCode(block, 'X',
-//       Blockly.RobotC.ORDER_COMMA) || '0';
-//   var argument1 = Blockly.RobotC.valueToCode(block, 'Y',
-//       Blockly.RobotC.ORDER_COMMA) || '0';
-//   return ['Math.atan2(' + argument1 + ', ' + argument0 + ') / Math.PI * 180',
-//       Blockly.RobotC.ORDER_DIVISION];
-// };
+Blockly.RobotC['math_angle_distance'] = function(block) {
+  var value_from = Blockly.RobotC.valueToCode(block, 'FROM', Blockly.RobotC.ORDER_ATOMIC);
+  var value_to = Blockly.RobotC.valueToCode(block, 'TO', Blockly.RobotC.ORDER_ATOMIC);
+  var code = 'mod(' + value_to + ' - ' + value_from + ' + 180, 360) - 180';
+  return [code, Blockly.RobotC.ORDER_SUBTRACTION];
+};
+
+Blockly.RobotC.math = `
+float mod(int i, int n) {
+  return (i % n + n) % n;
+}
+
+`;
+
+Blockly.RobotC.addReservedWords(
+  'mod');

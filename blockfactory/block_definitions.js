@@ -229,6 +229,7 @@ Blockly.Blocks['vex_iq_gyro'] = {
   init: function() {
     this.appendValueInput("DRIFT")
         .setCheck("Number")
+        .appendField(new Blockly.FieldDropdown([["clockwise","CW"], ["counter-clockwise","CCW"]]), "DIRECTION")
         .appendField("gyro with ");
     this.appendDummyInput()
         .appendField("degrees/sec drift");
@@ -1290,6 +1291,24 @@ Blockly.Blocks['logic_between'] = {
     this.setInputsInline(true);
     this.setOutput(true, null);
     this.setColour(210);
+ this.setTooltip("");
+ this.setHelpUrl("");
+  }
+};
+
+Blockly.Blocks['math_angle_distance'] = {
+  init: function() {
+    this.appendValueInput("FROM")
+        .setCheck("Number")
+        .appendField("distance from");
+    this.appendValueInput("TO")
+        .setCheck("Number")
+        .appendField("degrees to");
+    this.appendDummyInput()
+        .appendField("degrees");
+    this.setInputsInline(true);
+    this.setOutput(true, null);
+    this.setColour(230);
  this.setTooltip("");
  this.setHelpUrl("");
   }

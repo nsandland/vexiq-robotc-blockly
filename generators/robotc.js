@@ -133,6 +133,8 @@ Blockly.RobotC.init = function(workspace) {
   Blockly.RobotC.pragmas_ = '';
   Blockly.RobotC.gyroDrifts_ = {};
   Blockly.RobotC.lastGyroDrift_ = 0;
+  Blockly.RobotC.gyroDirections_ = {};
+  Blockly.RobotC.lastGyroDirection_ = 'CW';
 
   Blockly.RobotC.getVariableType = function(name) {
     return Blockly.RobotC.variableTypes_[name] || 'float';
@@ -226,7 +228,8 @@ task main() {
       + functionDeclarations
       + Blockly.RobotC.events
       + Blockly.RobotC.point
-      + Blockly.RobotC.logic
+      + Blockly.RobotC.logic     
+      + Blockly.RobotC.math
       + Blockly.RobotC.vexiq
       + code
       + definitions.join('\n\n') + '\n\n\n'

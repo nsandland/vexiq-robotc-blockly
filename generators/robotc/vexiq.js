@@ -188,6 +188,7 @@ Blockly.RobotC['vex_iq_distance_sensor'] = function(block) {
 Blockly.RobotC['vex_iq_gyro'] = function(block) {
   var code = 'sensorVexIQ_Gyro';
   Blockly.RobotC.lastGyroDrift_ = Blockly.RobotC.valueToCode(block, 'DRIFT', Blockly.RobotC.ORDER_ATOMIC);
+  Blockly.RobotC.lastGyroDirection_ = block.getFieldValue('DIRECTION');
   return [code, Blockly.RobotC.ORDER_ATOMIC];
 };
 
@@ -209,6 +210,7 @@ Blockly.RobotC['vex_iq_brain'] = function(block) {
     }
     if (value == 'sensorVexIQ_Gyro') {
       Blockly.RobotC.gyroDrifts_[variable] = Blockly.RobotC.lastGyroDrift_;
+      Blockly.RobotC.gyroDirections_[variable] = Blockly.RobotC.lastGyroDirection_;
     }
     Blockly.RobotC.variableTypes_[variable] = '#pragma';
   }
@@ -492,8 +494,12 @@ Blockly.RobotC['vex_iq_gyro_heading'] = function(block) {
   var resetTimeVarName = Blockly.RobotC.variableDB_.getName(variable_name + '_reset_time',
       Blockly.Names.DEVELOPER_VARIABLE_TYPE);
   block.getDeveloperVariables = () => [resetTimeVarName];
-  var code = 'getGyroHeadingFloat(' + variable_name + ') - (nPgmTime - ' + resetTimeVarName + ') * ' + Blockly.RobotC.gyroDrifts_[variable_name] + ' / 1000.0';
-  return [code, Blockly.RobotC.ORDER_SUBTRACTION];
+  var sign = '';
+  if (Blockly.RobotC.gyroDirections_[variable_name] == 'CW') {
+    sign = '-';
+  }
+  var code = 'mod(' + sign + 'getGyroHeadingFloat(' + variable_name + ') - (nPgmTime - ' + resetTimeVarName + ') * ' + Blockly.RobotC.gyroDrifts_[variable_name] + ' / 1000.0, 360)';
+  return [code, Blockly.RobotC.ORDER_FUNCTION_CALL];
 };
 
 Blockly.RobotC['vex_iq_gyro_reset_heading'] = function(block) {

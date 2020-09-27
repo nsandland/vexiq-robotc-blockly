@@ -106,6 +106,7 @@
       <block type="vex_iq_color_sensor"></block>
       <block type="vex_iq_distance_sensor"></block>
       <block type="vex_iq_gyro">
+        <field name="DIRECTION">CW</field>
         <value name="DRIFT">
           <shadow type="math_number">
             <field name="NUM">0</field>
@@ -491,6 +492,18 @@
         <value name="THETA">
           <shadow type="math_number">
             <field name="NUM">90</field>
+          </shadow>
+        </value>
+      </block>
+      <block type="math_angle_distance">
+        <value name="FROM">
+          <shadow type="math_number">
+            <field name="NUM">90</field>
+          </shadow>
+        </value>
+        <value name="TO">
+          <shadow type="math_number">
+            <field name="NUM">-45</field>
           </shadow>
         </value>
       </block>
