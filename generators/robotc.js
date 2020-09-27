@@ -227,6 +227,7 @@ task main() {
       + Blockly.RobotC.events
       + Blockly.RobotC.point
       + Blockly.RobotC.logic
+      + Blockly.RobotC.vexiq
       + code
       + definitions.join('\n\n') + '\n\n\n'
       + main;

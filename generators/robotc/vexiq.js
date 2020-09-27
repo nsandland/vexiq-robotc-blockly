@@ -453,17 +453,33 @@ Blockly.RobotC['vex_iq_distance_bound'] = function(block) {
   return code;
 };
 
-Blockly.RobotC['vex_iq_distance'] = function(block) {
+Blockly.RobotC['vex_iq_distance_sampler'] = function(block) {
   var MODES = {
-    'STRONGEST': 'getDistanceStrongest',
-    'SECOND_STRONGEST': 'getDistanceSecondStrongest', 
-    'MOST_REFLECTIVE': 'getDistanceMostReflective'
+    'STRONGEST': ['strongest', 'getDistanceStrongest'],
+    'SECOND_STRONGEST': ['secondStrongest', 'getDistanceSecondStrongest'], 
+    'MOST_REFLECTIVE': ['mostReflective', 'getDistanceMostReflective']
   };
-  var funcName = MODES[block.getFieldValue('MODE')];
+  var AGGREGATORS = {
+    'BRIGHTEST': 'brightest',
+    'HIGHEST_SNR': 'highestSNR',
+    'AVERAGE': 'average',
+  }
+  var dropdown_aggregator = AGGREGATORS[block.getFieldValue('AGGREGATOR')];
+  var dropdown_samples = block.getFieldValue('SAMPLES') || '1';
+  var dropdown_period = block.getFieldValue('PERIOD') || '0';
   var variable_distance_sensor = Blockly.RobotC.variableDB_.getName(block.getFieldValue('DISTANCE_SENSOR'), Blockly.Variables.NAME_TYPE);
-  var code = funcName + '(' + variable_distance_sensor + ')';
+  var modeEnum = MODES[block.getFieldValue('MODE')][0];
+  var modeFunction = MODES[block.getFieldValue('MODE')][1];
+  var code;
+  if (dropdown_samples == '1') {
+    code = modeFunction + '(' + variable_distance_sensor + ')';
+  } else {
+    code = 'sample_distances(' + modeEnum + ', ' + variable_distance_sensor + ', ' + dropdown_samples + ', ' + dropdown_period + ', ' + dropdown_aggregator + ')';
+  }
   return [code, Blockly.RobotC.ORDER_FUNCTION_CALL];
 };
+
+Blockly.RobotC['vex_iq_distance'] = Blockly.RobotC['vex_iq_distance_sampler'];
 
 Blockly.RobotC['vex_iq_motor_reset_absolute_position'] = function(block) {
   var variable_motor = Blockly.RobotC.variableDB_.getName(block.getFieldValue('MOTOR'), Blockly.Variables.NAME_TYPE);
@@ -626,3 +642,91 @@ Blockly.RobotC['vex_iq_sleep'] = function(block) {
 Blockly.RobotC['comment_block'] = function(block) {
   return '';
 };
+
+Blockly.RobotC.typedefs_.push(`
+typedef enum distanceMode {
+  strongest,
+  secondStrongest, 
+  mostReflective
+} DistanceMode;
+`);
+
+Blockly.RobotC.typedefs_.push(`
+typedef enum aggregator {
+  brightest,
+  highestSNR,
+  average
+} Aggregator;
+`);
+
+Blockly.RobotC.typedefs_.push(`
+typedef struct {
+  uword distance;
+  ubyte brightness;
+  ubyte snr;
+} DistanceSample;
+`);
+
+Blockly.RobotC.vexiq = `
+DistanceSample samples[100];
+float sample_distances(DistanceMode mode, tSensors distance_sensor, int sampleCount, int period, Aggregator aggregator) {
+  TDistanceInfo distanceInfo;
+  for (int i = 0; i < sampleCount; i++) {
+    getDistanceAdvanced(distance_sensor, distanceInfo);
+    switch (mode) {
+      case strongest:
+        samples[i].distance = distanceInfo.n1stStrongestTargetDistance;
+        samples[i].brightness = distanceInfo.n1stStrongestTargetBrightness;
+        samples[i].snr = distanceInfo.n1stStrongestTargetSNR;
+        break;
+      case secondStrongest:
+        samples[i].distance = distanceInfo.n2ndStrongestTargetDistance;
+        samples[i].brightness = distanceInfo.n2ndStrongestTargetBrightness;
+        samples[i].snr = distanceInfo.n2ndStrongestTargetSNR;
+        break;
+      case mostReflective:
+        samples[i].distance = distanceInfo.nBrightestTargetDistance;
+        samples[i].brightness = distanceInfo.nBrightestTargetBrightness;
+        samples[i].snr = distanceInfo.nBrightestTargetSNR;
+        break;
+    }
+    sleep(period);
+  }
+  switch (aggregator) {
+    case brightest:
+      ubyte maxBrightness = 0;
+      uword brightestDistance = 0;
+      for (int i = 0; i < sampleCount; i++) {
+        if (samples[i].brightness > maxBrightness) {
+          maxBrightness = samples[i].brightness;
+          brightestDistance = samples[i].distance;
+        }
+      }
+      return brightestDistance;
+    case highestSNR:
+      ubyte maxSNR = 0;
+      uword bestDistance = 0;
+      for (int i = 0; i < sampleCount; i++) {
+        if (samples[i].snr > maxSNR) {
+          maxSNR = samples[i].snr;
+          bestDistance = samples[i].distance;
+        }
+      }
+      return bestDistance;      
+    case average:
+      uword totalDistance = 0;
+      for (int i = 0; i < sampleCount; i++) {
+        totalDistance += samples[i].distance;
+      }
+      return (float) totalDistance / sampleCount;
+  }
+  return -1;
+}
+
+`;
+
+Blockly.RobotC.addReservedWords(
+  'strongest,secondStrongest,mostReflective,DistanceMode,'+
+  'brightest,highestSNR,average,Aggregator,'+
+  'distance,brightness,snr,DistanceSample,'+
+  'samples,sample_distances');

@@ -853,9 +853,28 @@ Blockly.Blocks['vex_iq_distance'] = {
         .appendField("distance in mm from")
         .appendField(new Blockly.FieldVariable("distance_sensor"), "DISTANCE_SENSOR")
         .appendField("to")
-        .appendField(new Blockly.FieldDropdown([["closest object","STRONGEST"], ["second closest object","SECOND_STRONGEST"], ["biggest object","MOST_REFLECTIVE"]]), "MODE");
+        .appendField(new Blockly.FieldDropdown([["closest object","STRONGEST"], ["2nd closest object","SECOND_STRONGEST"], ["biggest object","MOST_REFLECTIVE"]]), "MODE");
     this.setInputsInline(true);
     this.setOutput(true, "Number");
+    this.setColour(65);
+ this.setTooltip("");
+ this.setHelpUrl("");
+  }
+};
+
+Blockly.Blocks['vex_iq_distance_sampler'] = {
+  init: function() {
+    this.appendDummyInput()
+        .appendField(new Blockly.FieldDropdown([["brightest","BRIGHTEST"], ["best signal:noise","HIGHEST_SNR"], ["average","AVERAGE"]]), "AGGREGATOR")
+        .appendField("of")
+        .appendField(new Blockly.FieldDropdown([["3","3"], ["5","5"], ["10","10"], ["25","25"], ["50","50"], ["100","100"]]), "SAMPLES")
+        .appendField("samples every")
+        .appendField(new Blockly.FieldDropdown([["0","0"], ["1","1"], ["3","3"], ["5","5"], ["10","10"], ["30","30"]]), "PERIOD")
+        .appendField("ms from")
+        .appendField(new Blockly.FieldVariable("distance_sensor"), "DISTANCE_SENSOR")
+        .appendField("to")
+        .appendField(new Blockly.FieldDropdown([["closest object","STRONGEST"], ["2nd closest object","SECOND_STRONGEST"], ["biggest object","MOST_REFLECTIVE"]]), "MODE");
+    this.setOutput(true, null);
     this.setColour(65);
  this.setTooltip("");
  this.setHelpUrl("");
