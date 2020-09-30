@@ -718,6 +718,20 @@ Blockly.Blocks['vex_iq_motor_velocity'] = {
   }
 };
 
+
+Blockly.Blocks['vex_iq_motor_current'] = {
+  init: function() {
+    this.appendDummyInput()
+        .appendField(new Blockly.FieldVariable("motor"), "MOTOR")
+        .appendField("current in mA")
+    this.setInputsInline(true);
+    this.setOutput(true, "Number");
+    this.setColour(65);
+ this.setTooltip("");
+ this.setHelpUrl("");
+  }
+};
+
 Blockly.Blocks['vex_iq_bumper_is_pressed'] = {
   init: function() {
     this.appendDummyInput()

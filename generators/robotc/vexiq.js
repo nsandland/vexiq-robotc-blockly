@@ -388,6 +388,12 @@ Blockly.RobotC['vex_iq_motor_velocity'] = function(block) {
   return [code, Blockly.RobotC.ORDER_FUNCTION_CALL];
 };
 
+Blockly.RobotC['vex_iq_motor_current'] = function(block) {
+  var variable_motor = Blockly.RobotC.variableDB_.getName(block.getFieldValue('MOTOR'), Blockly.Variables.NAME_TYPE);
+  var code = 'getMotorCurrent(' + variable_motor + ')';
+  return [code, Blockly.RobotC.ORDER_FUNCTION_CALL];
+};
+
 Blockly.RobotC['vex_iq_motor_wait'] = function(block) {
   var variable_motor = Blockly.RobotC.variableDB_.getName(block.getFieldValue('MOTOR'), Blockly.Variables.NAME_TYPE);
   var code = 'waitUntilMotorStop(' + variable_motor + ');\n';
