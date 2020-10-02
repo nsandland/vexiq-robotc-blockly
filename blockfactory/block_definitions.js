@@ -587,18 +587,54 @@ Blockly.Blocks['vex_iq_motor_spin_distance'] = {
         .appendField(new Blockly.FieldVariable("motor"), "MOTOR")
         .appendField(new Blockly.FieldDropdown([["forward","FORWARD"], ["backward","BACKWARD"]]), "DIRECTION")
         .appendField("for");
+    this.appendDummyInput()
+        .appendField("degrees at");
     this.appendValueInput("VELOCITY")
         .setCheck("Number")
-        .appendField("degrees at");
-    this.appendDummyInput()
+    this.appendDummyInput("STOP_MODE_DUMMY")
         .appendField("% velocity")
         .appendField(new Blockly.FieldDropdown([["and actively hold position","HOLD"], ["and apply brake","BRAKE"]]), "STOP_MODE");
     this.setInputsInline(true);
     this.setPreviousStatement(true, null);
     this.setNextStatement(true, null);
     this.setColour(65);
- this.setTooltip("");
- this.setHelpUrl("");
+    this.setTooltip("");
+    this.setHelpUrl("");
+
+    this.getField('STOP_MODE').setValidator(function(option) {
+      var holdModeInput = (option == 'BRAKE');
+      this.getSourceBlock().updateShape_(holdModeInput);
+    });
+  },
+
+  mutationToDom: function() {
+    var container = Blockly.utils.xml.createElement('mutation');
+    var velocityInput = (this.getFieldValue('STOP_MODE') == 'BRAKE');
+    container.setAttribute('velocity_input', velocityInput);
+    return container;
+  },
+
+  domToMutation: function(xmlElement) {
+    var velocityInput = (xmlElement.getAttribute('velocity_input') == 'true');
+    this.updateShape_(velocityInput);
+  },
+
+  updateShape_: function(holdModeInput) {
+    // Add or remove a velocity Input.
+    var inputExists = this.getInput('VELOCITY');
+    if (holdModeInput) {
+      if (!inputExists) {
+        this.removeInput('STATIC_VELOCITY');
+        this.appendValueInput('VELOCITY')
+            .setCheck("Number");
+        this.moveInputBefore('VELOCITY', 'STOP_MODE_DUMMY');
+      }
+    } else if (inputExists) {
+      this.removeInput('VELOCITY');
+      this.appendDummyInput('STATIC_VELOCITY')
+          .appendField('100');
+      this.moveInputBefore('STATIC_VELOCITY', 'STOP_MODE_DUMMY');
+    }
   }
 };
 
@@ -609,18 +645,55 @@ Blockly.Blocks['vex_iq_motor_spin_to'] = {
         .appendField("spin")
         .appendField(new Blockly.FieldVariable("motor"), "MOTOR")
         .appendField("to absolute position of");
+    this.appendDummyInput()
+        .appendField("degrees at");
     this.appendValueInput("VELOCITY")
         .setCheck("Number")
-        .appendField("degrees at");
-    this.appendDummyInput()
+    this.appendDummyInput('STOP_MODE_DUMMY')
         .appendField("% velocity")
         .appendField(new Blockly.FieldDropdown([["and actively hold position","HOLD"], ["and apply brake","BRAKE"]]), "STOP_MODE");
     this.setInputsInline(true);
     this.setPreviousStatement(true, null);
     this.setNextStatement(true, null);
     this.setColour(65);
- this.setTooltip("");
- this.setHelpUrl("");
+    this.setMutator(new Blockly.Mutator(['vex_iq_motor_spin_to_mutator']));
+    this.setTooltip("");
+    this.setHelpUrl("");
+
+    this.getField('STOP_MODE').setValidator(function(option) {
+      var holdModeInput = (option == 'BRAKE');
+      this.getSourceBlock().updateShape_(holdModeInput);
+    });
+  },
+
+  mutationToDom: function() {
+    var container = Blockly.utils.xml.createElement('mutation');
+    var velocityInput = (this.getFieldValue('STOP_MODE') == 'BRAKE');
+    container.setAttribute('velocity_input', velocityInput);
+    return container;
+  },
+
+  domToMutation: function(xmlElement) {
+    var velocityInput = (xmlElement.getAttribute('velocity_input') == 'true');
+    this.updateShape_(velocityInput);
+  },
+
+  updateShape_: function(holdModeInput) {
+    // Add or remove a velocity Input.
+    var inputExists = this.getInput('VELOCITY');
+    if (holdModeInput) {
+      if (!inputExists) {
+        this.removeInput('STATIC_VELOCITY');
+        this.appendValueInput('VELOCITY')
+            .setCheck("Number");
+        this.moveInputBefore('VELOCITY', 'STOP_MODE_DUMMY');
+      }
+    } else if (inputExists) {
+      this.removeInput('VELOCITY');
+      this.appendDummyInput('STATIC_VELOCITY')
+          .appendField('100');
+      this.moveInputBefore('STATIC_VELOCITY', 'STOP_MODE_DUMMY');
+    }
   }
 };
 
