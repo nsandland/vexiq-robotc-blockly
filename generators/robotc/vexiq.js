@@ -331,9 +331,9 @@ Blockly.RobotC['vex_iq_motor_spin_distance'] = function(block) {
   }
   var target = 'getMotorEncoder(' + variable_motor + ') + ' + value_distance;
   if (dropdown_stop_mode === 'HOLD') {
-    return 'setServoTarget(' + variable_motor + ', ' + value_position + ');\n';
+    return 'setServoTarget(' + variable_motor + ', ' + target + ');\n';
   } else {
-    return 'setMotorTarget(' + variable_motor + ', ' + value_position + ', ' + value_velocity + ');\n';
+    return 'setMotorTarget(' + variable_motor + ', ' + target + ', ' + value_velocity + ');\n';
   }
 };
 
