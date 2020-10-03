@@ -324,10 +324,14 @@ Blockly.RobotC['vex_iq_motor_spin_distance'] = function(block) {
   } else {
     target += ' + ' + value_distance;
   }
+  var motorTargetVarName = Blockly.RobotC.variableDB_.getName(variable_motor + '_target',
+      Blockly.Names.DEVELOPER_VARIABLE_TYPE);
+  block.getDeveloperVariables = () => [motorTargetVarName];
+  var setTarget = motorTargetVarName + ' = ' + target + ';\n';
   if (dropdown_stop_mode === 'HOLD') {
-    return 'setServoTarget(' + variable_motor + ', ' + target + ');\n';
+    return setTarget + 'setServoTarget(' + variable_motor + ', ' + motorTargetVarName + ');\n';
   } else {
-    return 'setMotorTarget(' + variable_motor + ', ' + target + ', ' + value_velocity + ');\n';
+    return setTarget + 'setMotorTarget(' + variable_motor + ', ' + motorTargetVarName + ', ' + value_velocity + ');\n';
   }
 };
 
@@ -337,10 +341,14 @@ Blockly.RobotC['vex_iq_motor_spin_to'] = function(block) {
   var dropdown_stop_mode = block.getFieldValue('STOP_MODE');
   var value_velocity = Blockly.RobotC.valueToCode(block, 'VELOCITY', Blockly.RobotC.ORDER_ATOMIC);
   value_velocity = 'abs(' + value_velocity + ')';
+  var motorTargetVarName = Blockly.RobotC.variableDB_.getName(variable_motor + '_target',
+      Blockly.Names.DEVELOPER_VARIABLE_TYPE);
+  block.getDeveloperVariables = () => [motorTargetVarName];
+  var setTarget = motorTargetVarName + ' = ' + value_position + ';\n';
   if (dropdown_stop_mode === 'HOLD') {
-    return 'setServoTarget(' + variable_motor + ', ' + value_position + ');\n';
+    return setTarget + 'setServoTarget(' + variable_motor + ', ' + motorTargetVarName + ');\n';
   } else {
-    return 'setMotorTarget(' + variable_motor + ', ' + value_position + ', ' + value_velocity + ');\n';
+    return setTarget + 'setMotorTarget(' + variable_motor + ', ' + motorTargetVarName + ', ' + value_velocity + ');\n';
   }
 };
 
@@ -394,7 +402,12 @@ Blockly.RobotC['vex_iq_motor_current'] = function(block) {
 
 Blockly.RobotC['vex_iq_motor_wait'] = function(block) {
   var variable_motor = Blockly.RobotC.variableDB_.getName(block.getFieldValue('MOTOR'), Blockly.Variables.NAME_TYPE);
-  var code = 'waitUntilMotorStop(' + variable_motor + ');\n';
+  var motorTargetVarName = Blockly.RobotC.variableDB_.getName(variable_motor + '_target',
+      Blockly.Names.DEVELOPER_VARIABLE_TYPE);
+  block.getDeveloperVariables = () => [motorTargetVarName];
+  var code = 'while (abs(getMotorEncoder(' +  variable_motor + ') - ' + motorTargetVarName + ') > 10 && getMotorSpeed(' + variable_motor + ') > 5) {\n' +
+      Blockly.RobotC.INDENT + 'sleep(1);\n' +
+      '}\n'
   return code;
 };
 
