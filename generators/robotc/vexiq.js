@@ -306,11 +306,7 @@ Blockly.RobotC['vex_iq_motor_spin_velocity'] = function(block) {
   var dropdown_direction = block.getFieldValue('DIRECTION');
   var value_velocity = Blockly.RobotC.valueToCode(block, 'VELOCITY', Blockly.RobotC.ORDER_ATOMIC);
   if (dropdown_direction === 'BACKWARD') {
-    if (value_velocity[0] == '-') {
-      value_velocity = value_velocity.substring(1);
-    } else {
-      value_velocity = '-' + value_velocity;
-    }
+    value_velocity = '- (' + value_velocity + ')'
   }
   var code = 'setMotorSpeed(' + variable_motor + ', ' + value_velocity + ');\n';
   return code;
@@ -322,14 +318,12 @@ Blockly.RobotC['vex_iq_motor_spin_distance'] = function(block) {
   var dropdown_stop_mode = block.getFieldValue('STOP_MODE');
   var value_distance = Blockly.RobotC.valueToCode(block, 'DISTANCE', Blockly.RobotC.ORDER_ATOMIC);
   var value_velocity = Blockly.RobotC.valueToCode(block, 'VELOCITY', Blockly.RobotC.ORDER_ATOMIC);
-  if (dropdown_direction[0] == 'BACKWARD') {
-    if (value_distance[0] == '-') {
-      value_distance = value_distance.substring(1);
-    } else {
-      value_distance = '-' + value_distance;
-    }
+  var target = 'getMotorEncoder(' + variable_motor + ')'
+  if (dropdown_direction == 'BACKWARD') {
+    target += ' - ' + value_distance;
+  } else {
+    target += ' + ' + value_distance;
   }
-  var target = 'getMotorEncoder(' + variable_motor + ') + ' + value_distance;
   if (dropdown_stop_mode === 'HOLD') {
     return 'setServoTarget(' + variable_motor + ', ' + target + ');\n';
   } else {
