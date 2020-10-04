@@ -1400,3 +1400,18 @@ Blockly.Blocks['math_angle_distance'] = {
  this.setHelpUrl("");
   }
 };
+
+Blockly.Blocks['math_change'] = {
+  init: function() {
+    this.appendValueInput("DELTA")
+        .setCheck("Number")
+        .appendField("change")
+        .appendField(new Blockly.FieldVariable("item"), "VAR")
+        .appendField("by");
+    this.setPreviousStatement(true, null);
+    this.setNextStatement(true, null);
+    this.setColour(230);
+ this.setTooltip("");
+ this.setHelpUrl("");
+  }
+};
