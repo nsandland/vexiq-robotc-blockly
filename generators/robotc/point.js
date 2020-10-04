@@ -14,7 +14,17 @@ void rotate(Point &p, float theta) {
   p.y = newY;
 }
 
+void translate(Point &p, float x, float y) {
+  p.x += x;
+  p.y += y;
+}
+
+void scale(Point &p, float amount) {
+  p.x *= amount;
+  p.y *= amount;
+}
+
 `;
 
 Blockly.RobotC.addReservedWords(
-    'Point,rotate');
+    'Point,rotate,translate,scale');

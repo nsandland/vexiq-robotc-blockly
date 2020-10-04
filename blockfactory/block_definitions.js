@@ -1191,6 +1191,58 @@ Blockly.Blocks['math_points_rotation'] = {
   }
 };
 
+Blockly.Blocks['math_points_arithmetic'] = {
+  init: function() {
+    this.appendDummyInput()
+        .appendField("modify")
+        .appendField(new Blockly.FieldVariable("point"), "POINT1")
+        .appendField("by")
+        .appendField(new Blockly.FieldDropdown([["subtracting","MINUS"], ["adding","ADD"], ["multiplying","MULTIPLY"], ["dividing","DIVIDE"]]), "OP");
+    this.appendDummyInput('BY_POINT')
+        .appendField(new Blockly.FieldVariable("point"), "POINT2");
+    this.setInputsInline(true);
+    this.setPreviousStatement(true, null);
+    this.setNextStatement(true, null);
+    this.setColour(230);
+    this.setTooltip("");
+    this.setHelpUrl("");
+    this.getField('OP').setValidator(function(option) {
+      var isTimesOrDivide = (option == 'MULTIPLY' || option == 'DIVIDE');
+      this.getSourceBlock().updateShape_(isTimesOrDivide);
+    });
+  },
+
+  mutationToDom: function() {
+    var container = Blockly.utils.xml.createElement('mutation');
+    var op = this.getFieldValue('OP')
+    var isTimesOrDivide = (op == 'MULTIPLY' || op == 'DIVIDE');
+    container.setAttribute('times_divide', isTimesOrDivide);
+    return container;
+  },
+
+  domToMutation: function(xmlElement) {
+    var isTimesOrDivide = (xmlElement.getAttribute('times_divide') == 'true');
+    this.updateShape_(isTimesOrDivide);
+  },
+
+  updateShape_: function(isTimesOrDivide) {
+    // Differences between +,- & *,/
+    var inputExists = this.getInput('BY_NUMBER');
+    if (isTimesOrDivide) {
+      if (!inputExists) {
+        this.removeInput('BY_POINT');
+        this.appendValueInput('BY_NUMBER')
+            .appendField("by")
+            .setCheck("Number");
+      }
+    } else if (inputExists) {
+      this.removeInput('BY_NUMBER');
+      this.appendDummyInput('BY_POINT')
+          .appendField(new Blockly.FieldVariable("point"), "POINT2");
+    }
+  }
+};
+
 Blockly.Blocks['vex_iq_sleep'] = {
   init: function() {
     this.appendValueInput("DURATION")

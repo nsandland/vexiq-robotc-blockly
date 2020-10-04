@@ -656,6 +656,26 @@ Blockly.RobotC['math_points_rotation'] = function(block) {
   return code;
 };
 
+Blockly.RobotC['math_points_arithmetic'] = function(block) {
+  var variable_point1 = Blockly.RobotC.variableDB_.getName(block.getFieldValue('POINT1'), Blockly.Variables.NAME_TYPE);
+  var dropdown_op = block.getFieldValue('OP');
+  switch (dropdown_op) {
+    case 'DIVIDE':
+      var value_number = Blockly.RobotC.valueToCode(block, 'BY_NUMBER', Blockly.RobotC.ORDER_ATOMIC);
+      value_number = '1 / ' + value_number;
+      return 'scale(' + variable_point1 + ', ' +  value_number + ');\n';     
+    case 'MULTIPLY':
+      var value_number = Blockly.RobotC.valueToCode(block, 'BY_NUMBER', Blockly.RobotC.ORDER_ATOMIC);
+      return 'scale(' + variable_point1 + ', ' +  value_number + ');\n';
+    case 'ADD':
+      var variable_point2 = Blockly.RobotC.variableDB_.getName(block.getFieldValue('POINT2'), Blockly.Variables.NAME_TYPE);
+      return 'translate(' + variable_point1 + ', ' +  variable_point2 + '.x, ' + variable_point2 + '.y);\n';
+    case 'MINUS':
+      var variable_point2 = Blockly.RobotC.variableDB_.getName(block.getFieldValue('POINT2'), Blockly.Variables.NAME_TYPE);
+      return 'translate(' + variable_point1 + ', -' +  variable_point2 + '.x, -' + variable_point2 + '.y);\n';
+  }
+};
+
 Blockly.RobotC['vex_iq_sleep'] = function(block) {
   var value_duration = Blockly.RobotC.valueToCode(block, 'DURATION', Blockly.RobotC.ORDER_ATOMIC);
   var code = 'sleep(' + value_duration + ');\n';
