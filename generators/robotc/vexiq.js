@@ -472,6 +472,46 @@ Blockly.RobotC['vex_iq_distance_bound'] = function(block) {
   return code;
 };
 
+Blockly.RobotC['vex_iq_distance_tracker'] = function(block) {
+  var MODES = {
+    'STRONGEST': 'getDistanceStrongest',
+    'SECOND_STRONGEST': 'getDistanceSecondStrongest', 
+    'MOST_REFLECTIVE': 'getDistanceMostReflective'
+  };
+  var modeFunction = MODES[block.getFieldValue('MODE')];
+  var value_initial_distance = Blockly.RobotC.valueToCode(block, 'INITIAL_DISTANCE', Blockly.RobotC.ORDER_ATOMIC);
+  var value_deviation = Blockly.RobotC.valueToCode(block, 'DEVIATION', Blockly.RobotC.ORDER_ATOMIC);
+  var variable_distance_sensor = Blockly.RobotC.variableDB_.getName(block.getFieldValue('DISTANCE_SENSOR'), Blockly.Variables.NAME_TYPE);
+  var trackedDistanceVarName = Blockly.RobotC.variableDB_.getName(variable_distance_sensor + '_tracked_distance',
+      Blockly.Names.DEVELOPER_VARIABLE_TYPE);
+  var trackedDeviationVarName = Blockly.RobotC.variableDB_.getName(variable_distance_sensor + '_tracked_deviation',
+      Blockly.Names.DEVELOPER_VARIABLE_TYPE);
+  block.getDeveloperVariables = () => [trackedDistanceVarName, trackedDeviationVarName];
+      
+  // TODO: Assemble JavaScript into code variable.
+  var code = trackedDistanceVarName + ' = ' + value_initial_distance + ';\n' +
+      trackedDeviationVarName + ' = ' + value_deviation + ';\n';
+
+  var functionName = Blockly.RobotC.variableDB_.getDistinctName('track_' + variable_distance_sensor,
+      Blockly.PROCEDURE_CATEGORY_NAME);
+  functionName = Blockly.RobotC.provideFunction_(
+      functionName,
+      ['void ' + Blockly.RobotC.FUNCTION_NAME_PLACEHOLDER_ + '() {',
+      '  float range_min = max(0, ' + trackedDistanceVarName + ' - ' + trackedDeviationVarName + ');',
+      '  float range_max = ' + trackedDistanceVarName + ' + ' + trackedDeviationVarName + ';',
+      '  setDistanceMinRange(' + variable_distance_sensor + ', range_min);',
+      '  setDistanceMaxRange(' + variable_distance_sensor + ', range_max);',
+      '  float measured_distance = ' + modeFunction + '(' + variable_distance_sensor + ');',
+      '  if (measured_distance >= range_min && measured_distance <= range_max) {',
+      '    ' + trackedDistanceVarName + ' = measured_distance;',
+      '  }',
+      '}']);
+Blockly.RobotC.eventFunctionNames_.push(functionName);
+
+  return code;
+};
+
+// Deprecated
 Blockly.RobotC['vex_iq_distance_sampler'] = function(block) {
   var MODES = {
     'STRONGEST': ['strongest', 'getDistanceStrongest'],
@@ -498,7 +538,25 @@ Blockly.RobotC['vex_iq_distance_sampler'] = function(block) {
   return [code, Blockly.RobotC.ORDER_FUNCTION_CALL];
 };
 
-Blockly.RobotC['vex_iq_distance'] = Blockly.RobotC['vex_iq_distance_sampler'];
+Blockly.RobotC['vex_iq_distance'] = function(block) {
+  var MODES = {
+    'STRONGEST': 'getDistanceStrongest',
+    'SECOND_STRONGEST': 'getDistanceSecondStrongest', 
+    'MOST_REFLECTIVE': 'getDistanceMostReflective',
+    'TRACKED': 'TRACKED'
+  };
+  var variable_distance_sensor = Blockly.RobotC.variableDB_.getName(block.getFieldValue('DISTANCE_SENSOR'), Blockly.Variables.NAME_TYPE);
+  var modeFunction = MODES[block.getFieldValue('MODE')];
+  var code;
+  if (modeFunction == 'TRACKED') {
+    code = Blockly.RobotC.variableDB_.getName(variable_distance_sensor + '_tracked_distance',
+        Blockly.Names.DEVELOPER_VARIABLE_TYPE);
+    block.getDeveloperVariables = () => [code];
+  } else {
+    code = modeFunction + '(' + variable_distance_sensor + ')';
+  }
+  return [code, Blockly.RobotC.ORDER_FUNCTION_CALL];
+};
 
 Blockly.RobotC['vex_iq_motor_reset_absolute_position'] = function(block) {
   var variable_motor = Blockly.RobotC.variableDB_.getName(block.getFieldValue('MOTOR'), Blockly.Variables.NAME_TYPE);

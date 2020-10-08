@@ -941,9 +941,29 @@ Blockly.Blocks['vex_iq_distance'] = {
         .appendField("distance in mm from")
         .appendField(new Blockly.FieldVariable("distance_sensor"), "DISTANCE_SENSOR")
         .appendField("to")
-        .appendField(new Blockly.FieldDropdown([["closest object","STRONGEST"], ["2nd closest object","SECOND_STRONGEST"], ["biggest object","MOST_REFLECTIVE"]]), "MODE");
+        .appendField(new Blockly.FieldDropdown([["closest object","STRONGEST"], ["2nd closest object","SECOND_STRONGEST"], ["biggest object","MOST_REFLECTIVE"], ["tracked","TRACKED"]]), "MODE");
     this.setInputsInline(true);
     this.setOutput(true, "Number");
+    this.setColour(65);
+ this.setTooltip("");
+ this.setHelpUrl("");
+  }
+};
+
+Blockly.Blocks['vex_iq_distance_tracker'] = {
+  init: function() {
+    this.appendValueInput("INITIAL_DISTANCE")
+        .setCheck("Number")
+        .appendField("track")
+        .appendField(new Blockly.FieldDropdown([["closest object","STRONGEST"], ["2nd closest object","SECOND_STRONGEST"], ["biggest object","MOST_REFLECTIVE"]]), "MODE");
+    this.appendValueInput("DEVIATION")
+        .setCheck("Number")
+        .appendField("±");
+    this.appendDummyInput()
+        .appendField("mm away with")
+        .appendField(new Blockly.FieldVariable("distance_sensor"), "DISTANCE_SENSOR");
+    this.setPreviousStatement(true, null);
+    this.setNextStatement(true, null);
     this.setColour(65);
  this.setTooltip("");
  this.setHelpUrl("");
