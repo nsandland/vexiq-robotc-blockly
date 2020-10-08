@@ -497,7 +497,10 @@ Blockly.RobotC['vex_iq_distance_tracker'] = function(block) {
   functionName = Blockly.RobotC.provideFunction_(
       functionName,
       ['void ' + Blockly.RobotC.FUNCTION_NAME_PLACEHOLDER_ + '() {',
-      '  float range_min = max(0, ' + trackedDistanceVarName + ' - ' + trackedDeviationVarName + ');',
+      '  float range_min = ' + trackedDistanceVarName + ' - ' + trackedDeviationVarName + ';',
+      '  if (range_min < 0) {',
+      '    range_min = 0;',
+      '  }',
       '  float range_max = ' + trackedDistanceVarName + ' + ' + trackedDeviationVarName + ';',
       '  setDistanceMinRange(' + variable_distance_sensor + ', range_min);',
       '  setDistanceMaxRange(' + variable_distance_sensor + ', range_max);',
