@@ -941,7 +941,7 @@ Blockly.Blocks['vex_iq_distance'] = {
         .appendField("distance in mm from")
         .appendField(new Blockly.FieldVariable("distance_sensor"), "DISTANCE_SENSOR")
         .appendField("to")
-        .appendField(new Blockly.FieldDropdown([["closest object","STRONGEST"], ["2nd closest object","SECOND_STRONGEST"], ["biggest object","MOST_REFLECTIVE"], ["tracked","TRACKED"]]), "MODE");
+        .appendField(new Blockly.FieldDropdown([["closest object","STRONGEST"], ["2nd closest object","SECOND_STRONGEST"], ["biggest object","MOST_REFLECTIVE"], ["tracked object","TRACKED"]]), "MODE");
     this.setInputsInline(true);
     this.setOutput(true, "Number");
     this.setColour(65);
