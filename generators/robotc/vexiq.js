@@ -463,7 +463,11 @@ Blockly.RobotC['vex_iq_distance_min'] = function(block) {
 Blockly.RobotC['vex_iq_distance_bound'] = function(block) {
   var BOUNDS = {
     'MAXIMUM': 'setDistanceMaxRange',
-    'MINIMUM': 'setDistanceMinRange'
+    'MINIMUM': 'setDistanceMinRange',
+    'BRIGHTNESS_THRESHOLD': 'setDistanceBrightnessThreshold',
+    'SNR_THRESHOLD': 'setDistanceSNRThreshold',
+    'FILTER_FACTOR': 'setDistanceFilterFactor',
+    'TRANSMIT_POWER': 'setDistanceTransmitPower'
   };
   var variable_distance_sensor = Blockly.RobotC.variableDB_.getName(block.getFieldValue('DISTANCE_SENSOR'), Blockly.Variables.NAME_TYPE);
   var value_distance = Blockly.RobotC.valueToCode(block, 'DISTANCE', Blockly.RobotC.ORDER_ATOMIC);
@@ -480,36 +484,57 @@ Blockly.RobotC['vex_iq_distance_tracker'] = function(block) {
   };
   var modeFunction = MODES[block.getFieldValue('MODE')];
   var value_initial_distance = Blockly.RobotC.valueToCode(block, 'INITIAL_DISTANCE', Blockly.RobotC.ORDER_ATOMIC);
-  var value_deviation = Blockly.RobotC.valueToCode(block, 'DEVIATION', Blockly.RobotC.ORDER_ATOMIC);
+  var value_max_velocity = Blockly.RobotC.valueToCode(block, 'MAX_VELOCITY', Blockly.RobotC.ORDER_ATOMIC);
   var variable_distance_sensor = Blockly.RobotC.variableDB_.getName(block.getFieldValue('DISTANCE_SENSOR'), Blockly.Variables.NAME_TYPE);
   var trackedDistanceVarName = Blockly.RobotC.variableDB_.getName(variable_distance_sensor + '_tracked_distance',
       Blockly.Names.DEVELOPER_VARIABLE_TYPE);
-  var trackedDeviationVarName = Blockly.RobotC.variableDB_.getName(variable_distance_sensor + '_tracked_deviation',
+  var trackedMeasurementTimeVarName = Blockly.RobotC.variableDB_.getName(variable_distance_sensor + '_tracked_measurement_time',
       Blockly.Names.DEVELOPER_VARIABLE_TYPE);
-  block.getDeveloperVariables = () => [trackedDistanceVarName, trackedDeviationVarName];
+  var trackedMaxVelocityVarName = Blockly.RobotC.variableDB_.getName(variable_distance_sensor + '_tracked_max_velocity',
+      Blockly.Names.DEVELOPER_VARIABLE_TYPE);      
+  block.getDeveloperVariables = () => [trackedDistanceVarName, trackedMeasurementTimeVarName, trackedMaxVelocityVarName];
       
   // TODO: Assemble JavaScript into code variable.
   var code = trackedDistanceVarName + ' = ' + value_initial_distance + ';\n' +
-      trackedDeviationVarName + ' = ' + value_deviation + ';\n';
+      trackedMaxVelocityVarName + ' = ' + value_max_velocity + ';\n' +
+      trackedMeasurementTimeVarName + ' = 0;\n';
 
   var functionName = Blockly.RobotC.variableDB_.getDistinctName('track_' + variable_distance_sensor,
       Blockly.PROCEDURE_CATEGORY_NAME);
-  functionName = Blockly.RobotC.provideFunction_(
-      functionName,
-      ['void ' + Blockly.RobotC.FUNCTION_NAME_PLACEHOLDER_ + '() {',
-      '  float range_min = ' + trackedDistanceVarName + ' - ' + trackedDeviationVarName + ';',
-      '  if (range_min < 0) {',
-      '    range_min = 0;',
-      '  }',
-      '  float range_max = ' + trackedDistanceVarName + ' + ' + trackedDeviationVarName + ';',
-      '  setDistanceMinRange(' + variable_distance_sensor + ', range_min);',
-      '  setDistanceMaxRange(' + variable_distance_sensor + ', range_max);',
-      '  float measured_distance = ' + modeFunction + '(' + variable_distance_sensor + ');',
-      '  if (measured_distance >= range_min && measured_distance <= range_max) {',
-      '    ' + trackedDistanceVarName + ' = measured_distance;',
-      '  }',
-      '}']);
-Blockly.RobotC.eventFunctionNames_.push(functionName);
+  functionName = Blockly.RobotC.provideFunction_(functionName, [
+`void ${Blockly.RobotC.FUNCTION_NAME_PLACEHOLDER_}() {
+  float now = nPgmTime;
+  float allowable_deviation = (now - ${trackedMeasurementTimeVarName}) * ${trackedMaxVelocityVarName} + 5;
+  float range_min = ${trackedDistanceVarName} - allowable_deviation;
+  if (range_min < 0) {
+    range_min = 0;
+  }
+  float range_max = ${trackedDistanceVarName} + allowable_deviation;
+  if (range_max > 1200) {  // practical max distance of vex iq sensor
+    range_max = 1200;
+  }
+  setDistanceMinRange(${variable_distance_sensor}, range_min);
+  setDistanceMaxRange(${variable_distance_sensor}, range_max);
+
+  // median of three helps avoid spurious measurements
+  float a = ${modeFunction}(${variable_distance_sensor});
+  float b = ${modeFunction}(${variable_distance_sensor});
+  float c = ${modeFunction}(${variable_distance_sensor});
+  float measured_distance;
+  if (a >= b && a <= c || a >= c && a <= b) {
+    measured_distance = a;
+  } else if (b >= a && b <= c || b >= c && b <= a) {
+    measured_distance = b;
+  } else {
+    measured_distance = c;
+  }
+  if (measured_distance >= range_min && measured_distance <= range_max) {
+    ${trackedDistanceVarName} = measured_distance;
+    ${trackedMeasurementTimeVarName} = now;
+  }
+}`
+  ]);
+  Blockly.RobotC.eventFunctionNames_.push(functionName);
 
   return code;
 };

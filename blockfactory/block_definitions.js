@@ -884,46 +884,8 @@ Blockly.Blocks['vex_iq_distance_bound'] = {
         .setCheck("Number")
         .appendField("set")
         .appendField(new Blockly.FieldVariable("distance_sensor"), "DISTANCE_SENSOR")
-        .appendField(new Blockly.FieldDropdown([["maximum","MAXIMUM"], ["minimum","MINIMUM"]]), "BOUND")
+        .appendField(new Blockly.FieldDropdown([["maximum","MAXIMUM"], ["minimum","MINIMUM"], ["min brightness","BRIGHTNESS_THRESHOLD"], ["min signal:noise ratio","SNR_THRESHOLD"], ["filter factor","FILTER_FACTOR"], ["transmit power","TRANSMIT_POWER"]]), )
         .appendField("to");
-    this.appendDummyInput()
-        .appendField("mm");
-    this.setInputsInline(true);
-    this.setPreviousStatement(true, null);
-    this.setNextStatement(true, null);
-    this.setColour(65);
- this.setTooltip("");
- this.setHelpUrl("");
-  }
-};
-
-// Deprecated
-Blockly.Blocks['vex_iq_distance_max'] = {
-  init: function() {
-    this.appendValueInput("DISTANCE")
-        .setCheck("Number")
-        .appendField("set")
-        .appendField(new Blockly.FieldVariable("distance_sensor"), "DISTANCE_SENSOR")
-        .appendField("maximum to");
-    this.appendDummyInput()
-        .appendField("mm");
-    this.setInputsInline(true);
-    this.setPreviousStatement(true, null);
-    this.setNextStatement(true, null);
-    this.setColour(65);
- this.setTooltip("");
- this.setHelpUrl("");
-  }
-};
-
-// Deprecated
-Blockly.Blocks['vex_iq_distance_min'] = {
-  init: function() {
-    this.appendValueInput("DISTANCE")
-        .setCheck("Number")
-        .appendField("set")
-        .appendField(new Blockly.FieldVariable("distance_sensor"), "DISTANCE_SENSOR")
-        .appendField("minimum to");
     this.appendDummyInput()
         .appendField("mm");
     this.setInputsInline(true);
@@ -955,13 +917,15 @@ Blockly.Blocks['vex_iq_distance_tracker'] = {
     this.appendValueInput("INITIAL_DISTANCE")
         .setCheck("Number")
         .appendField("track")
-        .appendField(new Blockly.FieldDropdown([["closest object","STRONGEST"], ["2nd closest object","SECOND_STRONGEST"], ["biggest object","MOST_REFLECTIVE"]]), "MODE");
-    this.appendValueInput("DEVIATION")
+        .appendField(new Blockly.FieldDropdown([["closest object","STRONGEST"], ["2nd closest object","SECOND_STRONGEST"], ["biggest object","MOST_REFLECTIVE"]]), "MODE")
+        .appendField("starting at");
+    this.appendValueInput("MAX_VELOCITY")
         .setCheck("Number")
-        .appendField("±");
+        .appendField("mm away from")
+        .appendField(new Blockly.FieldVariable("distance_sensor"), "DISTANCE_SENSOR")
+        .appendField("with max velocity of");
     this.appendDummyInput()
-        .appendField("mm away with")
-        .appendField(new Blockly.FieldVariable("distance_sensor"), "DISTANCE_SENSOR");
+        .appendField("mm/ms");
     this.setPreviousStatement(true, null);
     this.setNextStatement(true, null);
     this.setColour(65);
