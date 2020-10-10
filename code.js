@@ -311,7 +311,7 @@ Code.attemptCodeGeneration = function(generator) {
     // Append XML as a comment at the bottom, so both can be saved as a single file.
     var xmlDom = Blockly.Xml.workspaceToDom(Code.workspace);
     var xmlText = Blockly.Xml.domToPrettyText(xmlDom);
-    code += '\n/* XML\n' + xmlText + '\nEND XML */\n';
+    code += '\n/* XML\n' + xmlText.replace('*/', '&#x002A/') + '\nEND XML */\n';
 
     content.value = code;
     // Remove the 'prettyprinted' class, so that Prettify will recalculate.
@@ -330,7 +330,7 @@ Code.attemptBlockGeneration = function() {
       window.confirm("Unable to find XML in editor.");
       return;
     }
-    xmlDom = Blockly.Xml.textToDom(found[found.length - 1]);
+    xmlDom = Blockly.Xml.textToDom(found[found.length - 1].replace('&#x002A', '*'));
   } catch (e) {
     var q =
         window.confirm(MSG['badXml'].replace('%1', e));
