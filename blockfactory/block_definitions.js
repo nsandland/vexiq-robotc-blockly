@@ -884,7 +884,7 @@ Blockly.Blocks['vex_iq_distance_bound'] = {
         .setCheck("Number")
         .appendField("set")
         .appendField(new Blockly.FieldVariable("distance_sensor"), "DISTANCE_SENSOR")
-        .appendField(new Blockly.FieldDropdown([["maximum","MAXIMUM"], ["minimum","MINIMUM"], ["min brightness","BRIGHTNESS_THRESHOLD"], ["min signal:noise ratio","SNR_THRESHOLD"], ["filter factor","FILTER_FACTOR"], ["transmit power","TRANSMIT_POWER"]]), )
+        .appendField(new Blockly.FieldDropdown([["maximum","MAXIMUM"], ["minimum","MINIMUM"], ["min brightness","BRIGHTNESS_THRESHOLD"], ["min signal:noise ratio","SNR_THRESHOLD"], ["filter factor","FILTER_FACTOR"], ["transmit power","TRANSMIT_POWER"]]), "BOUND")
         .appendField("to");
     this.appendDummyInput()
         .appendField("mm");
