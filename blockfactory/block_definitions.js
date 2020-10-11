@@ -886,14 +886,50 @@ Blockly.Blocks['vex_iq_distance_bound'] = {
         .appendField(new Blockly.FieldVariable("distance_sensor"), "DISTANCE_SENSOR")
         .appendField(new Blockly.FieldDropdown([["maximum","MAXIMUM"], ["minimum","MINIMUM"], ["min brightness","BRIGHTNESS_THRESHOLD"], ["min signal:noise ratio","SNR_THRESHOLD"], ["filter factor","FILTER_FACTOR"], ["transmit power","TRANSMIT_POWER"]]), "BOUND")
         .appendField("to");
-    this.appendDummyInput()
+    this.appendDummyInput("UNIT")
         .appendField("mm");
     this.setInputsInline(true);
     this.setPreviousStatement(true, null);
     this.setNextStatement(true, null);
     this.setColour(65);
- this.setTooltip("");
- this.setHelpUrl("");
+    this.setTooltip("");
+    this.setHelpUrl("");
+    this.getField('BOUND').setValidator(function(bound) {
+      this.getSourceBlock().updateShape_(bound);
+    });
+  },
+
+  mutationToDom: function() {
+    var container = Blockly.utils.xml.createElement('mutation');
+    var bound = this.getFieldValue('BOUND')
+    container.setAttribute('bound', bound);
+    return container;
+  },
+
+  domToMutation: function(xmlElement) {
+    var bound = xmlElement.getAttribute('bound');
+    this.updateShape_(bound);
+  },
+
+  updateShape_: function(bound) {
+    this.removeInput('UNIT');
+    switch(bound) {
+      case 'MAXIMUM':
+      case 'MINIMUM':
+        this.appendDummyInput("UNIT")
+            .appendField("mm");
+        break;
+      case 'BRIGHTNESS_THRESHOLD':
+      case 'SNR_THRESHOLD':
+        this.appendDummyInput("UNIT")
+            .appendField("dB");
+        break;          
+      case 'FILTER_FACTOR':
+      case 'TRANSMIT_POWER':
+        this.appendDummyInput("UNIT")
+            .appendField("");
+        break;   
+    }
   }
 };
 
