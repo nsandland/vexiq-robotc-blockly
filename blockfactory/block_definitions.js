@@ -884,6 +884,19 @@ Blockly.Blocks['vex_iq_touch_led_color'] = {
   }
 };
 
+Blockly.Blocks['vex_iq_color_sensor_value'] = {
+  init: function() {
+    this.appendDummyInput()
+        .appendField(new Blockly.FieldVariable("color_sensor"), "COLOR_SENSOR")
+        .appendField(new Blockly.FieldDropdown([["hue","HUE"], ["red amount","RED_CHANNEL"], ["blue amount","BLUE_CHANNEL"], ["green amount","GREEN_CHANNEL"], ["grayscale amount","GRAYSCALE"], ["proximity","PROXIMITY"], ["saturation","SATURATION"]]), "VALUE_TYPE");
+    this.setInputsInline(true);
+    this.setOutput(true, "Number");
+    this.setColour(65);
+ this.setTooltip("");
+ this.setHelpUrl("");
+  }
+};
+
 Blockly.Blocks['vex_iq_distance_bound'] = {
   init: function() {
     this.appendValueInput("DISTANCE")

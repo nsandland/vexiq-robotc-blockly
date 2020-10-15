@@ -447,6 +447,22 @@ Blockly.RobotC['vex_iq_touch_led_color'] = function(block) {
   }
 };
 
+Blockly.RobotC['vex_iq_color_sensor_value'] = function(block) {
+  var FUNCTIONS = {
+    'HUE': 'getColorHue',
+    'RED_CHANNEL': 'getColorRedChannel',
+    'BLUE_CHANNEL': 'getColorBlueChannel',
+    'GREEN_CHANNEL': 'getColorGreenChannel',
+    'GRAYSCALE': 'getColorGrayscale',
+    'PROXIMITY': 'getColorProximity',
+    'SATURATION': 'getColorSaturation'
+  };
+  var variable_color_sensor = Blockly.RobotC.variableDB_.getName(block.getFieldValue('COLOR_SENSOR'), Blockly.Variables.NAME_TYPE);
+  var funcName = FUNCTIONS[block.getFieldValue('VALUE_TYPE')];
+  var code = funcName + '(' + variable_color_sensor + ')';
+  return [code, Blockly.RobotC.ORDER_FUNCTION_CALL];
+};
+
 // Deprecated
 Blockly.RobotC['vex_iq_distance_max'] = function(block) {
   var variable_distance_sensor = Blockly.RobotC.variableDB_.getName(block.getFieldValue('DISTANCE_SENSOR'), Blockly.Variables.NAME_TYPE);
