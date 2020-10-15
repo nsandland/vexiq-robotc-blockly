@@ -212,6 +212,9 @@ Blockly.RobotC['vex_iq_brain'] = function(block) {
       Blockly.RobotC.gyroDrifts_[variable] = Blockly.RobotC.lastGyroDrift_;
       Blockly.RobotC.gyroDirections_[variable] = Blockly.RobotC.lastGyroDirection_;
     }
+    if (value == 'sensorVexIQ_LED') {
+      Blockly.RobotC.touchLEDs.add(variable);
+    }
     Blockly.RobotC.variableTypes_[variable] = '#pragma';
   }
   Blockly.RobotC.pragmas_ = code;
@@ -413,35 +416,35 @@ Blockly.RobotC['vex_iq_motor_wait'] = function(block) {
 
 Blockly.RobotC['vex_iq_bumper_is_pressed'] = function(block) {
   var variable_bumper = Blockly.RobotC.variableDB_.getName(block.getFieldValue('BUMPER'), Blockly.Variables.NAME_TYPE);
-  var code = 'getBumperValue(' + variable_bumper + ')';
+  var code;
+  if (Blockly.RobotC.touchLEDs.has(variable_bumper)) {
+    code = 'getTouchLEDValue(' + variable_bumper + ')';
+  } else {
+    code = 'getBumperValue(' + variable_bumper + ')';
+  }
   return [code, Blockly.RobotC.ORDER_FUNCTION_CALL];
 };
 
-Blockly.RobotC['vex_iq_touch_led_on'] = function(block) {
+Blockly.RobotC['vex_iq_touch_led_color'] = function(block) {
   var variable_touch_led = Blockly.RobotC.variableDB_.getName(block.getFieldValue('TOUCH_LED'), Blockly.Variables.NAME_TYPE);
-  var colour_color = block.getFieldValue('COLOR');
-  var value_brightness = Blockly.RobotC.valueToCode(block, 'BRIGHTNESS', Blockly.RobotC.ORDER_ATOMIC);
-  // TODO: Assemble RobotC into code variable.
-  var code = '...;\n';
-  return code;
-};
-
-Blockly.RobotC['vex_iq_touch_led_blink'] = function(block) {
-  var variable_touch_led = Blockly.RobotC.variableDB_.getName(block.getFieldValue('TOUCH_LED'), Blockly.Variables.NAME_TYPE);
-  var colour_color = block.getFieldValue('COLOR');
-  var value_brightness = Blockly.RobotC.valueToCode(block, 'BRIGHTNESS', Blockly.RobotC.ORDER_ATOMIC);
-  var value_on_duration = Blockly.RobotC.valueToCode(block, 'ON_DURATION', Blockly.RobotC.ORDER_ATOMIC);
-  var value_off_duration = Blockly.RobotC.valueToCode(block, 'OFF_DURATION', Blockly.RobotC.ORDER_ATOMIC);
-  // TODO: Assemble RobotC into code variable.
-  var code = '...;\n';
-  return code;
-};
-
-Blockly.RobotC['vex_iq_touch_led_off'] = function(block) {
-  var variable_touch_led = Blockly.RobotC.variableDB_.getName(block.getFieldValue('TOUCH_LED'), Blockly.Variables.NAME_TYPE);
-  // TODO: Assemble RobotC into code variable.
-  var code = '...;\n';
-  return code;
+  var dropdown_value_type = block.getFieldValue('VALUE_TYPE');
+  switch (dropdown_value_type) {
+    case 'COLOR_RGB':
+      var color_rgb = block.getFieldValue('COLOR_RGB');
+      var red = parseInt(color_rgb.substring(1, 3), 16);
+      var green = parseInt(color_rgb.substring(3, 5), 16);
+      var blue = parseInt(color_rgb.substring(5, 7), 16);
+      return 'setTouchLEDRGB(' + variable_touch_led + ', ' + red + ', ' + green + ', ' + blue + ');';
+    case 'COLOR_HUE':
+      var color_value = Blockly.RobotC.valueToCode(block, 'VALUE', Blockly.RobotC.ORDER_ATOMIC);
+      return 'setTouchLEDHue(' + variable_touch_led + ', ' + Math.round(color_value * 2.55) + ');';
+    case 'BRIGHTNESS':
+      var color_value = Blockly.RobotC.valueToCode(block, 'VALUE', Blockly.RobotC.ORDER_ATOMIC);
+      return 'setTouchLEDBrightness(' + variable_touch_led + ', ' + Math.round(color_value * 2.55) + ');';
+    case 'FADE':
+      var fade = block.getFieldValue('FADE');
+      return 'setTouchLEDFade(' + variable_touch_led + ', colorFade' + fade + ');';
+  }
 };
 
 // Deprecated

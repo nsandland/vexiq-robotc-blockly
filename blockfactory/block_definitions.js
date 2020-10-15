@@ -818,63 +818,69 @@ Blockly.Blocks['vex_iq_bumper_is_pressed'] = {
   }
 };
 
-Blockly.Blocks['vex_iq_touch_led_on'] = {
+Blockly.Blocks['vex_iq_touch_led_color'] = {
   init: function() {
-    this.appendValueInput("BRIGHTNESS")
-        .setCheck("Number")
-        .appendField("turn on")
+    this.appendDummyInput()
+        .appendField("set")
         .appendField(new Blockly.FieldVariable("touch_led"), "TOUCH_LED")
-        .appendField("with color")
-        .appendField(new Blockly.FieldColour("#ff0000"), "COLOR")
-        .appendField("and");
-    this.appendDummyInput()
-        .appendField("% brightness");
+        .appendField(new Blockly.FieldDropdown([["color","COLOR_RGB"], ["hue","COLOR_HUE"], ["brightness","BRIGHTNESS"], ["fade","FADE"]]), "VALUE_TYPE")
+        .appendField("to");
+    this.appendDummyInput("VALUE")
+        .appendField(new Blockly.FieldColour("#ff0000"), "COLOR_RGB");
+    this.appendDummyInput("UNIT")
+        .appendField("");
     this.setInputsInline(true);
     this.setPreviousStatement(true, null);
     this.setNextStatement(true, null);
     this.setColour(65);
- this.setTooltip("");
- this.setHelpUrl("");
-  }
-};
+    this.setTooltip("");
+    this.setHelpUrl("");
+    this.getField('VALUE_TYPE').setValidator(function(type) {
+      this.getSourceBlock().updateShape_(type);
+    });
+  },
 
-Blockly.Blocks['vex_iq_touch_led_blink'] = {
-  init: function() {
-    this.appendValueInput("BRIGHTNESS")
-        .setCheck("Number")
-        .appendField("blink")
-        .appendField(new Blockly.FieldVariable("touch_led"), "TOUCH_LED")
-        .appendField("with color")
-        .appendField(new Blockly.FieldColour("#ff0000"), "COLOR")
-        .appendField("and");
-    this.appendValueInput("ON_DURATION")
-        .setCheck("Number")
-        .appendField("% brightness, on");
-    this.appendValueInput("OFF_DURATION")
-        .setCheck("Number")
-        .appendField("ms, off");
-    this.appendDummyInput()
-        .appendField("ms");
-    this.setInputsInline(true);
-    this.setPreviousStatement(true, null);
-    this.setNextStatement(true, null);
-    this.setColour(65);
- this.setTooltip("");
- this.setHelpUrl("");
-  }
-};
+  mutationToDom: function() {
+    var container = Blockly.utils.xml.createElement('mutation');
+    var type = this.getFieldValue('VALUE_TYPE')
+    container.setAttribute('type', type);
+    return container;
+  },
 
-Blockly.Blocks['vex_iq_touch_led_off'] = {
-  init: function() {
-    this.appendDummyInput()
-        .appendField("turn off")
-        .appendField(new Blockly.FieldVariable("touch_led"), "TOUCH_LED");
-    this.setInputsInline(true);
-    this.setPreviousStatement(true, null);
-    this.setNextStatement(true, null);
-    this.setColour(65);
- this.setTooltip("");
- this.setHelpUrl("");
+  domToMutation: function(xmlElement) {
+    var type = xmlElement.getAttribute('type');
+    this.updateShape_(type);
+  },
+
+  updateShape_: function(type) {
+    this.removeInput('VALUE');
+    this.removeInput('UNIT');
+    switch(type) {
+      case 'COLOR_RGB':
+        this.appendDummyInput("VALUE")
+            .appendField(new Blockly.FieldColour("#ff0000"), "COLOR_RGB");
+        this.appendDummyInput("UNIT")
+            .appendField("");
+        break;
+      case 'COLOR_HUE':
+        this.appendValueInput("VALUE")
+            .setCheck("Number")
+        this.appendDummyInput("UNIT")
+            .appendField("%");
+        break;
+      case 'BRIGHTNESS':
+        this.appendValueInput("VALUE")
+            .setCheck("Number")
+        this.appendDummyInput("UNIT")
+            .appendField("%");     
+        break;
+      case 'FADE':
+        this.appendDummyInput("VALUE")
+            .appendField(new Blockly.FieldDropdown([["0","None"], ["72","72ms"], ["170","170ms"], ["370","370ms"], ["770","770ms"], ["1570","1570ms"], ["3240","3240ms"], ["6480","6480ms"], ["13000","13sec"], ["26000","26sec"]]), "FADE");
+        this.appendDummyInput("UNIT")
+            .appendField("ms"); 
+        break;
+    }
   }
 };
 

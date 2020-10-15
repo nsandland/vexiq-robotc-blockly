@@ -134,6 +134,7 @@ Blockly.RobotC.init = function(workspace) {
   Blockly.RobotC.gyroDrifts_ = {};
   Blockly.RobotC.lastGyroDrift_ = 0;
   Blockly.RobotC.gyroDirections_ = {};
+  Blockly.RobotC.touchLEDs = new Set();
   Blockly.RobotC.lastGyroDirection_ = 'CW';
 
   Blockly.RobotC.getVariableType = function(name) {
