@@ -437,10 +437,10 @@ Blockly.RobotC['vex_iq_touch_led_color'] = function(block) {
       return 'setTouchLEDRGB(' + variable_touch_led + ', ' + red + ', ' + green + ', ' + blue + ');';
     case 'COLOR_HUE':
       var color_value = Blockly.RobotC.valueToCode(block, 'VALUE', Blockly.RobotC.ORDER_ATOMIC);
-      return 'setTouchLEDHue(' + variable_touch_led + ', ' + Math.round(color_value * 2.55) + ');';
+      return 'setTouchLEDHue(' + variable_touch_led + ', ' + color_value + ');';
     case 'BRIGHTNESS':
       var color_value = Blockly.RobotC.valueToCode(block, 'VALUE', Blockly.RobotC.ORDER_ATOMIC);
-      return 'setTouchLEDBrightness(' + variable_touch_led + ', ' + Math.round(color_value * 2.55) + ');';
+      return 'setTouchLEDBrightness(' + variable_touch_led + ', ' + color_value + ' * 2.55);';
     case 'FADE':
       var fade = block.getFieldValue('FADE');
       return 'setTouchLEDFade(' + variable_touch_led + ', colorFade' + fade + ');';

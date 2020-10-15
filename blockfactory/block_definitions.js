@@ -866,7 +866,7 @@ Blockly.Blocks['vex_iq_touch_led_color'] = {
         this.appendValueInput("VALUE")
             .setCheck("Number")
         this.appendDummyInput("UNIT")
-            .appendField("%");
+            .appendField("");
         break;
       case 'BRIGHTNESS':
         this.appendValueInput("VALUE")
